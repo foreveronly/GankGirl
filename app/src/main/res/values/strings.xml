@@ -5,4 +5,15 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="title_activity_base">BaseActivity</string>
+    <string name="menu_index">首页</string>
+    <string name="menu_girl">妹子</string>
+    <string name="menu_iOS">iOS</string>
+    <string name="menu_android">Android</string>
+    <string name="menu_app">App</string>
+    <string name="menu_video">休息视频</string>
+    <string name="menu_recommend">瞎推荐</string>
+    <string name="menu_resource">拓展资源</string>
+    <string name="menu_about">关于</string>
+    <string name="menu_share">分享</string>
 </resources>
