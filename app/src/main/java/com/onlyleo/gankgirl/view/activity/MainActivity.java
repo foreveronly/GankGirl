@@ -7,15 +7,19 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.onlyleo.gankgirl.R;
+import com.onlyleo.gankgirl.model.entity.Gank;
+import com.onlyleo.gankgirl.presenter.MainPresenter;
+import com.onlyleo.gankgirl.view.IMainView;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import java.util.List;
+
+public class MainActivity extends BaseActivity<MainPresenter>
+        implements NavigationView.OnNavigationItemSelectedListener,IMainView<Gank>{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,21 +86,21 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_index) {
-            // Handle the camera action
+            setTitle(getResources().getString(R.string.app_name),false);
         } else if (id == R.id.nav_android) {
-
+            setTitle(getResources().getString(R.string.menu_android),false);
         } else if (id == R.id.nav_iOS) {
-
+            setTitle(getResources().getString(R.string.menu_iOS),false);
         } else if (id == R.id.nav_app) {
-
+            setTitle(getResources().getString(R.string.menu_app),false);
         } else if (id == R.id.nav_recommend) {
-
+            setTitle(getResources().getString(R.string.menu_recommend),false);
         } else if (id == R.id.nav_video) {
-
+            setTitle(getResources().getString(R.string.menu_video),false);
         }else if (id == R.id.nav_resource) {
-
+            setTitle(getResources().getString(R.string.menu_resource),false);
         }else if (id == R.id.nav_girl) {
-
+            setTitle(getResources().getString(R.string.menu_girl),false);
         }else if (id == R.id.nav_share) {
 
         }else if (id == R.id.nav_about) {
@@ -106,5 +110,35 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void initPresenter() {
+        mPresenter = new MainPresenter(this,this);
+    }
+
+    @Override
+    protected int getLayout() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    public void fillData(List<Gank> data) {
+
+    }
+
+    @Override
+    public void appendMoreDataToView(List<Gank> data) {
+
+    }
+
+    @Override
+    public void hasNoMoreData() {
+
+    }
+
+    @Override
+    public void showChangeLogInfo(String assetFileName) {
+
     }
 }

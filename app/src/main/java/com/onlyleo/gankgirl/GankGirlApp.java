@@ -9,7 +9,7 @@ import com.orhanobut.logger.Logger;
 /**
  * Created by bbc on 16/1/25.
  */
-public class GankGilrApp extends Application{
+public class GankGirlApp extends Application{
 
     @Override
     public void onCreate() {
