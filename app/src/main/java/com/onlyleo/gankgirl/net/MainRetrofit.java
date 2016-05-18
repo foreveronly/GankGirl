@@ -46,9 +46,9 @@ public class MainRetrofit {
                 .build();
     }
 
-    public static GuDong getGuDongInstance(){
-        synchronized (monitor){
-            if(mGuDong==null){
+    public static GuDong getGuDongInstance() {
+        synchronized (monitor) {
+            if (mGuDong == null) {
                 mGuDong = retrofit.create(GuDong.class);
             }
             return mGuDong;

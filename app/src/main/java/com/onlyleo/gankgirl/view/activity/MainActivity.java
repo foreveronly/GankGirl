@@ -6,6 +6,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -15,6 +16,7 @@ import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Gank;
 import com.onlyleo.gankgirl.presenter.MainPresenter;
 import com.onlyleo.gankgirl.view.IMainView;
+import com.onlyleo.gankgirl.widget.LMRecyclerView;
 
 import java.util.List;
 
@@ -33,13 +35,17 @@ public class MainActivity extends BaseActivity<MainPresenter>
     NavigationView navigationView;
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
+    @Bind(R.id.recycler_view)
+    LMRecyclerView recyclerView;
+    @Bind(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         initView();
-
     }
 
     @Override
@@ -54,11 +60,12 @@ public class MainActivity extends BaseActivity<MainPresenter>
     }
 
     @OnClick(R.id.fab)
-    public void fabClick(View view){
+    public void fabClick(View view) {
         Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
     }
-    public void initView(){
+
+    public void initView() {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
