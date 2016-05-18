@@ -19,13 +19,9 @@
 
 package com.onlyleo.gankgirl.model.entity;
 
-
 import java.util.Date;
 
-
 public class Girl extends Soul {
-
-
 
     public boolean used;
     public String type;

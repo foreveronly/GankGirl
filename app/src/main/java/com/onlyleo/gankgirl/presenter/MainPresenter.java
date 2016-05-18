@@ -9,6 +9,11 @@ import com.onlyleo.gankgirl.view.IMainView;
  */
 public class MainPresenter extends BasePresenter<IMainView> {
 
+    @Override
+    public void release() {
+        subscription.unsubscribe();
+    }
+
     public MainPresenter(Activity context, IMainView view) {
         super(context, view);
     }
