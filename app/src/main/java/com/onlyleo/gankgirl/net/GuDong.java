@@ -23,8 +23,8 @@ import com.onlyleo.gankgirl.model.GankData;
 import com.onlyleo.gankgirl.model.PrettyGirlData;
 import com.onlyleo.gankgirl.model.VideoData;
 
-import retrofit.http.GET;
-import retrofit.http.Path;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
 import rx.Observable;
 
 public interface GuDong {

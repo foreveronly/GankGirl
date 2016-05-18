@@ -19,36 +19,39 @@
 
 package com.onlyleo.gankgirl.net;
 
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.squareup.okhttp.OkHttpClient;
 
-import java.util.concurrent.TimeUnit;
-
-import retrofit.RestAdapter;
-import retrofit.client.OkClient;
-import retrofit.converter.GsonConverter;
-
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainRetrofit {
+    /**
+     * 数据主机地址
+     */
+    public static final String HOST = "http://gank.io/api/";
+    private static Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").serializeNulls().create();
+    private static Retrofit retrofit;
+    private static GuDong mGuDong;
+    protected static final Object monitor = new Object();
 
-    final GuDong mService;
+    static {
 
-    final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").serializeNulls().create();
-
-    MainRetrofit() {
-        OkHttpClient client = new OkHttpClient();
-        client.setReadTimeout(21, TimeUnit.SECONDS);
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setClient(new OkClient(client))
-                .setEndpoint(MainFactory.HOST)
-                .setConverter(new GsonConverter(gson))
-                .setLogLevel(RestAdapter.LogLevel.FULL)
+        retrofit = new Retrofit.Builder()
+                .baseUrl(HOST)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
-        mService = restAdapter.create(GuDong.class);
     }
 
-    public GuDong getService(){
-        return mService;
+    public static GuDong getGuDongInstance(){
+        synchronized (monitor){
+            if(mGuDong==null){
+                mGuDong = retrofit.create(GuDong.class);
+            }
+            return mGuDong;
+        }
     }
 }
