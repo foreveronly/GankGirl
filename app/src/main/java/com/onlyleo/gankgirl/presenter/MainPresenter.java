@@ -18,4 +18,9 @@ public class MainPresenter extends BasePresenter<IMainView> {
         super(context, view);
     }
 
+    @Override
+    public void loadData() {
+
+    }
+
 }

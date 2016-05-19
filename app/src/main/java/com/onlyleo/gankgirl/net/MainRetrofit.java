@@ -38,7 +38,6 @@ public class MainRetrofit {
     protected static final Object monitor = new Object();
 
     static {
-
         retrofit = new Retrofit.Builder()
                 .baseUrl(HOST)
                 .addConverterFactory(GsonConverterFactory.create(gson))
