@@ -9,5 +9,5 @@
     tools:showIn="@layout/app_bar_main">
 
 
-    <include layout="@layout/refresh_recycler_view" />
+    <include layout="@layout/gankdaily_recycler_view" />
 </RelativeLayout>

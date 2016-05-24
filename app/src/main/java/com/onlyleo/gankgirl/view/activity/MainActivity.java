@@ -35,12 +35,12 @@ public class MainActivity extends BaseActivity<MainPresenter>
     NavigationView navigationView;
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
-    @Bind(R.id.recycler_view)
+    @Bind(R.id.recycler_view_gankdaily)
     LMRecyclerView recyclerView;
     @Bind(R.id.swipe_refresh_layout)
-    SwipeRefreshLayout swipeRefreshLayout;
 
-    @Override
+    @Override    SwipeRefreshLayout swipeRefreshLayout;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
