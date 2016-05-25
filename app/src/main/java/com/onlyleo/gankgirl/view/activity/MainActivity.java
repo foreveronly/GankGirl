@@ -3,7 +3,6 @@ package com.onlyleo.gankgirl.view.activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,10 +11,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.adapter.GankDailyAdapter;
 import com.onlyleo.gankgirl.model.entity.Gank;
+import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.presenter.MainPresenter;
 import com.onlyleo.gankgirl.view.IMainView;
 import com.onlyleo.gankgirl.widget.LMRecyclerView;
@@ -42,8 +43,11 @@ public class MainActivity extends BaseActivity<MainPresenter>
     LMRecyclerView recyclerView;
     @Bind(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
-    private List<Gank> list;
+    private List<Girl> list;
     private GankDailyAdapter adapter;
+    private boolean isRefresh = true;
+    private boolean canLoading = true;
+    private int page = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +80,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
 
     @Override
     public void init() {
+        Toast.makeText(this,"加载",Toast.LENGTH_SHORT).show();
         list = new ArrayList<>();
         adapter = new GankDailyAdapter(list,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -87,6 +92,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
             @Override
             public void run() {
                 swipeRefreshLayout.setRefreshing(true);
+                mPresenter.loadData(page);
             }
         });
         toolbar.setOnClickListener(new View.OnClickListener() {
@@ -119,8 +125,18 @@ public class MainActivity extends BaseActivity<MainPresenter>
     }
 
     @Override
-    public void showGankList(List<Gank> meiziList) {
-
+    public void showGankList(List<Girl> meiziList) {
+        canLoading = true;
+        page++;
+        if (isRefresh) {
+            list.clear();
+            list.addAll(meiziList);
+            adapter.notifyDataSetChanged();
+            isRefresh = false;
+        } else {
+            list.addAll(meiziList);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -129,8 +145,9 @@ public class MainActivity extends BaseActivity<MainPresenter>
     }
     @OnClick(R.id.fab)
     public void fabClick(View view) {
-        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+        isRefresh = true;
+        page = 1;
+        mPresenter.loadData(page);
     }
 
     public void initView() {
@@ -177,6 +194,8 @@ public class MainActivity extends BaseActivity<MainPresenter>
 
     @Override
     public void onRefresh() {
-
+        isRefresh = true;
+        page = 1;
+        mPresenter.loadData(page);
     }
 }
