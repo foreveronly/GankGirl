@@ -8,16 +8,19 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.onlyleo.gankgirl.R;
+import com.onlyleo.gankgirl.adapter.GankDailyAdapter;
 import com.onlyleo.gankgirl.model.entity.Gank;
 import com.onlyleo.gankgirl.presenter.MainPresenter;
 import com.onlyleo.gankgirl.view.IMainView;
 import com.onlyleo.gankgirl.widget.LMRecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -25,7 +28,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity<MainPresenter>
-        implements NavigationView.OnNavigationItemSelectedListener, IMainView<Gank> {
+        implements NavigationView.OnNavigationItemSelectedListener, IMainView<Gank>,LMRecyclerView.LoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -38,9 +41,10 @@ public class MainActivity extends BaseActivity<MainPresenter>
     @Bind(R.id.recycler_view_gankdaily)
     LMRecyclerView recyclerView;
     @Bind(R.id.swipe_refresh_layout)
-
-    @Override    SwipeRefreshLayout swipeRefreshLayout;
-
+    SwipeRefreshLayout swipeRefreshLayout;
+    private List<Gank> list;
+    private GankDailyAdapter adapter;
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -59,6 +63,70 @@ public class MainActivity extends BaseActivity<MainPresenter>
         }
     }
 
+    @Override
+    protected void initPresenter() {
+        mPresenter = new MainPresenter(this, this);
+        mPresenter.init();
+    }
+
+    @Override
+    protected int getLayout() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    public void init() {
+        list = new ArrayList<>();
+        adapter = new GankDailyAdapter(list,this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLoadMoreListener(this);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(true);
+            }
+        });
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.smoothScrollToPosition(0);
+            }
+        });
+    }
+    @Override
+    public void showProgress() {
+        if (!swipeRefreshLayout.isRefreshing())
+            swipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void hideProgress() {
+        if (swipeRefreshLayout.isRefreshing())
+            swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void showErrorView() {
+
+    }
+
+    @Override
+    public void showNoMoreData() {
+
+    }
+
+    @Override
+    public void showGankList(List<Gank> meiziList) {
+
+    }
+
+    @Override
+    public void loadMore() {
+
+    }
     @OnClick(R.id.fab)
     public void fabClick(View view) {
         Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -108,37 +176,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
     }
 
     @Override
-    protected void initPresenter() {
-        mPresenter = new MainPresenter(this, this);
-    }
-
-    @Override
-    protected int getLayout() {
-        return R.layout.activity_main;
-    }
-
-    @Override
-    public void fillData(List<Gank> data) {
-
-    }
-
-    @Override
-    public void appendMoreDataToView(List<Gank> data) {
-
-    }
-
-    @Override
-    public void hasNoMoreData() {
-
-    }
-
-    @Override
-    public void showChangeLogInfo(String assetFileName) {
-
-    }
-
-    @Override
-    public void init() {
+    public void onRefresh() {
 
     }
 }

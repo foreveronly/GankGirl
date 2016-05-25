@@ -20,7 +20,7 @@ public class MainPresenter extends BasePresenter<IMainView> {
 
     @Override
     public void loadData() {
-
+//        subscription = Observable
     }
 
 }
