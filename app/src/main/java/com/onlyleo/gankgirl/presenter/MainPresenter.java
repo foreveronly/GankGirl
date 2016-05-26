@@ -1,11 +1,11 @@
 package com.onlyleo.gankgirl.presenter;
 
 import android.app.Activity;
-import android.widget.Toast;
 
 import com.onlyleo.gankgirl.model.PrettyGirlData;
 import com.onlyleo.gankgirl.model.VideoData;
 import com.onlyleo.gankgirl.net.MainRetrofit;
+import com.onlyleo.gankgirl.utils.ToastUtils;
 import com.onlyleo.gankgirl.view.IMainView;
 
 import rx.Observable;
@@ -35,7 +35,6 @@ public class MainPresenter extends BasePresenter<IMainView> {
                 MainRetrofit.getGuDongInstance().getVideoData(20, page), new Func2<PrettyGirlData, VideoData, PrettyGirlData>() {
                     @Override
                     public PrettyGirlData call(PrettyGirlData prettyGirlData, VideoData videoData) {
-                        Toast.makeText(mContext,prettyGirlData.results.get(0).desc,Toast.LENGTH_SHORT).show();
                         return getGirlAndTitleAndDate(prettyGirlData,videoData);
                     }
                 }).subscribeOn(Schedulers.io())
@@ -60,6 +59,7 @@ public class MainPresenter extends BasePresenter<IMainView> {
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
+                        ToastUtils.showShort(mContext,throwable.toString());
                         mView.showErrorView();
                         mView.hideProgress();
                     }

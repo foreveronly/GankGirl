@@ -2,7 +2,6 @@ package com.onlyleo.gankgirl;
 
 import android.app.Application;
 
-import com.orhanobut.logger.AndroidLogTool;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 
@@ -11,6 +10,7 @@ import com.orhanobut.logger.Logger;
  */
 public class GankGirlApp extends Application{
 
+    private static GankGirlApp instance = null;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -18,11 +18,15 @@ public class GankGirlApp extends Application{
             Logger
                     .init(getResources().getString(R.string.app_name))                 // default PRETTYLOGGER or use just init()
                     .methodCount(3)                 // default 2
-                    .hideThreadInfo()               // default shown
                     .logLevel(LogLevel.FULL)        // default LogLevel.FULL
-                    .methodOffset(2)                // default 0
-                    .logTool(new AndroidLogTool()); // custom log tool, optional
+                    .methodOffset(2);        // default 0
         }
 
+    }
+    public static GankGirlApp getInstance() {
+        if (instance == null) {
+            instance = new GankGirlApp();
+        }
+            return instance;
     }
 }

@@ -29,12 +29,12 @@ import rx.Observable;
 
 public interface GuDong {
 
-    @GET("/data/福利/{pagesize}/{page}")
+    @GET("data/福利/{pagesize}/{page}")
     Observable<PrettyGirlData> getPrettyGirlData(@Path("pagesize") int pagesize, @Path("page") int page);
 
-    @GET("/data/休息视频/{pagesize}/{page}")
+    @GET("data/休息视频/{pagesize}/{page}")
     Observable<VideoData> getVideoData(@Path("pagesize") int pagesize, @Path("page") int page);
 
-    @GET("/day/{year}/{month}/{day}")
+    @GET("day/{year}/{month}/{day}")
     Observable<GankData> getGankData(@Path("year") int year, @Path("month") int month, @Path("day") int day);
 }

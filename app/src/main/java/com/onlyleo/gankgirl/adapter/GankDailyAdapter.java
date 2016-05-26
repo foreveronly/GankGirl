@@ -43,8 +43,8 @@ public class GankDailyAdapter extends RecyclerView.Adapter<GankDailyAdapter.Gank
                 .crossFade()
                 .into(holder.ivMeizi);
         String desc[] = girl.desc.split(",");
-        String date = desc[1];
-        String title = desc[2];
+        String date = desc[0];
+        String title = desc[1];
         holder.tvDate.setText(date);
         holder.tvTitle.setText(title);
     }

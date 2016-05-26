@@ -1,6 +1,5 @@
 package com.onlyleo.gankgirl.view.activity;
 
-import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,13 +10,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.adapter.GankDailyAdapter;
-import com.onlyleo.gankgirl.model.entity.Gank;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.presenter.MainPresenter;
+import com.onlyleo.gankgirl.utils.ToastUtils;
 import com.onlyleo.gankgirl.view.IMainView;
 import com.onlyleo.gankgirl.widget.LMRecyclerView;
 
@@ -25,11 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity<MainPresenter>
-        implements NavigationView.OnNavigationItemSelectedListener, IMainView<Gank>,LMRecyclerView.LoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
+        implements NavigationView.OnNavigationItemSelectedListener, IMainView, LMRecyclerView.LoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -48,41 +45,39 @@ public class MainActivity extends BaseActivity<MainPresenter>
     private boolean isRefresh = true;
     private boolean canLoading = true;
     private int page = 1;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-        initView();
-    }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        assert drawer != null;
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        assert drawerLayout != null;
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
     }
 
     @Override
-    protected void initPresenter() {
-        mPresenter = new MainPresenter(this, this);
-        mPresenter.init();
-    }
-
-    @Override
-    protected int getLayout() {
+    protected int provideContentViewId() {
         return R.layout.activity_main;
     }
 
     @Override
+    protected void initPresenter() {
+        presenter = new MainPresenter(this, this);
+        presenter.init();
+    }
+
+
+    @Override
     public void init() {
-        Toast.makeText(this,"加载",Toast.LENGTH_SHORT).show();
+        setSupportActionBar(toolbar);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.setDrawerListener(toggle);
+        toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
         list = new ArrayList<>();
-        adapter = new GankDailyAdapter(list,this);
+        adapter = new GankDailyAdapter(list, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         recyclerView.setLoadMoreListener(this);
@@ -92,7 +87,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
             @Override
             public void run() {
                 swipeRefreshLayout.setRefreshing(true);
-                mPresenter.loadData(page);
+                presenter.loadData(page);
             }
         });
         toolbar.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +97,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
             }
         });
     }
+
     @Override
     public void showProgress() {
         if (!swipeRefreshLayout.isRefreshing())
@@ -121,50 +117,43 @@ public class MainActivity extends BaseActivity<MainPresenter>
 
     @Override
     public void showNoMoreData() {
-
+        ToastUtils.showShort(this,"没有更多数据!");
     }
 
     @Override
-    public void showGankList(List<Girl> meiziList) {
+    public void showGankList(List<Girl> girlList) {
         canLoading = true;
         page++;
         if (isRefresh) {
             list.clear();
-            list.addAll(meiziList);
+            list.addAll(girlList);
             adapter.notifyDataSetChanged();
             isRefresh = false;
         } else {
-            list.addAll(meiziList);
+            list.addAll(girlList);
             adapter.notifyDataSetChanged();
         }
     }
 
     @Override
     public void loadMore() {
-
+        isRefresh = true;
+        page++;
+        presenter.loadData(page);
     }
+
     @OnClick(R.id.fab)
     public void fabClick(View view) {
         isRefresh = true;
         page = 1;
-        mPresenter.loadData(page);
+        presenter.loadData(page);
     }
 
-    public void initView() {
-        ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.setDrawerListener(toggle);
-        toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if (id == R.id.nav_index) {
             setTitle(getResources().getString(R.string.app_name), false);
         } else if (id == R.id.nav_android) {
@@ -186,7 +175,6 @@ public class MainActivity extends BaseActivity<MainPresenter>
         } else if (id == R.id.nav_about) {
 
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -196,6 +184,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
     public void onRefresh() {
         isRefresh = true;
         page = 1;
-        mPresenter.loadData(page);
+        presenter.loadData(page);
     }
+
 }
