@@ -13,7 +13,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Girl;
+import com.onlyleo.gankgirl.utils.Tools;
 
+import java.text.ParseException;
 import java.util.List;
 
 import butterknife.Bind;
@@ -50,9 +52,13 @@ public class GankDailyAdapter extends RecyclerView.Adapter<GankDailyAdapter.Gank
                 .load(girl.url)
                 .crossFade()
                 .into(holder.ivgirl);
-        String desc[] = girl.desc.split(",");
-        String date = desc[0];
-        String title = desc[1];
+        String date = null;
+        try {
+            date = Tools.todate(girl.publishedAt.toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String title = girl.desc;
         holder.tvDate.setText(date);
         holder.tvTitle.setText(title);
         showItemAnimation(holder, position);
