@@ -4,7 +4,7 @@
     android:layout_height="200dp">
 
     <ImageView
-        android:id="@+id/iv_meizi"
+        android:id="@+id/iv_girl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFFFFF"

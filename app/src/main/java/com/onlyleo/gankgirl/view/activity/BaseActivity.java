@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.onlyleo.gankgirl.GankGirlApp;
 import com.onlyleo.gankgirl.presenter.BasePresenter;
 
 import butterknife.ButterKnife;
@@ -18,6 +19,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(provideContentViewId());
+        GankGirlApp.getInstance().addActivity(this);
         ButterKnife.bind(this);
         initPresenter();
         checkPresenterIsNull();

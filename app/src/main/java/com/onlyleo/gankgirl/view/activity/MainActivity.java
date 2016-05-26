@@ -1,16 +1,21 @@
 package com.onlyleo.gankgirl.view.activity;
 
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.onlyleo.gankgirl.GankGirlApp;
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.adapter.GankDailyAdapter;
 import com.onlyleo.gankgirl.model.entity.Girl;
@@ -40,22 +45,29 @@ public class MainActivity extends BaseActivity<MainPresenter>
     LMRecyclerView recyclerView;
     @Bind(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
+
     private List<Girl> list;
     private GankDailyAdapter adapter;
     private boolean isRefresh = true;
     private boolean canLoading = true;
     private int page = 1;
+    private boolean isQuit = false;
 
     @Override
-    public void onBackPressed() {
-        assert drawerLayout != null;
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+            }else if(isQuit){
+                GankGirlApp.getInstance().exit();
+            }else if(!isQuit){
+                isQuit = true;
+                Snackbar.make(drawerLayout,"再按一次退出程序",Snackbar.LENGTH_SHORT).show();
+                mHandler.sendEmptyMessageDelayed(0,2000);
+            }
         }
+        return false;
     }
-
     @Override
     protected int provideContentViewId() {
         return R.layout.activity_main;
@@ -187,4 +199,11 @@ public class MainActivity extends BaseActivity<MainPresenter>
         presenter.loadData(page);
     }
 
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            isQuit = false;
+        }
+    };
 }

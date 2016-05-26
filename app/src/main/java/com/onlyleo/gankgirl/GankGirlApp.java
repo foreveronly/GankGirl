@@ -1,16 +1,20 @@
 package com.onlyleo.gankgirl;
 
+import android.app.Activity;
 import android.app.Application;
 
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Created by bbc on 16/1/25.
  */
 public class GankGirlApp extends Application{
-
     private static GankGirlApp instance = null;
+    private List<Activity> activityList = new LinkedList<Activity>();
     @Override
     public void onCreate() {
         super.onCreate();
@@ -28,5 +32,17 @@ public class GankGirlApp extends Application{
             instance = new GankGirlApp();
         }
             return instance;
+    }
+
+    //添加Activity到容器中
+    public void addActivity(Activity activity)  {
+        activityList.add(activity);
+    }
+
+    //遍历所有Activity并finish
+    public void exit(){
+        for(Activity activity:activityList) {
+            activity.finish();
+        }
     }
 }
