@@ -1,4 +1,4 @@
-package com.onlyleo.gankgirl.view.activity;
+package com.onlyleo.gankgirl.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

@@ -1,4 +1,4 @@
-package com.onlyleo.gankgirl.view.activity;
+package com.onlyleo.gankgirl.ui.activity;
 
 import android.os.Handler;
 import android.os.Message;
@@ -20,8 +20,8 @@ import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.adapter.GankDailyAdapter;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.presenter.MainPresenter;
+import com.onlyleo.gankgirl.ui.view.IMainView;
 import com.onlyleo.gankgirl.utils.ToastUtils;
-import com.onlyleo.gankgirl.view.IMainView;
 import com.onlyleo.gankgirl.widget.LMRecyclerView;
 
 import java.util.ArrayList;

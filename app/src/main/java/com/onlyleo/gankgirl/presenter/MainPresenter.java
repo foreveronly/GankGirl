@@ -6,8 +6,7 @@ import com.onlyleo.gankgirl.model.PrettyGirlData;
 import com.onlyleo.gankgirl.model.VideoData;
 import com.onlyleo.gankgirl.net.MainRetrofit;
 import com.onlyleo.gankgirl.utils.ToastUtils;
-import com.onlyleo.gankgirl.view.IMainView;
-import com.orhanobut.logger.Logger;
+import com.onlyleo.gankgirl.ui.view.IMainView;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -72,7 +71,6 @@ public class MainPresenter extends BasePresenter<IMainView> {
         int size = Math.min(girl.results.size(),video.results.size());
         for (int i = 0; i < size; i++) {
             girl.results.get(i).desc = video.results.get(i).desc;
-            Logger.d(girl.results.get(i).desc);
         }
         return girl;
     }

@@ -15,7 +15,6 @@ import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.utils.Tools;
 
-import java.text.ParseException;
 import java.util.List;
 
 import butterknife.Bind;
@@ -24,12 +23,13 @@ import butterknife.ButterKnife;
 /**
  * Created by leoonly on 16/5/18.
  */
-public class GankDailyAdapter extends RecyclerView.Adapter<GankDailyAdapter.GankHolder>{
+public class GankDailyAdapter extends RecyclerView.Adapter<GankDailyAdapter.GankHolder> {
     private List<Girl> list;
     private Context context;
     private Girl girl;
     int lastPosition = 0;
-    public GankDailyAdapter(List<Girl>list,Context context) {
+
+    public GankDailyAdapter(List<Girl> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -52,14 +52,9 @@ public class GankDailyAdapter extends RecyclerView.Adapter<GankDailyAdapter.Gank
                 .load(girl.url)
                 .crossFade()
                 .into(holder.ivgirl);
-        String date = null;
-        try {
-            date = Tools.todate(girl.publishedAt.toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        long date = girl.createdAt.getTime();
         String title = girl.desc;
-        holder.tvDate.setText(date);
+        holder.tvDate.setText(Tools.toDate(date));
         holder.tvTitle.setText(title);
         showItemAnimation(holder, position);
     }
@@ -85,6 +80,7 @@ public class GankDailyAdapter extends RecyclerView.Adapter<GankDailyAdapter.Gank
             ButterKnife.bind(this, itemView);
         }
     }
+
     private void showItemAnimation(GankHolder holder, int position) {
         if (position > lastPosition) {
             lastPosition = position;

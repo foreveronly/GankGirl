@@ -2,7 +2,7 @@ package com.onlyleo.gankgirl.presenter;
 
 import android.app.Activity;
 
-import com.onlyleo.gankgirl.view.IBaseView;
+import com.onlyleo.gankgirl.ui.view.IBaseView;
 
 import rx.Subscription;
 
