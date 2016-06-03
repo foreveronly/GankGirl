@@ -10,5 +10,5 @@ public interface IMainView extends IBaseView{
     void hideProgress();
     void showErrorView();
     void showNoMoreData();
-    void showGankList(List<Girl> girlList);
+    void showGirlList(List<Girl> girlList);
 }

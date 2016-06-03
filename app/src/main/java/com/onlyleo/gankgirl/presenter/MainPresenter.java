@@ -31,7 +31,7 @@ public class MainPresenter extends BasePresenter<IMainView> {
 
     @Override
     public void loadData(int page) {
-        subscription = Observable.zip(MainRetrofit.getGuDongInstance().getPrettyGirlData(20, page),
+        subscription = Observable.zip(MainRetrofit.getGuDongInstance().getPrettyGirlData(10, page),
                 MainRetrofit.getGuDongInstance().getVideoData(20, page), new Func2<PrettyGirlData, VideoData, PrettyGirlData>() {
                     @Override
                     public PrettyGirlData call(PrettyGirlData prettyGirlData, VideoData videoData) {
@@ -52,7 +52,7 @@ public class MainPresenter extends BasePresenter<IMainView> {
                         if (prettyGirlData.results.size() == 0){
                             mView.showNoMoreData();
                         }else {
-                            mView.showGankList(prettyGirlData.results);
+                            mView.showGirlList(prettyGirlData.results);
                         }
                         mView.hideProgress();
                     }

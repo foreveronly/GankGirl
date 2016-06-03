@@ -17,7 +17,7 @@ import android.view.View;
 
 import com.onlyleo.gankgirl.GankGirlApp;
 import com.onlyleo.gankgirl.R;
-import com.onlyleo.gankgirl.adapter.GankDailyAdapter;
+import com.onlyleo.gankgirl.adapter.MainAdapter;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.presenter.MainPresenter;
 import com.onlyleo.gankgirl.ui.view.IMainView;
@@ -47,7 +47,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
     SwipeRefreshLayout swipeRefreshLayout;
 
     private List<Girl> list;
-    private GankDailyAdapter adapter;
+    private MainAdapter adapter;
     private boolean isRefresh = true;
     private boolean canLoading = true;
     private int page = 1;
@@ -89,7 +89,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         list = new ArrayList<>();
-        adapter = new GankDailyAdapter(list, this);
+        adapter = new MainAdapter(list, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         recyclerView.setLoadMoreListener(this);
@@ -133,7 +133,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
     }
 
     @Override
-    public void showGankList(List<Girl> girlList) {
+    public void showGirlList(List<Girl> girlList) {
         canLoading = true;
         page++;
         if (isRefresh) {
@@ -149,7 +149,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
 
     @Override
     public void loadMore() {
-        isRefresh = true;
+        isRefresh = false;
         page++;
         presenter.loadData(page);
     }
@@ -158,6 +158,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
     public void fabClick(View view) {
         isRefresh = true;
         page = 1;
+        recyclerView.smoothScrollToPosition(0);
         presenter.loadData(page);
     }
 
@@ -187,8 +188,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
         } else if (id == R.id.nav_about) {
 
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
@@ -206,4 +206,5 @@ public class MainActivity extends BaseActivity<MainPresenter>
             isQuit = false;
         }
     };
+
 }

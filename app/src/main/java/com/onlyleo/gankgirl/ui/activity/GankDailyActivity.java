@@ -1,17 +1,20 @@
 package com.onlyleo.gankgirl.ui.activity;
 
+import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.presenter.GankDailyPresenter;
 import com.onlyleo.gankgirl.ui.view.GankDailyView;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implements GankDailyView {
@@ -24,9 +27,11 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
     AppBarLayout appBar;
     @Bind(R.id.fab)
     FloatingActionButton fab;
+    @Bind(R.id.iv_head_girl)
+    ImageView ivHeadGirl;
 
     @OnClick(R.id.fab)
-    public void fabClick(View view){
+    public void fabClick(View view) {
         Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
     }
@@ -38,7 +43,7 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
 
     @Override
     protected void initPresenter() {
-        presenter = new GankDailyPresenter(this,this);
+        presenter = new GankDailyPresenter(this, this);
         presenter.init();
     }
 
@@ -62,4 +67,10 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
         setSupportActionBar(toolbar);
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

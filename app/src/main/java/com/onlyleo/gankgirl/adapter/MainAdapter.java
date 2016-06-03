@@ -1,42 +1,50 @@
 package com.onlyleo.gankgirl.adapter;
 
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Girl;
+import com.onlyleo.gankgirl.ui.activity.GankDailyActivity;
 import com.onlyleo.gankgirl.utils.Tools;
 
+import java.io.Serializable;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by leoonly on 16/5/18.
  */
-public class GankDailyAdapter extends RecyclerView.Adapter<GankDailyAdapter.GankHolder> {
+public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GankHolder> {
     private List<Girl> list;
     private Context context;
     private Girl girl;
     int lastPosition = 0;
 
-    public GankDailyAdapter(List<Girl> list, Context context) {
+    public MainAdapter(List<Girl> list, Context context) {
         this.list = list;
         this.context = context;
     }
 
     @Override
     public GankHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.gankdaily_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.main_item, parent, false);
         return new GankHolder(view);
     }
 
@@ -64,13 +72,24 @@ public class GankDailyAdapter extends RecyclerView.Adapter<GankDailyAdapter.Gank
         return list.size();
     }
 
-    public class GankHolder extends RecyclerView.ViewHolder {
+    class GankHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.iv_girl)
         ImageView ivgirl;
         @Bind(R.id.tv_date)
         TextView tvDate;
         @Bind(R.id.tv_title)
         TextView tvTitle;
+        @Bind(R.id.main_root)
+        RelativeLayout mainRoot;
+
+        @OnClick(R.id.main_root)
+        void itemCilick(){
+            Intent intent = new Intent(context, GankDailyActivity.class);
+            intent.putExtra("girlData",((Serializable)card.getTag()));
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                    .makeSceneTransitionAnimation((Activity) context, ivgirl,"GankDaily");
+            ActivityCompat.startActivity((Activity) context, intent, optionsCompat.toBundle());
+        }
 
         View card;
 

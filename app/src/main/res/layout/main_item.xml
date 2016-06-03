@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_root"
     android:layout_width="match_parent"
+    android:focusable="true"
     android:layout_height="200dp">
 
     <ImageView
@@ -17,7 +19,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:background="#55555555"
+        android:background="#33000000"
         android:gravity="end"
         android:orientation="vertical">
 
