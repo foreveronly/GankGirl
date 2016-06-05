@@ -79,6 +79,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
     @Override
     public void init() {
         initToolbar();
+        setTitle(getString(R.string.app_name),true);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.setDrawerListener(toggle);
@@ -96,12 +97,6 @@ public class MainActivity extends BaseActivity<MainPresenter>
             public void run() {
                 swipeRefreshLayout.setRefreshing(true);
                 presenter.loadData(page);
-            }
-        });
-        toolbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                recyclerView.smoothScrollToPosition(0);
             }
         });
     }
@@ -157,7 +152,10 @@ public class MainActivity extends BaseActivity<MainPresenter>
         recyclerView.smoothScrollToPosition(0);
         presenter.loadData(page);
     }
-
+    @OnClick(R.id.toolbar)
+    void toolbarClick(){
+        recyclerView.smoothScrollToPosition(0);
+    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override

@@ -76,6 +76,7 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
 
     @Override
     public void init() {
+        initToolbar();
         getIntentData();
         initGankDaily();
     }
@@ -85,7 +86,6 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
     }
 
     public void initGankDaily() {
-        initToolbar();
         ivHeadGirl.setImageDrawable(ShareElement.shareDrawable);
         ViewCompat.setTransitionName(ivHeadGirl, getString(R.string.pretty_girl));
         setTitle(Tools.toDate(girl.publishedAt.getTime()),true);
