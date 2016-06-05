@@ -11,7 +11,7 @@ public abstract class BasePresenter<GV extends IBaseView> {
     protected Subscription subscription;
     protected GV mView;
     protected Activity mContext;
-
+    protected final  static int PAGE_SIZE = 10;
     public abstract void release();
 
     public BasePresenter(Activity context, GV view) {

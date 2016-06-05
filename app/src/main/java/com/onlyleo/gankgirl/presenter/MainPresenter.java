@@ -2,11 +2,11 @@ package com.onlyleo.gankgirl.presenter;
 
 import android.app.Activity;
 
+import com.onlyleo.gankgirl.model.ContentData;
 import com.onlyleo.gankgirl.model.PrettyGirlData;
-import com.onlyleo.gankgirl.model.VideoData;
 import com.onlyleo.gankgirl.net.MainRetrofit;
-import com.onlyleo.gankgirl.utils.ToastUtils;
 import com.onlyleo.gankgirl.ui.view.IMainView;
+import com.onlyleo.gankgirl.utils.ToastUtils;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -31,11 +31,11 @@ public class MainPresenter extends BasePresenter<IMainView> {
 
     @Override
     public void loadData(int page) {
-        subscription = Observable.zip(MainRetrofit.getGuDongInstance().getPrettyGirlData(10, page),
-                MainRetrofit.getGuDongInstance().getVideoData(20, page), new Func2<PrettyGirlData, VideoData, PrettyGirlData>() {
+        subscription = Observable.zip(MainRetrofit.getGuDongInstance().getPrettyGirlData(PAGE_SIZE, page),
+                MainRetrofit.getGuDongInstance().getContentData(PAGE_SIZE, page), new Func2<PrettyGirlData, ContentData, PrettyGirlData>() {
                     @Override
-                    public PrettyGirlData call(PrettyGirlData prettyGirlData, VideoData videoData) {
-                        return getGirlAndTitleAndDate(prettyGirlData,videoData);
+                    public PrettyGirlData call(PrettyGirlData prettyGirlData, ContentData contentData) {
+                        return getGirlAndTitleAndDate(prettyGirlData,contentData);
                     }
                 }).subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
@@ -67,10 +67,10 @@ public class MainPresenter extends BasePresenter<IMainView> {
     }
 
 
-    private PrettyGirlData getGirlAndTitleAndDate(PrettyGirlData girl, VideoData video){
-        int size = Math.min(girl.results.size(),video.results.size());
+    private PrettyGirlData getGirlAndTitleAndDate(PrettyGirlData girl, ContentData contentData){
+        int size = Math.min(girl.results.size(),contentData.results.size());
         for (int i = 0; i < size; i++) {
-            girl.results.get(i).desc = video.results.get(i).desc;
+            girl.results.get(i).desc = contentData.results.get(i).title;
         }
         return girl;
     }

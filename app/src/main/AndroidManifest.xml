@@ -29,8 +29,11 @@
         <activity
             android:name=".ui.activity.GankDailyActivity"
             android:label="@string/title_activity_gank_daily"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".ui.activity.GirlActivity"
+            android:label="@string/title_activity_girl"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -10,7 +10,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +20,6 @@ import com.onlyleo.gankgirl.adapter.MainAdapter;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.presenter.MainPresenter;
 import com.onlyleo.gankgirl.ui.view.IMainView;
-import com.onlyleo.gankgirl.utils.ToastUtils;
 import com.onlyleo.gankgirl.widget.LMRecyclerView;
 
 import java.util.ArrayList;
@@ -33,8 +31,6 @@ import butterknife.OnClick;
 public class MainActivity extends BaseActivity<MainPresenter>
         implements NavigationView.OnNavigationItemSelectedListener, IMainView, LMRecyclerView.LoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
 
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
     @Bind(R.id.fab)
     FloatingActionButton fab;
     @Bind(R.id.nav_view)
@@ -82,7 +78,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
 
     @Override
     public void init() {
-        setSupportActionBar(toolbar);
+        initToolbar();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.setDrawerListener(toggle);
@@ -129,7 +125,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
 
     @Override
     public void showNoMoreData() {
-        ToastUtils.showShort(this,"没有更多数据!");
+        Snackbar.make(drawerLayout,"加载完啦",Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

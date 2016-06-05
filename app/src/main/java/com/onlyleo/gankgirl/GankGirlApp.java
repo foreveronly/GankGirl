@@ -12,13 +12,14 @@ import java.util.List;
 /**
  * Created by bbc on 16/1/25.
  */
-public class GankGirlApp extends Application{
+public class GankGirlApp extends Application {
     private static GankGirlApp instance = null;
-    private List<Activity> activityList = new LinkedList<Activity>();
+    private List<Activity> activityList = new LinkedList<>();
+
     @Override
     public void onCreate() {
         super.onCreate();
-        if(BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             Logger
                     .init(getResources().getString(R.string.app_name))                 // default PRETTYLOGGER or use just init()
                     .methodCount(3)                 // default 2
@@ -27,21 +28,22 @@ public class GankGirlApp extends Application{
         }
 
     }
+
     public static GankGirlApp getInstance() {
         if (instance == null) {
             instance = new GankGirlApp();
         }
-            return instance;
+        return instance;
     }
 
     //添加Activity到容器中
-    public void addActivity(Activity activity)  {
+    public void addActivity(Activity activity) {
         activityList.add(activity);
     }
 
     //遍历所有Activity并finish
-    public void exit(){
-        for(Activity activity:activityList) {
+    public void exit() {
+        for (Activity activity : activityList) {
             activity.finish();
         }
     }

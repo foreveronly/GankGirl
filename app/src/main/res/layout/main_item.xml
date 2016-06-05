@@ -3,7 +3,7 @@
     android:id="@+id/main_root"
     android:layout_width="match_parent"
     android:focusable="true"
-    android:layout_height="200dp">
+    android:layout_height="180dp">
 
     <ImageView
         android:id="@+id/iv_girl"
@@ -14,6 +14,7 @@
         android:contentDescription="@string/menu_girl" />
 
     <LinearLayout
+        android:id="@+id/ll_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

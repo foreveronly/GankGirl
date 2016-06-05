@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.onlyleo.gankgirl.R;
+import com.onlyleo.gankgirl.ShareElement;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.ui.activity.GankDailyActivity;
 import com.onlyleo.gankgirl.utils.Tools;
@@ -81,13 +82,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GankHolder> {
         TextView tvTitle;
         @Bind(R.id.main_root)
         RelativeLayout mainRoot;
-
         @OnClick(R.id.main_root)
         void itemCilick(){
+            ShareElement.shareDrawable = ivgirl.getDrawable();
             Intent intent = new Intent(context, GankDailyActivity.class);
-            intent.putExtra("girlData",((Serializable)card.getTag()));
+            intent.putExtra("girlData",(Serializable)card.getTag());
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
-                    .makeSceneTransitionAnimation((Activity) context, ivgirl,"GankDaily");
+                    .makeSceneTransitionAnimation((Activity) context, ivgirl,context.getString(R.string.pretty_girl));
             ActivityCompat.startActivity((Activity) context, intent, optionsCompat.toBundle());
         }
 

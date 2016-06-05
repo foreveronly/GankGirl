@@ -2,7 +2,9 @@
 package com.onlyleo.gankgirl.model.entity;
 
 
-public class Soul {
+import java.io.Serializable;
+
+public class Soul implements Serializable {
     protected long id;
     public String objectId;
 }

@@ -2,18 +2,24 @@ package com.onlyleo.gankgirl.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
 import com.onlyleo.gankgirl.GankGirlApp;
+import com.onlyleo.gankgirl.R;
+import com.onlyleo.gankgirl.ShareElement;
 import com.onlyleo.gankgirl.presenter.BasePresenter;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
     protected String TAG = this.getClass().getSimpleName();
     protected P presenter;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +36,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     protected abstract void initPresenter();
 
-
+    public void initToolbar(){
+        setSupportActionBar(toolbar);
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
@@ -91,6 +99,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+        if(ShareElement.shareDrawable !=null){
+            ShareElement.shareDrawable = null;
+        }
         Log.i(TAG,"onDestroy");
 
     }
