@@ -76,7 +76,6 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
 
     @Override
     public void init() {
-        initToolbar();
         getIntentData();
         initGankDaily();
     }

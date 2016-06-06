@@ -44,7 +44,6 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
 
     @Override
     public void init() {
-        initToolbar();
         getIntentData();
         initGirl();
     }

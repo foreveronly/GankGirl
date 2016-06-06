@@ -1,6 +1,7 @@
 package com.onlyleo.gankgirl.ui.activity;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -17,6 +18,7 @@ import butterknife.ButterKnife;
 
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
     protected String TAG = this.getClass().getSimpleName();
+    protected ActionBar actionBar;
     protected P presenter;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -27,6 +29,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         setContentView(provideContentViewId());
         GankGirlApp.getInstance().addActivity(this);
         ButterKnife.bind(this);
+        initToolbar();
         initPresenter();
         checkPresenterIsNull();
         Log.i(TAG,"onCreate");
@@ -38,6 +41,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     public void initToolbar(){
         setSupportActionBar(toolbar);
+        actionBar = getSupportActionBar();
+        if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -51,7 +56,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     public void setTitle(String strTitle,boolean showHome){
         setTitle(strTitle);
         getSupportActionBar().setDisplayShowHomeEnabled(showHome);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(showHome);
     }
 
     //检查Presenter是否存在

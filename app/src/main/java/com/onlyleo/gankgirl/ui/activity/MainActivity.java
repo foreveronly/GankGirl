@@ -20,7 +20,10 @@ import com.onlyleo.gankgirl.adapter.MainAdapter;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.presenter.MainPresenter;
 import com.onlyleo.gankgirl.ui.view.IMainView;
+import com.onlyleo.gankgirl.utils.TipsUtil;
+import com.onlyleo.gankgirl.utils.Tools;
 import com.onlyleo.gankgirl.widget.LMRecyclerView;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +61,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
                 GankGirlApp.getInstance().exit();
             }else if(!isQuit){
                 isQuit = true;
-                Snackbar.make(drawerLayout,"再按一次退出程序",Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(fab,"再按一次退出程序",Snackbar.LENGTH_SHORT).show();
                 mHandler.sendEmptyMessageDelayed(0,2000);
             }
         }
@@ -78,14 +81,14 @@ public class MainActivity extends BaseActivity<MainPresenter>
 
     @Override
     public void init() {
-        initToolbar();
-        setTitle(getString(R.string.app_name),true);
+        Logger.d("Tool is null " + (toolbar==null));
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-        list = new ArrayList<>();
+        list = Tools.getFirstPageGirls(this);
+        if(list==null)list = new ArrayList<>();
         adapter = new MainAdapter(list, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -115,12 +118,19 @@ public class MainActivity extends BaseActivity<MainPresenter>
 
     @Override
     public void showErrorView() {
-
+        canLoading = true;
+        TipsUtil.showTipWithAction(fab, getString(R.string.load_failed), getString(R.string.retry), new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.loadData(page);
+            }
+        });
     }
 
     @Override
     public void showNoMoreData() {
-        Snackbar.make(drawerLayout,"加载完啦",Snackbar.LENGTH_SHORT).show();
+        canLoading =false;
+        Snackbar.make(fab,"加载完啦",Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -128,6 +138,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
         canLoading = true;
         page++;
         if (isRefresh) {
+            Tools.saveFirstPageGirls(this,girlList);
             list.clear();
             list.addAll(girlList);
             adapter.notifyDataSetChanged();
@@ -141,8 +152,10 @@ public class MainActivity extends BaseActivity<MainPresenter>
     @Override
     public void loadMore() {
         isRefresh = false;
-        page++;
-        presenter.loadData(page);
+        if(canLoading){
+            presenter.loadData(page);
+            canLoading = false;
+        }
     }
 
     @OnClick(R.id.fab)

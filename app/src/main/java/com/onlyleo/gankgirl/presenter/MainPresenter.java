@@ -6,7 +6,6 @@ import com.onlyleo.gankgirl.model.ContentData;
 import com.onlyleo.gankgirl.model.PrettyGirlData;
 import com.onlyleo.gankgirl.net.MainRetrofit;
 import com.onlyleo.gankgirl.ui.view.IMainView;
-import com.onlyleo.gankgirl.utils.ToastUtils;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -59,7 +58,6 @@ public class MainPresenter extends BasePresenter<IMainView> {
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        ToastUtils.showShort(mContext,throwable.toString());
                         mView.showErrorView();
                         mView.hideProgress();
                     }
