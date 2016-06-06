@@ -56,4 +56,18 @@ public class Gank extends Soul implements Cloneable, Serializable {
         }
         return gank;
     }
+
+    @Override
+    public String toString() {
+        return "Gank{" +
+                "used=" + used +
+                ", type='" + type + '\'' +
+                ", url='" + url + '\'' +
+                ", who='" + who + '\'' +
+                ", desc='" + desc + '\'' +
+                ", updatedAt=" + updatedAt +
+                ", createdAt=" + createdAt +
+                ", publishedAt=" + publishedAt +
+                '}';
+    }
 }

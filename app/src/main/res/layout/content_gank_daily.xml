@@ -8,9 +8,8 @@
     tools:context="com.onlyleo.gankgirl.ui.activity.GankDailyActivity"
     tools:showIn="@layout/activity_gank_daily">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin" />
-
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_gankdaily"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </android.support.v4.widget.NestedScrollView>

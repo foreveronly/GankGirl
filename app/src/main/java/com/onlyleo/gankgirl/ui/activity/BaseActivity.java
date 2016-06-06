@@ -55,7 +55,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     }
     public void setTitle(String strTitle,boolean showHome){
         setTitle(strTitle);
-        getSupportActionBar().setDisplayShowHomeEnabled(showHome);
+//        getSupportActionBar().setDisplayShowHomeEnabled(showHome);
     }
 
     //检查Presenter是否存在

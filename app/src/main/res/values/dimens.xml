@@ -9,4 +9,6 @@
     <dimen name="main_act_font">20sp</dimen>
     <dimen name="app_bar_height">300dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="font_normal">12sp</dimen>
+    <dimen name="font_title">16sp</dimen>
 </resources>

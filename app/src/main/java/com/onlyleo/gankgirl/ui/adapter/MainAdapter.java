@@ -32,7 +32,7 @@ import butterknife.OnClick;
 /**
  * Created by leoonly on 16/5/18.
  */
-public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GankHolder> {
+public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
     private List<Girl> list;
     private Context context;
     private Girl girl;
@@ -44,13 +44,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GankHolder> {
     }
 
     @Override
-    public GankHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public GirlHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_main, parent, false);
-        return new GankHolder(view);
+        return new GirlHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(GankHolder holder, int position) {
+    public void onBindViewHolder(GirlHolder holder, int position) {
         girl = list.get(position);
         holder.card.setTag(girl);
         int red = (int) (Math.random() * 255);
@@ -72,7 +72,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GankHolder> {
         return list.size();
     }
 
-    class GankHolder extends RecyclerView.ViewHolder {
+    class GirlHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.iv_girl)
         ImageView ivgirl;
         @Bind(R.id.tv_date)
@@ -95,14 +95,14 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GankHolder> {
 
         View card;
 
-        public GankHolder(View itemView) {
+        public GirlHolder(View itemView) {
             super(itemView);
             card = itemView;
             ButterKnife.bind(this, itemView);
         }
     }
 
-    private void showItemAnimation(GankHolder holder, int position) {
+    private void showItemAnimation(GirlHolder holder, int position) {
         if (position > lastPosition) {
             lastPosition = position;
             ObjectAnimator.ofFloat(holder.card, "translationY", 1f * holder.card.getHeight(), 0f)
