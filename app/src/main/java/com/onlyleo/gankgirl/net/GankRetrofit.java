@@ -27,14 +27,14 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainRetrofit {
+public class GankRetrofit {
     /**
      * 数据主机地址
      */
     public static final String HOST = "http://gank.io/api/";
     private static Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").serializeNulls().create();
     private static Retrofit retrofit;
-    private static GuDong mGuDong;
+    private static GankAPI mGankAPI;
     protected static final Object monitor = new Object();
 
     static {
@@ -45,12 +45,12 @@ public class MainRetrofit {
                 .build();
     }
 
-    public static GuDong getGuDongInstance() {
+    public static GankAPI getGuDongInstance() {
         synchronized (monitor) {
-            if (mGuDong == null) {
-                mGuDong = retrofit.create(GuDong.class);
+            if (mGankAPI == null) {
+                mGankAPI = retrofit.create(GankAPI.class);
             }
-            return mGuDong;
+            return mGankAPI;
         }
     }
 }

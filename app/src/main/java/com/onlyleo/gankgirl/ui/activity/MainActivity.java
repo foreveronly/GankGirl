@@ -16,14 +16,13 @@ import android.view.View;
 
 import com.onlyleo.gankgirl.GankGirlApp;
 import com.onlyleo.gankgirl.R;
-import com.onlyleo.gankgirl.adapter.MainAdapter;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.presenter.MainPresenter;
+import com.onlyleo.gankgirl.ui.adapter.MainAdapter;
 import com.onlyleo.gankgirl.ui.view.IMainView;
 import com.onlyleo.gankgirl.utils.TipsUtil;
 import com.onlyleo.gankgirl.utils.Tools;
 import com.onlyleo.gankgirl.widget.LMRecyclerView;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +80,6 @@ public class MainActivity extends BaseActivity<MainPresenter>
 
     @Override
     public void init() {
-        Logger.d("Tool is null " + (toolbar==null));
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.setDrawerListener(toggle);

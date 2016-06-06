@@ -14,12 +14,6 @@ import java.util.List;
  * Created by leoonly on 16/5/26.
  */
 public class Tools {
-    static SimpleDateFormat sdf;
-    public static String toDate(long date) {
-        sdf = new SimpleDateFormat("yyyy/MM/dd");
-        String d = sdf.format(date);
-        return d;
-    }
     private static final String GANK = "gank";
     private static final String GIRLS = "girls";
     private static final String IS_FIRST_OPEN = "is_first_open";

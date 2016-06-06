@@ -23,5 +23,4 @@ public abstract class BasePresenter<GV extends IBaseView> {
         mView.init();
     }
 
-    public abstract void loadData(int page);
 }

@@ -1,8 +1,6 @@
 package com.onlyleo.gankgirl.ui.activity;
 
 import android.content.Intent;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -11,29 +9,33 @@ import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.ShareElement;
+import com.onlyleo.gankgirl.model.entity.Gank;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.presenter.GankDailyPresenter;
+import com.onlyleo.gankgirl.ui.adapter.GankDailyAdpter;
 import com.onlyleo.gankgirl.ui.view.IGankDailyView;
-import com.onlyleo.gankgirl.utils.Tools;
+import com.onlyleo.gankgirl.utils.CalendarUtil;
+
+import java.util.Calendar;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 
 public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implements IGankDailyView {
 
-    @Bind(R.id.toolbar_layout)
-    CollapsingToolbarLayout toolbarLayout;
-    @Bind(R.id.app_bar)
-    AppBarLayout appBar;
     @Bind(R.id.fab)
     FloatingActionButton fab;
     @Bind(R.id.iv_head_girl)
     ImageView ivHeadGirl;
 
     private Girl girl;
-
+    private List<Gank> list;
+    private GankDailyAdpter adapter;
+    private Calendar calendar;
     @OnClick(R.id.fab)
     public void fabClick(View view) {
         Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -41,13 +43,14 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
     }
 
     @OnClick(R.id.iv_head_girl)
-    void girlClick(View view){
-        Intent intent = new Intent(this,GirlActivity.class);
-        intent.putExtra("girlData",girl);
+    void girlClick(View view) {
+        Intent intent = new Intent(this, GirlActivity.class);
+        intent.putExtra("girlData", girl);
         ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
-                .makeSceneTransitionAnimation(this, ivHeadGirl,getString(R.string.pretty_girl));
-        ActivityCompat.startActivity(this,intent,optionsCompat.toBundle());
+                .makeSceneTransitionAnimation(this, ivHeadGirl, getString(R.string.pretty_girl));
+        ActivityCompat.startActivity(this, intent, optionsCompat.toBundle());
     }
+
     @Override
     protected int provideContentViewId() {
         return R.layout.activity_gank_daily;
@@ -75,6 +78,11 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
     }
 
     @Override
+    public void showGankList(List<Gank> list) {
+        this.list = list;
+    }
+
+    @Override
     public void init() {
         getIntentData();
         initGankDaily();
@@ -82,11 +90,19 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
 
     public void getIntentData() {
         girl = (Girl) getIntent().getSerializableExtra("girlData");
+        calendar = Calendar.getInstance();
+        presenter.loadData(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH)+1,calendar.get(Calendar.DAY_OF_MONTH));
     }
 
     public void initGankDaily() {
-        ivHeadGirl.setImageDrawable(ShareElement.shareDrawable);
+        if (ShareElement.shareDrawable != null)
+            ivHeadGirl.setImageDrawable(ShareElement.shareDrawable);
+        else
+            Glide.with(this)
+                    .load(girl.url)
+                    .crossFade()
+                    .into(ivHeadGirl);
         ViewCompat.setTransitionName(ivHeadGirl, getString(R.string.pretty_girl));
-        setTitle(Tools.toDate(girl.publishedAt.getTime()),true);
+        setTitle(CalendarUtil.toDateTimeStr(girl.publishedAt), true);
     }
 }

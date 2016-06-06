@@ -1,4 +1,4 @@
-package com.onlyleo.gankgirl.adapter;
+package com.onlyleo.gankgirl.ui.adapter;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
@@ -20,7 +20,7 @@ import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.ShareElement;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.ui.activity.GankDailyActivity;
-import com.onlyleo.gankgirl.utils.Tools;
+import com.onlyleo.gankgirl.utils.CalendarUtil;
 
 import java.io.Serializable;
 import java.util.List;
@@ -45,7 +45,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GankHolder> {
 
     @Override
     public GankHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.main_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_main, parent, false);
         return new GankHolder(view);
     }
 
@@ -61,9 +61,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GankHolder> {
                 .load(girl.url)
                 .crossFade()
                 .into(holder.ivgirl);
-        long date = girl.createdAt.getTime();
         String title = girl.desc;
-        holder.tvDate.setText(Tools.toDate(date));
+        holder.tvDate.setText(CalendarUtil.toDateTimeStr(girl.createdAt));
         holder.tvTitle.setText(title);
         showItemAnimation(holder, position);
     }
@@ -82,13 +81,15 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GankHolder> {
         TextView tvTitle;
         @Bind(R.id.main_root)
         RelativeLayout mainRoot;
+
         @OnClick(R.id.main_root)
-        void itemCilick(){
-            ShareElement.shareDrawable = ivgirl.getDrawable();
+        void itemCilick() {
+            if (ivgirl.getDrawable() != null)
+                ShareElement.shareDrawable = ivgirl.getDrawable();
             Intent intent = new Intent(context, GankDailyActivity.class);
-            intent.putExtra("girlData",(Serializable)card.getTag());
+            intent.putExtra("girlData", (Serializable) card.getTag());
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
-                    .makeSceneTransitionAnimation((Activity) context, ivgirl,context.getString(R.string.pretty_girl));
+                    .makeSceneTransitionAnimation((Activity) context, ivgirl, context.getString(R.string.pretty_girl));
             ActivityCompat.startActivity((Activity) context, intent, optionsCompat.toBundle());
         }
 

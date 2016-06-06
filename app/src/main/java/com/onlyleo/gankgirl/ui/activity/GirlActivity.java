@@ -11,7 +11,7 @@ import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.presenter.GirlPresenter;
 import com.onlyleo.gankgirl.ui.view.IGirlView;
-import com.onlyleo.gankgirl.utils.Tools;
+import com.onlyleo.gankgirl.utils.CalendarUtil;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -54,7 +54,7 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
                 .crossFade()
                 .into(ivGirl);
         ViewCompat.setTransitionName(ivGirl, getString(R.string.pretty_girl));
-        setTitle(Tools.toDate(girl.publishedAt.getTime()),true);
+        setTitle(CalendarUtil.toDateTimeStr(girl.publishedAt),true);
     }
     public void getIntentData(){
         girl = (Girl) getIntent().getSerializableExtra("girlData");

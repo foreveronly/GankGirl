@@ -18,8 +18,4 @@ public class GirlPresenter extends BasePresenter<IGirlView> {
         subscription.unsubscribe();
     }
 
-    @Override
-    public void loadData(int page) {
-
-    }
 }

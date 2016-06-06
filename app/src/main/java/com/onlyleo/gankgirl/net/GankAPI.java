@@ -28,7 +28,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import rx.Observable;
 
-public interface GuDong {
+public interface GankAPI {
 
     @GET("data/福利/{pagesize}/{page}")
     Observable<PrettyGirlData> getPrettyGirlData(@Path("pagesize") int pagesize, @Path("page") int page);
