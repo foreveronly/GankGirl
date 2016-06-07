@@ -19,8 +19,6 @@
 
 package com.onlyleo.gankgirl.model.entity;
 
-import com.onlyleo.gankgirl.net.GankCategory;
-
 import java.util.Date;
 
 
@@ -35,15 +33,6 @@ public class Gank extends Soul{
     public Date updatedAt;
     public Date createdAt;
     public Date publishedAt;
-
-    /**
-     * this item is header type of gank or not,if true, this item will show category name
-     */
-    public boolean isHeader;
-
-    public boolean isGirl() {
-        return type.equals(GankCategory.妹子.name());
-    }
 
     @Override
     public String toString() {

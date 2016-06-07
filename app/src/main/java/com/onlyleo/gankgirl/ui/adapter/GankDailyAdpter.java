@@ -48,7 +48,9 @@ public class GankDailyAdpter extends RecyclerView.Adapter<GankDailyAdpter.GankDa
                 showTitle(true,holder.titleList);
             }
         }
-        holder.titleList.setText(gank.type);
+        if(holder.titleList.getVisibility()==View.VISIBLE){
+            holder.titleList.setText(gank.type);
+        }
         holder.linkList.setText(StringStyleUtil.getGankStyleStr(gank));
     }
 
