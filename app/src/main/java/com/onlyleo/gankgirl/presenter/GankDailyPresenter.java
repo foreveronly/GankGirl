@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
@@ -34,13 +33,6 @@ public class GankDailyPresenter extends BasePresenter<IGankDailyView> {
     public void loadData(int year,int month,int day) {
         subscription = GankRetrofit.getGuDongInstance().getGankData(year,month,day)
                 .subscribeOn(Schedulers.io())
-                .doOnSubscribe(new Action0() {
-                    @Override
-                    public void call() {
-                        mView.showProgress();
-                    }
-                })
-                .subscribeOn(AndroidSchedulers.mainThread())
                 .map(new Func1<GankData,List<Gank>>(){
                     @Override
                     public List<Gank> call(GankData gankData) {

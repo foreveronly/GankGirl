@@ -21,11 +21,10 @@ package com.onlyleo.gankgirl.model.entity;
 
 import com.onlyleo.gankgirl.net.GankCategory;
 
-import java.io.Serializable;
 import java.util.Date;
 
 
-public class Gank extends Soul implements Cloneable, Serializable {
+public class Gank extends Soul{
 
 
     public boolean used;
@@ -44,17 +43,6 @@ public class Gank extends Soul implements Cloneable, Serializable {
 
     public boolean isGirl() {
         return type.equals(GankCategory.妹子.name());
-    }
-
-    @Override
-    public Gank clone() {
-        Gank gank = null;
-        try {
-            gank = (Gank) super.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        return gank;
     }
 
     @Override

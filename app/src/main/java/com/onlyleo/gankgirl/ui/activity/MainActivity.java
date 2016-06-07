@@ -88,12 +88,9 @@ public class MainActivity extends BaseActivity<MainPresenter>
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-
         list = SPDataTools.getFirstPageGirls(this);
         if(list==null)list = new ArrayList<>();
-
         adapter = new MainAdapter(list, this);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         recyclerView.setLoadMoreListener(this);
@@ -103,7 +100,6 @@ public class MainActivity extends BaseActivity<MainPresenter>
         swipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
-                swipeRefreshLayout.setRefreshing(true);
                 presenter.loadData(page);
             }
         });

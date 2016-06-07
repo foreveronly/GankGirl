@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +23,7 @@ import com.onlyleo.gankgirl.ui.adapter.GankDailyAdpter;
 import com.onlyleo.gankgirl.ui.view.IGankDailyView;
 import com.onlyleo.gankgirl.utils.CalendarUtil;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -88,16 +90,15 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
     }
 
     @Override
-    public void showGankList(List<Gank> list) {
-        this.list = list;
-        adapter = new GankDailyAdpter(this, list);
-        recyclerViewGankdaily.setLayoutManager(new LinearLayoutManager(this));
-        recyclerViewGankdaily.setAdapter(adapter);
+    public void showGankList(List<Gank> gankList) {
+        list.addAll(gankList);
+        adapter.notifyDataSetChanged();
+        fab.setClickable(true);
     }
 
     @Override
     public void init() {
-        setSupportActionBar(toolbar);
+        initToolbar(toolbar);
         getIntentData();
         initGankDaily();
     }
@@ -119,6 +120,11 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
                     .into(ivHeadGirl);
         ViewCompat.setTransitionName(ivHeadGirl, getString(R.string.pretty_girl));
         setTitle(CalendarUtil.toDateTimeStr(girl.publishedAt));
+        list = new ArrayList<>();
+        adapter = new GankDailyAdpter(this, list);
+        recyclerViewGankdaily.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewGankdaily.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewGankdaily.setAdapter(adapter);
+        fab.setClickable(false);
     }
-
 }
