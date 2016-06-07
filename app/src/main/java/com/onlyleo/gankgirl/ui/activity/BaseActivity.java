@@ -3,16 +3,13 @@ package com.onlyleo.gankgirl.ui.activity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
 import com.onlyleo.gankgirl.GankGirlApp;
-import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.ShareElement;
 import com.onlyleo.gankgirl.presenter.BasePresenter;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
@@ -20,8 +17,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected String TAG = this.getClass().getSimpleName();
     protected ActionBar actionBar;
     protected P presenter;
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +24,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         setContentView(provideContentViewId());
         GankGirlApp.getInstance().addActivity(this);
         ButterKnife.bind(this);
-        initToolbar();
         initPresenter();
         checkPresenterIsNull();
         Log.i(TAG,"onCreate");
@@ -39,11 +33,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     protected abstract void initPresenter();
 
-    public void initToolbar(){
-        setSupportActionBar(toolbar);
-        actionBar = getSupportActionBar();
-        if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
-    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
@@ -52,10 +42,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-    public void setTitle(String strTitle,boolean showHome){
-        setTitle(strTitle);
-//        getSupportActionBar().setDisplayShowHomeEnabled(showHome);
     }
 
     //检查Presenter是否存在

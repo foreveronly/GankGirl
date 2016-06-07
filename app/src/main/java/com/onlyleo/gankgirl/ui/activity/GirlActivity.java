@@ -3,6 +3,7 @@ package com.onlyleo.gankgirl.ui.activity;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -23,7 +24,8 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
     FloatingActionButton fab;
     @Bind(R.id.iv_girl)
     ImageView ivGirl;
-
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
     private Girl girl;
     @OnClick(R.id.fab)
     public void fabClick(View view) {
@@ -44,6 +46,7 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
 
     @Override
     public void init() {
+        setSupportActionBar(toolbar);
         getIntentData();
         initGirl();
     }
@@ -54,7 +57,7 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
                 .crossFade()
                 .into(ivGirl);
         ViewCompat.setTransitionName(ivGirl, getString(R.string.pretty_girl));
-        setTitle(CalendarUtil.toDateTimeStr(girl.publishedAt),true);
+        setTitle(CalendarUtil.toDateTimeStr(girl.publishedAt));
     }
     public void getIntentData(){
         girl = (Girl) getIntent().getSerializableExtra("girlData");

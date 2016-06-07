@@ -1,7 +1,6 @@
 package com.onlyleo.gankgirl.ui.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -9,6 +8,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -26,18 +26,21 @@ import java.util.Calendar;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implements IGankDailyView {
 
     @Bind(R.id.fab)
     FloatingActionButton fab;
+
     @Bind(R.id.iv_head_girl)
     ImageView ivHeadGirl;
-    @Bind(R.id.recycler_view_gankdaily)
+
+    @Bind(R.id.recycler_view_gank_daily)
     RecyclerView recyclerViewGankdaily;
 
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
     private Girl girl;
     private List<Gank> list;
     private GankDailyAdpter adapter;
@@ -88,12 +91,13 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
     public void showGankList(List<Gank> list) {
         this.list = list;
         adapter = new GankDailyAdpter(this, list);
-        recyclerViewGankdaily.setAdapter(adapter);
         recyclerViewGankdaily.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewGankdaily.setAdapter(adapter);
     }
 
     @Override
     public void init() {
+        setSupportActionBar(toolbar);
         getIntentData();
         initGankDaily();
     }
@@ -101,6 +105,7 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
     public void getIntentData() {
         girl = (Girl) getIntent().getSerializableExtra("girlData");
         calendar = Calendar.getInstance();
+        calendar.setTime(girl.publishedAt);
         presenter.loadData(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
     }
 
@@ -113,13 +118,7 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
                     .crossFade()
                     .into(ivHeadGirl);
         ViewCompat.setTransitionName(ivHeadGirl, getString(R.string.pretty_girl));
-        setTitle(CalendarUtil.toDateTimeStr(girl.publishedAt), true);
+        setTitle(CalendarUtil.toDateTimeStr(girl.publishedAt));
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

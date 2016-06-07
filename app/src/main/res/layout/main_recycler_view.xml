@@ -10,7 +10,7 @@
     tools:showIn="@layout/activity_main">
 
     <com.onlyleo.gankgirl.widget.LMRecyclerView
-        android:id="@+id/recycler_view_gankdaily"
+        android:id="@+id/recycler_view_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="20dp"

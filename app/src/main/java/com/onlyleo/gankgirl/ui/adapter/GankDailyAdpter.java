@@ -9,37 +9,33 @@ import android.widget.TextView;
 
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Gank;
-import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-/**
- * Created by BBC on 2016/6/6 0006.
- */
-public class GankDailyAdpter extends RecyclerView.Adapter {
+public class GankDailyAdpter extends RecyclerView.Adapter<GankDailyAdpter.GankDailyHolder> {
 
     private List<Gank> list;
     private Context context;
 
     public GankDailyAdpter(Context context, List<Gank> list) {
-        this.context = context;
         this.list = list;
+        this.context = context;
     }
 
-
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public GankDailyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_gank_daily, parent, false);
         return new GankDailyHolder(view);
     }
 
+
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Gank gank = list.get(position);
-        Logger.d(gank.toString());
+    public void onBindViewHolder(GankDailyHolder holder, int position) {
+
     }
 
     @Override
@@ -47,14 +43,24 @@ public class GankDailyAdpter extends RecyclerView.Adapter {
         return list.size();
     }
 
+
     class GankDailyHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.title_list)
         TextView titleList;
         @Bind(R.id.link_list)
         TextView linkList;
+
+        @OnClick(R.id.link_list)
+        public void onClick() {
+
+        }
+
+        View card;
+
         public GankDailyHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(context, itemView);
+            card = itemView;
+            ButterKnife.bind(this, itemView);
         }
     }
 }

@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,8 +21,8 @@ import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.presenter.MainPresenter;
 import com.onlyleo.gankgirl.ui.adapter.MainAdapter;
 import com.onlyleo.gankgirl.ui.view.IMainView;
+import com.onlyleo.gankgirl.utils.SPDataTools;
 import com.onlyleo.gankgirl.utils.TipsUtil;
-import com.onlyleo.gankgirl.utils.Tools;
 import com.onlyleo.gankgirl.widget.LMRecyclerView;
 
 import java.util.ArrayList;
@@ -39,11 +40,12 @@ public class MainActivity extends BaseActivity<MainPresenter>
     NavigationView navigationView;
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
-    @Bind(R.id.recycler_view_gankdaily)
+    @Bind(R.id.recycler_view_main)
     LMRecyclerView recyclerView;
     @Bind(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
-
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
     private List<Girl> list;
     private MainAdapter adapter;
     private boolean isRefresh = true;
@@ -56,12 +58,12 @@ public class MainActivity extends BaseActivity<MainPresenter>
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START);
-            }else if(isQuit){
-                GankGirlApp.getInstance().exit();
             }else if(!isQuit){
                 isQuit = true;
                 Snackbar.make(fab,"再按一次退出程序",Snackbar.LENGTH_SHORT).show();
                 mHandler.sendEmptyMessageDelayed(0,2000);
+            }else if(isQuit){
+                GankGirlApp.getInstance().exit();
             }
         }
         return false;
@@ -80,17 +82,22 @@ public class MainActivity extends BaseActivity<MainPresenter>
 
     @Override
     public void init() {
+        setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-        list = Tools.getFirstPageGirls(this);
+
+        list = SPDataTools.getFirstPageGirls(this);
         if(list==null)list = new ArrayList<>();
+
         adapter = new MainAdapter(list, this);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         recyclerView.setLoadMoreListener(this);
+
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.post(new Runnable() {
@@ -136,7 +143,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
         canLoading = true;
         page++;
         if (isRefresh) {
-            Tools.saveFirstPageGirls(this,girlList);
+            SPDataTools.saveFirstPageGirls(this,girlList);
             list.clear();
             list.addAll(girlList);
             adapter.notifyDataSetChanged();
@@ -173,21 +180,21 @@ public class MainActivity extends BaseActivity<MainPresenter>
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_index) {
-            setTitle(getResources().getString(R.string.app_name), false);
+            setTitle(getResources().getString(R.string.app_name));
         } else if (id == R.id.nav_android) {
-            setTitle(getResources().getString(R.string.menu_android), false);
+            setTitle(getResources().getString(R.string.menu_android));
         } else if (id == R.id.nav_iOS) {
-            setTitle(getResources().getString(R.string.menu_iOS), false);
+            setTitle(getResources().getString(R.string.menu_iOS));
         } else if (id == R.id.nav_app) {
-            setTitle(getResources().getString(R.string.menu_app), false);
+            setTitle(getResources().getString(R.string.menu_app));
         } else if (id == R.id.nav_recommend) {
-            setTitle(getResources().getString(R.string.menu_recommend), false);
+            setTitle(getResources().getString(R.string.menu_recommend));
         } else if (id == R.id.nav_video) {
-            setTitle(getResources().getString(R.string.menu_video), false);
+            setTitle(getResources().getString(R.string.menu_video));
         } else if (id == R.id.nav_resource) {
-            setTitle(getResources().getString(R.string.menu_resource), false);
+            setTitle(getResources().getString(R.string.menu_resource));
         } else if (id == R.id.nav_girl) {
-            setTitle(getResources().getString(R.string.menu_girl), false);
+            setTitle(getResources().getString(R.string.menu_girl));
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_about) {

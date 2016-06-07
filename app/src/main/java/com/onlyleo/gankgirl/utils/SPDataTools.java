@@ -7,13 +7,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.onlyleo.gankgirl.model.entity.Girl;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
-/**
- * Created by leoonly on 16/5/26.
- */
-public class Tools {
+public class SPDataTools {
     private static final String GANK = "gank";
     private static final String GIRLS = "girls";
     private static final String IS_FIRST_OPEN = "is_first_open";
