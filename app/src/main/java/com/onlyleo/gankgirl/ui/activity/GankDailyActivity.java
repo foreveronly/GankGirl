@@ -127,4 +127,10 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
         recyclerViewGankdaily.setAdapter(adapter);
         fab.setClickable(false);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.release();
+    }
 }

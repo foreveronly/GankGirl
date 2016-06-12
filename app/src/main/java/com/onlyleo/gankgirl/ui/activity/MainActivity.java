@@ -215,4 +215,9 @@ public class MainActivity extends BaseActivity<MainPresenter>
         }
     };
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.release();
+    }
 }

@@ -21,4 +21,6 @@
     <string name="pretty_girl">ivGirl</string>
     <string name="load_failed">加载失败</string>
     <string name="retry">重试</string>
+    <string name="action_save">保存</string>
+    <string name="action_share">分享</string>
 </resources>

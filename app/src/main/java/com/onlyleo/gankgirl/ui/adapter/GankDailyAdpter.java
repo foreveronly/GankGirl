@@ -79,7 +79,7 @@ public class GankDailyAdpter extends RecyclerView.Adapter<GankDailyAdpter.GankDa
 
         @OnClick(R.id.gankll_list)
         public void onClick() {
-
+            
         }
 
 

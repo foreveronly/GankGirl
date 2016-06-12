@@ -2,6 +2,7 @@ package com.onlyleo.gankgirl.ui.activity;
 
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -12,6 +13,7 @@ import com.onlyleo.gankgirl.ui.view.IGirlView;
 import com.onlyleo.gankgirl.utils.CalendarUtil;
 
 import butterknife.Bind;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlView {
 
@@ -22,7 +24,7 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
     Toolbar toolbar;
     private Girl girl;
 
-
+    private PhotoViewAttacher photoViewAttacher;
     @Override
     protected int provideContentViewId() {
         return R.layout.activity_girl;
@@ -48,9 +50,22 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
                 .into(ivGirl);
         ViewCompat.setTransitionName(ivGirl, getString(R.string.pretty_girl));
         setTitle(CalendarUtil.toDateTimeStr(girl.publishedAt));
+        photoViewAttacher = new PhotoViewAttacher(ivGirl);
     }
 
     public void getIntentData() {
         girl = (Girl) getIntent().getSerializableExtra("girlData");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_girl, menu);
+        return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.release();
     }
 }

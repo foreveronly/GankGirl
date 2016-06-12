@@ -15,7 +15,7 @@ public class GirlPresenter extends BasePresenter<IGirlView> {
 
     @Override
     public void release() {
-        subscription.unsubscribe();
+
     }
 
 }
