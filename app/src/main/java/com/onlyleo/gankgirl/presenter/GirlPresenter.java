@@ -7,8 +7,8 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.onlyleo.gankgirl.ui.view.IGirlView;
+import com.onlyleo.gankgirl.utils.CommonTools;
 import com.onlyleo.gankgirl.utils.FileUtil;
-import com.onlyleo.gankgirl.utils.ShareUtil;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -77,7 +77,7 @@ public class GirlPresenter extends BasePresenter<IGirlView> {
                 .subscribe(new Action1<Uri>() {
                     @Override
                     public void call(Uri uri) {
-                        ShareUtil.shareImage(mContext, uri, "分享到");
+                        CommonTools.shareImage(mContext, uri, "分享到");
                     }
                 }, new Action1<Throwable>() {
                     @Override

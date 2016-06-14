@@ -15,7 +15,7 @@ import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.presenter.GirlPresenter;
 import com.onlyleo.gankgirl.ui.view.IGirlView;
-import com.onlyleo.gankgirl.utils.DateUtil;
+import com.onlyleo.gankgirl.utils.CommonTools;
 import com.onlyleo.gankgirl.utils.FileUtil;
 import com.onlyleo.gankgirl.utils.TipsUtil;
 
@@ -65,7 +65,7 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
             }
         });
         ViewCompat.setTransitionName(ivGirl, getString(R.string.pretty_girl));
-        setTitle(DateUtil.toDateTimeStr(girl.publishedAt));
+        setTitle(CommonTools.toDateTimeStr(girl.publishedAt));
         photoViewAttacher = new PhotoViewAttacher(ivGirl);
     }
 
@@ -86,11 +86,11 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
                 if (!FileUtil.isSDCardEnable() || girl == null) {
                     TipsUtil.showSnackTip(ivGirl,"保存失败!");
                 } else {
-                    presenter.saveGirl(girlbm, DateUtil.toDateString(girl.publishedAt).toString());
+                    presenter.saveGirl(girlbm, CommonTools.toDateString(girl.publishedAt).toString());
                 }
                 break;
             case R.id.action_share:
-                presenter.shareGirl(girlbm, DateUtil.toDateString(girl.publishedAt).toString());
+                presenter.shareGirl(girlbm, CommonTools.toDateString(girl.publishedAt).toString());
                 break;
         }
         return super.onOptionsItemSelected(item);

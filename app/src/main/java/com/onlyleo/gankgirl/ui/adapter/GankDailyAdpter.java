@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Gank;
 import com.onlyleo.gankgirl.ui.activity.WebActivity;
-import com.onlyleo.gankgirl.utils.StringStyleUtil;
+import com.onlyleo.gankgirl.utils.CommonTools;
 
 import java.util.List;
 
@@ -52,7 +52,7 @@ public class GankDailyAdpter extends RecyclerView.Adapter<GankDailyAdpter.GankDa
         if(holder.titleList.getVisibility()==View.VISIBLE){
             holder.titleList.setText(gank.type);
         }
-        holder.linkList.setText(StringStyleUtil.getGankStyleStr(gank));
+        holder.linkList.setText(CommonTools.getGankStyleStr(gank));
     }
 
     public void showTitle(boolean show,TextView titleList){

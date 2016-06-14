@@ -10,8 +10,7 @@ import android.webkit.WebViewClient;
 
 import com.onlyleo.gankgirl.model.entity.Gank;
 import com.onlyleo.gankgirl.ui.view.IWebView;
-import com.onlyleo.gankgirl.utils.AndroidUtil;
-import com.onlyleo.gankgirl.utils.ShareUtil;
+import com.onlyleo.gankgirl.utils.CommonTools;
 
 /**
  * Created by BBC on 2016/6/14 0014.
@@ -65,12 +64,13 @@ public class WebPresenter extends BasePresenter<IWebView> {
     }
 
     public void copyUrl(String text) {
-        AndroidUtil.copyToClipBoard(mContext.getApplicationContext(), text,"复制成功");
+        CommonTools.copyToClipBoard(mContext.getApplicationContext(), text,"复制成功");
     }
 
     public void openInBrowser(String url) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
+        intent.addCategory(Intent.CATEGORY_APP_BROWSER);
         Uri uri = Uri.parse(url);
         intent.setData(uri);
         if (intent.resolveActivity(mContext.getPackageManager()) != null) {
@@ -82,6 +82,6 @@ public class WebPresenter extends BasePresenter<IWebView> {
 
     public void moreOperation(Gank gank) {
         if (gank != null)
-            ShareUtil.shareGank(mContext, gank);
+            CommonTools.shareGank(mContext, gank);
     }
 }

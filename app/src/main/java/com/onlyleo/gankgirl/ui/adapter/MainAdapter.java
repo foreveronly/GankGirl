@@ -20,7 +20,7 @@ import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.ShareElement;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.ui.activity.GankDailyActivity;
-import com.onlyleo.gankgirl.utils.DateUtil;
+import com.onlyleo.gankgirl.utils.CommonTools;
 
 import java.io.Serializable;
 import java.util.List;
@@ -62,7 +62,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
                 .crossFade()
                 .into(holder.ivgirl);
         String title = girl.desc;
-        holder.tvDate.setText(DateUtil.toDateTimeStr(girl.createdAt));
+        holder.tvDate.setText(CommonTools.toDateTimeStr(girl.createdAt));
         holder.tvTitle.setText(title);
         showItemAnimation(holder, position);
     }

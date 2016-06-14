@@ -21,7 +21,7 @@ import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.presenter.GankDailyPresenter;
 import com.onlyleo.gankgirl.ui.adapter.GankDailyAdpter;
 import com.onlyleo.gankgirl.ui.view.IGankDailyView;
-import com.onlyleo.gankgirl.utils.DateUtil;
+import com.onlyleo.gankgirl.utils.CommonTools;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,13 +34,10 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
 
     @Bind(R.id.fab)
     FloatingActionButton fab;
-
     @Bind(R.id.iv_head_girl)
     ImageView ivHeadGirl;
-
     @Bind(R.id.recycler_view_gank_daily)
     RecyclerView recyclerViewGankdaily;
-
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     private Girl girl;
@@ -119,7 +116,7 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
                     .crossFade()
                     .into(ivHeadGirl);
         ViewCompat.setTransitionName(ivHeadGirl, getString(R.string.pretty_girl));
-        setTitle(DateUtil.toDateTimeStr(girl.publishedAt));
+        setTitle(CommonTools.toDateTimeStr(girl.publishedAt));
         list = new ArrayList<>();
         adapter = new GankDailyAdpter(this, list);
         recyclerViewGankdaily.setLayoutManager(new LinearLayoutManager(this));
