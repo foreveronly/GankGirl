@@ -132,6 +132,7 @@ public class CommonTools {
         context.startActivity(Intent.createChooser(intent, context.getString(R.string.share_gank_to)));
     }
 
+
     /**
      * 分享视频
      * @param context

@@ -31,10 +31,10 @@ public class GankDailyPresenter extends BasePresenter<IGankDailyView> {
             subscription.unsubscribe();
     }
 
-    public void loadData(int year,int month,int day) {
-        subscription = GankRetrofit.getGuDongInstance().getGankData(year,month,day)
+    public void loadData(int year, int month, int day) {
+        subscription = GankRetrofit.getGuDongInstance().getGankData(year, month, day)
                 .subscribeOn(Schedulers.io())
-                .map(new Func1<GankData,List<Gank>>(){
+                .map(new Func1<GankData, List<Gank>>() {
                     @Override
                     public List<Gank> call(GankData gankData) {
                         return addAllResults(gankData.results);
@@ -55,6 +55,7 @@ public class GankDailyPresenter extends BasePresenter<IGankDailyView> {
                     }
                 });
     }
+
     private List<Gank> addAllResults(GankData.Result results) {
         List<Gank> mGankList = new ArrayList<>();
         if (results.androidList != null) mGankList.addAll(results.androidList);

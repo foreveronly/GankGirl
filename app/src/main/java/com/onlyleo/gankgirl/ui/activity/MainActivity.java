@@ -57,16 +57,19 @@ public class MainActivity extends BaseActivity<MainPresenter>
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START);
-            }else if(!isQuit){
-                isQuit = true;
-                TipsUtil.showSnackTip(fab,"再按一次退出程序");
-                mHandler.sendEmptyMessageDelayed(0,2000);
-            }else if(isQuit){
-                GankGirlApp.getInstance().exit();
+            } else {
+                if (!isQuit) {
+                    isQuit = true;
+                    TipsUtil.showSnackTip(fab, "再按一次退出程序");
+                    mHandler.sendEmptyMessageDelayed(0, 2000);
+                } else {
+                    GankGirlApp.getInstance().exit();
+                }
             }
         }
         return false;
     }
+
     @Override
     protected int provideContentViewId() {
         return R.layout.activity_main;
@@ -88,7 +91,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         list = SPDataTools.getFirstPageGirls(this);
-        if(list==null)list = new ArrayList<>();
+        if (list == null) list = new ArrayList<>();
         adapter = new MainAdapter(list, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -129,8 +132,8 @@ public class MainActivity extends BaseActivity<MainPresenter>
 
     @Override
     public void showNoMoreData() {
-        canLoading =false;
-        TipsUtil.showSnackTip(fab,"加载完啦");
+        canLoading = false;
+        TipsUtil.showSnackTip(fab, "加载完啦");
     }
 
     @Override
@@ -138,7 +141,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
         canLoading = true;
         page++;
         if (isRefresh) {
-            SPDataTools.saveFirstPageGirls(this,girlList);
+            SPDataTools.saveFirstPageGirls(this, girlList);
             list.clear();
             list.addAll(girlList);
             adapter.notifyDataSetChanged();
@@ -152,7 +155,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
     @Override
     public void loadMore() {
         isRefresh = false;
-        if(canLoading){
+        if (canLoading) {
             presenter.loadData(page);
             canLoading = false;
         }
@@ -165,8 +168,9 @@ public class MainActivity extends BaseActivity<MainPresenter>
         recyclerView.smoothScrollToPosition(0);
         presenter.loadData(page);
     }
+
     @OnClick(R.id.toolbar)
-    void toolbarClick(){
+    void toolbarClick() {
         recyclerView.smoothScrollToPosition(0);
     }
 

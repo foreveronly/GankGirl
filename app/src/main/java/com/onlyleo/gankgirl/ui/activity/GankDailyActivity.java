@@ -1,8 +1,6 @@
 package com.onlyleo.gankgirl.ui.activity;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
@@ -10,6 +8,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -32,8 +32,6 @@ import butterknife.OnClick;
 
 public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implements IGankDailyView {
 
-    @Bind(R.id.fab)
-    FloatingActionButton fab;
     @Bind(R.id.iv_head_girl)
     ImageView ivHeadGirl;
     @Bind(R.id.recycler_view_gank_daily)
@@ -44,12 +42,6 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
     private List<Gank> list;
     private GankDailyAdpter adapter;
     private Calendar calendar;
-
-    @OnClick(R.id.fab)
-    public void fabClick(View view) {
-        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
-    }
 
     @OnClick(R.id.iv_head_girl)
     void girlClick(View view) {
@@ -90,7 +82,6 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
     public void showGankList(List<Gank> gankList) {
         list.addAll(gankList);
         adapter.notifyDataSetChanged();
-        fab.setClickable(true);
     }
 
     @Override
@@ -122,7 +113,25 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
         recyclerViewGankdaily.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewGankdaily.setItemAnimator(new DefaultItemAnimator());
         recyclerViewGankdaily.setAdapter(adapter);
-        fab.setClickable(false);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_gankdaily, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_share:
+                
+                break;
+            case R.id.action_open_in_browser:
+
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

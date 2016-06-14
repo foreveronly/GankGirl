@@ -21,6 +21,7 @@ import com.onlyleo.gankgirl.ShareElement;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.ui.activity.GankDailyActivity;
 import com.onlyleo.gankgirl.utils.CommonTools;
+import com.onlyleo.gankgirl.widget.AlwaysMarqueeTextView;
 
 import java.io.Serializable;
 import java.util.List;
@@ -78,7 +79,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
         @Bind(R.id.tv_date)
         TextView tvDate;
         @Bind(R.id.tv_title)
-        TextView tvTitle;
+        AlwaysMarqueeTextView tvTitle;
         @Bind(R.id.main_root)
         RelativeLayout mainRoot;
 

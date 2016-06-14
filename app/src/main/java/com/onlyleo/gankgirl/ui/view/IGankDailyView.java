@@ -8,6 +8,7 @@ import java.util.List;
  * Created by leoonly on 16/6/2.
  */
 public interface IGankDailyView extends IBaseView {
+
     void showProgress();
     void hideProgress();
     void showErrorView();
