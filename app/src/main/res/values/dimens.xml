@@ -6,7 +6,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="gank_daily_margin_title">5dp</dimen>
-    <dimen name="gank_daily_margin_link">20dp</dimen>
+    <dimen name="gank_daily_margin_link">15dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="main_act_font">20sp</dimen>
     <dimen name="app_bar_height">300dp</dimen>

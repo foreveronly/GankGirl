@@ -4,7 +4,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -60,7 +59,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
                 drawerLayout.closeDrawer(GravityCompat.START);
             }else if(!isQuit){
                 isQuit = true;
-                Snackbar.make(fab,"再按一次退出程序",Snackbar.LENGTH_SHORT).show();
+                TipsUtil.showSnackTip(fab,"再按一次退出程序");
                 mHandler.sendEmptyMessageDelayed(0,2000);
             }else if(isQuit){
                 GankGirlApp.getInstance().exit();
@@ -82,7 +81,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
 
     @Override
     public void init() {
-        setSupportActionBar(toolbar);
+        initToolbar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.setDrawerListener(toggle);
@@ -131,7 +130,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
     @Override
     public void showNoMoreData() {
         canLoading =false;
-        Snackbar.make(fab,"加载完啦",Snackbar.LENGTH_SHORT).show();
+        TipsUtil.showSnackTip(fab,"加载完啦");
     }
 
     @Override

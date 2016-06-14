@@ -21,7 +21,8 @@ public class MainPresenter extends BasePresenter<IMainView> {
 
     @Override
     public void release() {
-        subscription.unsubscribe();
+        if (subscription != null)
+            subscription.unsubscribe();
     }
 
     public MainPresenter(Activity context, IMainView view) {

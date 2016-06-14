@@ -21,7 +21,7 @@ import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.presenter.GankDailyPresenter;
 import com.onlyleo.gankgirl.ui.adapter.GankDailyAdpter;
 import com.onlyleo.gankgirl.ui.view.IGankDailyView;
-import com.onlyleo.gankgirl.utils.CalendarUtil;
+import com.onlyleo.gankgirl.utils.DateUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -119,7 +119,7 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
                     .crossFade()
                     .into(ivHeadGirl);
         ViewCompat.setTransitionName(ivHeadGirl, getString(R.string.pretty_girl));
-        setTitle(CalendarUtil.toDateTimeStr(girl.publishedAt));
+        setTitle(DateUtil.toDateTimeStr(girl.publishedAt));
         list = new ArrayList<>();
         adapter = new GankDailyAdpter(this, list);
         recyclerViewGankdaily.setLayoutManager(new LinearLayoutManager(this));

@@ -5,16 +5,16 @@
     android:background="@drawable/side_nav_bar"
     android:gravity="bottom"
     android:orientation="vertical"
+    android:paddingBottom="10dp"
     android:paddingLeft="20dp"
     android:paddingStart="20dp"
-    android:paddingBottom="10dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <com.onlyleo.gankgirl.widget.CircleImageView
         android:id="@+id/profile_image"
         android:layout_width="76dp"
         android:layout_height="76dp"
-        android:src="@mipmap/mylogo"/>
+        android:src="@mipmap/mylogo" />
 
     <TextView
         android:layout_width="match_parent"

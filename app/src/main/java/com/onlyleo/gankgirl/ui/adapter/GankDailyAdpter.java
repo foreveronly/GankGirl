@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Gank;
+import com.onlyleo.gankgirl.ui.activity.WebActivity;
 import com.onlyleo.gankgirl.utils.StringStyleUtil;
 
 import java.util.List;
@@ -79,7 +80,7 @@ public class GankDailyAdpter extends RecyclerView.Adapter<GankDailyAdpter.GankDa
 
         @OnClick(R.id.gankll_list)
         public void onClick() {
-            
+            WebActivity.loadWebViewActivity(context, (Gank) gankllList.getTag());
         }
 
 

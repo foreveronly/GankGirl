@@ -27,7 +27,8 @@ public class GankDailyPresenter extends BasePresenter<IGankDailyView> {
 
     @Override
     public void release() {
-        subscription.unsubscribe();
+        if (subscription != null)
+            subscription.unsubscribe();
     }
 
     public void loadData(int year,int month,int day) {

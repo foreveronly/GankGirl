@@ -38,7 +38,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/gank_daily_margin_link"
-            android:layout_marginRight="3dp"
+            android:layout_marginRight="@dimen/gank_daily_margin_link"
+            android:layout_marginEnd="@dimen/gank_daily_margin_link"
             android:layout_marginStart="@dimen/gank_daily_margin_link"
             android:textColor="@color/little_grey"
             android:textSize="@dimen/font_normal" />

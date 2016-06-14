@@ -23,4 +23,15 @@
     <string name="retry">重试</string>
     <string name="action_save">保存</string>
     <string name="action_share">分享</string>
+    <string name="share_app">发现了一款看妹子的小app「Gank.lu」,  同时有很多程序员干货哦，^_^，下载地址：http://fir.im/Gank</string>
+    <string name="download_gank">\n下载「Gank.lu」^_^ : http://fir.im/Gank</string>
+    <string name="share_app_to_friend">分享「Gank.io」给朋友</string>
+    <string name="share_gank_to">分享干货到</string>
+    <string name="share_video_to">分享视频到</string>
+    <string name="action_copy_url">复制地址</string>
+    <string name="action_open_in_browser">打开链接</string>
+    <string name="action_refresh">刷新页面</string>
+    <string name="open_url_failed">打开失败，没有找到可以打开该链接的其它应用o(︶︿︶)o唉</string>
+    <string name="copy_success">复制成功</string>
+    <string name="action_more_operation">更多操作</string>
 </resources>

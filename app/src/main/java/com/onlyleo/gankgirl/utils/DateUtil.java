@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-public class CalendarUtil {
+public class DateUtil {
 
     private int weeks = 0;// 用来全局控制 上一周，本周，下一周的周数变化
     private int MaxDate; // 一月最大天数
