@@ -2,7 +2,7 @@ package com.onlyleo.gankgirl.presenter;
 
 import android.app.Activity;
 
-import com.onlyleo.gankgirl.ui.view.IBaseView;
+import com.onlyleo.gankgirl.ui.base.IBaseView;
 
 import rx.Subscription;
 
@@ -11,7 +11,8 @@ public abstract class BasePresenter<GV extends IBaseView> {
     protected Subscription subscription;
     protected GV mView;
     protected Activity mContext;
-    protected final  static int PAGE_SIZE = 10;
+    protected final static int PAGE_SIZE = 10;
+
     public abstract void release();
 
     public BasePresenter(Activity context, GV view) {
@@ -19,7 +20,7 @@ public abstract class BasePresenter<GV extends IBaseView> {
         mView = view;
     }
 
-    public void init(){
+    public void init() {
         mView.init();
     }
 

@@ -6,15 +6,19 @@
 
     <string name="title_activity_base">BaseActivity</string>
     <string name="menu_index">首页</string>
-    <string name="menu_girl">妹子</string>
-    <string name="menu_iOS">iOS</string>
-    <string name="menu_android">Android</string>
-    <string name="menu_app">App</string>
-    <string name="menu_video">休息视频</string>
-    <string name="menu_recommend">瞎推荐</string>
-    <string name="menu_resource">拓展资源</string>
+    <string name="category_girl">妹子</string>
+    <string name="category_iOS">iOS</string>
+    <string name="category_android">Android</string>
+    <string name="category_app">App</string>
+    <string name="category_video">休息视频</string>
+    <string name="category_recommend">瞎推荐</string>
+    <string name="category_resource">拓展资源</string>
+    <string name="menu_category">分类</string>
+    <string name="menu_search">搜索</string>
+    <string name="menu_setting">设置</string>
     <string name="menu_about">关于</string>
     <string name="menu_share">分享</string>
+
     <string name="title_activity_gank_daily">GankDailyActivity</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_girl">GirlActivity</string>
@@ -31,7 +35,7 @@
     <string name="action_copy_url">复制地址</string>
     <string name="action_open_in_browser">打开链接</string>
     <string name="action_refresh">刷新页面</string>
-    <string name="open_url_failed">打开失败，没有找到可以打开该链接的其它应用o(︶︿︶)o唉</string>
+    <string name="open_url_failed">打开失败!</string>
     <string name="copy_success">复制成功</string>
     <string name="action_more_operation">更多操作</string>
 </resources>

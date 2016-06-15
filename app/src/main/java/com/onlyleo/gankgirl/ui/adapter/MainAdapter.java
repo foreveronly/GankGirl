@@ -30,9 +30,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * Created by leoonly on 16/5/18.
- */
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
     private List<Girl> list;
     private Context context;

@@ -1,4 +1,4 @@
-package com.onlyleo.gankgirl.ui.activity;
+package com.onlyleo.gankgirl.ui.base;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,19 +20,19 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(provideContentViewId());
+        setContentView(getLayout());
         GankGirlApp.getInstance().addActivity(this);
         ButterKnife.bind(this);
         initPresenter();
         checkPresenterIsNull();
-        Log.i(TAG,"onCreate");
+        Log.i(TAG, "onCreate");
     }
 
-    protected abstract int provideContentViewId();
+    protected abstract int getLayout();
 
     protected abstract void initPresenter();
 
-    public void initToolbar(Toolbar toolbar){
+    public void initToolbar(Toolbar toolbar) {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -40,7 +40,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 break;
@@ -49,43 +49,44 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     }
 
     //检查Presenter是否存在
-    private void checkPresenterIsNull(){
-        if(presenter==null){
+    private void checkPresenterIsNull() {
+        if (presenter == null) {
             throw new IllegalStateException("please init mPresenter in initPresenter() method ");
         }
     }
+
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.i(TAG,"onRestart");
+        Log.i(TAG, "onRestart");
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.i(TAG,"onStart");
+        Log.i(TAG, "onStart");
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i(TAG,"onResume");
+        Log.i(TAG, "onResume");
 
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.i(TAG,"onPause");
+        Log.i(TAG, "onPause");
 
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.i(TAG,"onStop");
+        Log.i(TAG, "onStop");
 
     }
 
@@ -93,10 +94,10 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
-        if(ShareElement.shareDrawable !=null){
+        if (ShareElement.shareDrawable != null) {
             ShareElement.shareDrawable = null;
         }
-        Log.i(TAG,"onDestroy");
+        Log.i(TAG, "onDestroy");
 
     }
 }

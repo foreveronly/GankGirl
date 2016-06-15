@@ -14,9 +14,6 @@ import rx.functions.Action1;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
-/**
- * Created by bbc on 16/1/26.
- */
 public class MainPresenter extends BasePresenter<IMainView> {
 
     @Override
@@ -29,12 +26,16 @@ public class MainPresenter extends BasePresenter<IMainView> {
         super(context, view);
     }
 
+    /**
+     * 加载首页数据
+     * @param page
+     */
     public void loadData(int page) {
         subscription = Observable.zip(GankRetrofit.getGuDongInstance().getPrettyGirlData(PAGE_SIZE, page),
                 GankRetrofit.getGuDongInstance().getContentData(PAGE_SIZE, page), new Func2<PrettyGirlData, ContentData, PrettyGirlData>() {
                     @Override
                     public PrettyGirlData call(PrettyGirlData prettyGirlData, ContentData contentData) {
-                        return getGirlAndTitleAndDate(prettyGirlData,contentData);
+                        return getGirlAndTitleAndDate(prettyGirlData, contentData);
                     }
                 }).subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
@@ -48,9 +49,9 @@ public class MainPresenter extends BasePresenter<IMainView> {
                 .subscribe(new Action1<PrettyGirlData>() {
                     @Override
                     public void call(PrettyGirlData prettyGirlData) {
-                        if (prettyGirlData.results.size() == 0){
+                        if (prettyGirlData.results.size() == 0) {
                             mView.showNoMoreData();
-                        }else {
+                        } else {
                             mView.showGirlList(prettyGirlData.results);
                         }
                         mView.hideProgress();
@@ -65,8 +66,8 @@ public class MainPresenter extends BasePresenter<IMainView> {
     }
 
 
-    private PrettyGirlData getGirlAndTitleAndDate(PrettyGirlData girl, ContentData contentData){
-        int size = Math.min(girl.results.size(),contentData.results.size());
+    private PrettyGirlData getGirlAndTitleAndDate(PrettyGirlData girl, ContentData contentData) {
+        int size = Math.min(girl.results.size(), contentData.results.size());
         for (int i = 0; i < size; i++) {
             girl.results.get(i).desc = contentData.results.get(i).title;
         }

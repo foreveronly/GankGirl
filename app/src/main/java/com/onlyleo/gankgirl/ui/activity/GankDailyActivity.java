@@ -20,8 +20,10 @@ import com.onlyleo.gankgirl.model.entity.Gank;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.presenter.GankDailyPresenter;
 import com.onlyleo.gankgirl.ui.adapter.GankDailyAdpter;
+import com.onlyleo.gankgirl.ui.base.BaseActivity;
 import com.onlyleo.gankgirl.ui.view.IGankDailyView;
 import com.onlyleo.gankgirl.utils.CommonTools;
+import com.onlyleo.gankgirl.utils.TipsUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -53,7 +55,7 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
     }
 
     @Override
-    protected int provideContentViewId() {
+    protected int getLayout() {
         return R.layout.activity_gank_daily;
     }
 
@@ -64,18 +66,15 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
     }
 
     @Override
-    public void showProgress() {
-
-    }
-
-    @Override
-    public void hideProgress() {
-
-    }
-
-    @Override
     public void showErrorView() {
-
+        TipsUtil.showTipWithAction(recyclerViewGankdaily, getString(R.string.load_failed), getString(R.string.retry), new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.loadData(calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH) + 1,
+                        calendar.get(Calendar.DAY_OF_MONTH));
+            }
+        });
     }
 
     @Override
@@ -125,7 +124,7 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_share:
-                
+
                 break;
             case R.id.action_open_in_browser:
 

@@ -24,6 +24,7 @@ public class GankDailyAdpter extends RecyclerView.Adapter<GankDailyAdpter.GankDa
     private List<Gank> list;
     private Context context;
     int lastPosition = 0;
+
     public GankDailyAdpter(Context context, List<Gank> list) {
         this.list = list;
         this.context = context;
@@ -40,25 +41,25 @@ public class GankDailyAdpter extends RecyclerView.Adapter<GankDailyAdpter.GankDa
     public void onBindViewHolder(GankDailyHolder holder, int position) {
         Gank gank = list.get(position);
         holder.gankllList.setTag(gank);
-        if(position == 0){
-            showTitle(true,holder.titleList);
-        }else{
-            if(list.get(position).type.equals(list.get(position-1).type)){
-                showTitle(false,holder.titleList);
-            }else {
-                showTitle(true,holder.titleList);
+        if (position == 0) {
+            showTitle(true, holder.titleList);
+        } else {
+            if (list.get(position).type.equals(list.get(position - 1).type)) {
+                showTitle(false, holder.titleList);
+            } else {
+                showTitle(true, holder.titleList);
             }
         }
-        if(holder.titleList.getVisibility()==View.VISIBLE){
+        if (holder.titleList.getVisibility() == View.VISIBLE) {
             holder.titleList.setText(gank.type);
         }
         holder.linkList.setText(CommonTools.getGankStyleStr(gank));
     }
 
-    public void showTitle(boolean show,TextView titleList){
-        if(show){
+    public void showTitle(boolean show, TextView titleList) {
+        if (show) {
             titleList.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             titleList.setVisibility(View.GONE);
         }
     }

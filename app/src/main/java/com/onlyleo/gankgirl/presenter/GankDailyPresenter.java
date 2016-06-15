@@ -16,9 +16,6 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 
-/**
- * Created by leoonly on 16/6/2.
- */
 public class GankDailyPresenter extends BasePresenter<IGankDailyView> {
 
     public GankDailyPresenter(Activity context, IGankDailyView view) {
@@ -31,6 +28,12 @@ public class GankDailyPresenter extends BasePresenter<IGankDailyView> {
             subscription.unsubscribe();
     }
 
+    /**
+     * 加载每日数据
+     * @param year
+     * @param month
+     * @param day
+     */
     public void loadData(int year, int month, int day) {
         subscription = GankRetrofit.getGuDongInstance().getGankData(year, month, day)
                 .subscribeOn(Schedulers.io())

@@ -12,9 +12,6 @@ import com.onlyleo.gankgirl.model.entity.Gank;
 import com.onlyleo.gankgirl.ui.view.IWebView;
 import com.onlyleo.gankgirl.utils.CommonTools;
 
-/**
- * Created by BBC on 2016/6/14 0014.
- */
 public class WebPresenter extends BasePresenter<IWebView> {
 
     public WebPresenter(Activity context, IWebView view) {
@@ -26,6 +23,11 @@ public class WebPresenter extends BasePresenter<IWebView> {
 
     }
 
+    /**
+     * webview设置
+     * @param webView
+     * @param url
+     */
     public void settingOfWebView(WebView webView, String url) {
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
@@ -59,18 +61,30 @@ public class WebPresenter extends BasePresenter<IWebView> {
             return true;
         }
     }
+
+    /**
+     * 刷新
+     * @param webView
+     */
     public void refresh(WebView webView) {
         webView.reload();
     }
 
+    /**
+     * 复制链接
+     * @param text
+     */
     public void copyUrl(String text) {
-        CommonTools.copyToClipBoard(mContext.getApplicationContext(), text,"复制成功");
+        CommonTools.copyToClipBoard(mContext.getApplicationContext(), text, "复制成功");
     }
 
+    /**
+     * 浏览器打开
+     * @param url
+     */
     public void openInBrowser(String url) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
-        intent.addCategory(Intent.CATEGORY_APP_BROWSER);
         Uri uri = Uri.parse(url);
         intent.setData(uri);
         if (intent.resolveActivity(mContext.getPackageManager()) != null) {
@@ -80,6 +94,10 @@ public class WebPresenter extends BasePresenter<IWebView> {
         }
     }
 
+    /**
+     * 更多操作
+     * @param gank
+     */
     public void moreOperation(Gank gank) {
         if (gank != null)
             CommonTools.shareGank(mContext, gank);

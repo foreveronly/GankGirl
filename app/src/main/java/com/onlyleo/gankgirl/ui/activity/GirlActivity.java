@@ -14,6 +14,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.presenter.GirlPresenter;
+import com.onlyleo.gankgirl.ui.base.BaseActivity;
 import com.onlyleo.gankgirl.ui.view.IGirlView;
 import com.onlyleo.gankgirl.utils.CommonTools;
 import com.onlyleo.gankgirl.utils.FileUtil;
@@ -33,8 +34,9 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
 
     private Bitmap girlbm;
     private PhotoViewAttacher photoViewAttacher;
+
     @Override
-    protected int provideContentViewId() {
+    protected int getLayout() {
         return R.layout.activity_girl;
     }
 
@@ -52,6 +54,7 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
     }
 
     public void initGirl() {
+        photoViewAttacher = new PhotoViewAttacher(ivGirl);
         Glide.with(this).load(girl.url).asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
@@ -59,6 +62,7 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
                 photoViewAttacher.update();
                 girlbm = resource;
             }
+
             @Override
             public void onLoadFailed(Exception e, Drawable errorDrawable) {
                 ivGirl.setImageDrawable(errorDrawable);
@@ -66,7 +70,6 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
         });
         ViewCompat.setTransitionName(ivGirl, getString(R.string.pretty_girl));
         setTitle(CommonTools.toDateTimeStr(girl.publishedAt));
-        photoViewAttacher = new PhotoViewAttacher(ivGirl);
     }
 
     public void getIntentData() {
@@ -84,7 +87,7 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
         switch (item.getItemId()) {
             case R.id.action_save:
                 if (!FileUtil.isSDCardEnable() || girl == null) {
-                    TipsUtil.showSnackTip(ivGirl,"保存失败!");
+                    TipsUtil.showSnackTip(ivGirl, "保存失败!");
                 } else {
                     presenter.saveGirl(girlbm, CommonTools.toDateString(girl.publishedAt).toString());
                 }
@@ -95,6 +98,7 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
         }
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -103,6 +107,6 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
 
     @Override
     public void showSaveGirlResult(String result) {
-        TipsUtil.showSnackTip(ivGirl,result);
+        TipsUtil.showSnackTip(ivGirl, result);
     }
 }

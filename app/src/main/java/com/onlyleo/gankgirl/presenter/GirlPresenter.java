@@ -16,9 +16,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-/**
- * Created by leoonly on 16/6/5.
- */
 public class GirlPresenter extends BasePresenter<IGirlView> {
 
     public GirlPresenter(Activity context, IGirlView view) {
@@ -31,6 +28,11 @@ public class GirlPresenter extends BasePresenter<IGirlView> {
             subscription.unsubscribe();
     }
 
+    /**
+     * 保存妹子图片
+     * @param bitmap
+     * @param title
+     */
     public void saveGirl(final Bitmap bitmap, final String title) {
         subscription = Observable.create(new Observable.OnSubscribe<Uri>() {
             @Override
@@ -60,6 +62,11 @@ public class GirlPresenter extends BasePresenter<IGirlView> {
                 });
     }
 
+    /**
+     * 分享妹子图片
+     * @param bitmap
+     * @param title
+     */
     public void shareGirl(final Bitmap bitmap, final String title) {
         Observable.create(new Observable.OnSubscribe<Uri>() {
             @Override

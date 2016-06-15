@@ -1,7 +1,5 @@
 package com.onlyleo.gankgirl.ui.activity;
 
-import android.os.Handler;
-import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,6 +17,7 @@ import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.presenter.MainPresenter;
 import com.onlyleo.gankgirl.ui.adapter.MainAdapter;
+import com.onlyleo.gankgirl.ui.base.BaseActivity;
 import com.onlyleo.gankgirl.ui.view.IMainView;
 import com.onlyleo.gankgirl.utils.SPDataTools;
 import com.onlyleo.gankgirl.utils.TipsUtil;
@@ -50,7 +49,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
     private boolean isRefresh = true;
     private boolean canLoading = true;
     private int page = 1;
-    private boolean isQuit = false;
+    private long quitTime = 0;
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -58,10 +57,9 @@ public class MainActivity extends BaseActivity<MainPresenter>
             if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START);
             } else {
-                if (!isQuit) {
-                    isQuit = true;
+                if (System.currentTimeMillis() - quitTime > 2000) {
                     TipsUtil.showSnackTip(fab, "再按一次退出程序");
-                    mHandler.sendEmptyMessageDelayed(0, 2000);
+                    quitTime = System.currentTimeMillis();
                 } else {
                     GankGirlApp.getInstance().exit();
                 }
@@ -71,7 +69,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
     }
 
     @Override
-    protected int provideContentViewId() {
+    protected int getLayout() {
         return R.layout.activity_main;
     }
 
@@ -180,20 +178,12 @@ public class MainActivity extends BaseActivity<MainPresenter>
         int id = item.getItemId();
         if (id == R.id.nav_index) {
             setTitle(getResources().getString(R.string.app_name));
-        } else if (id == R.id.nav_android) {
-            setTitle(getResources().getString(R.string.menu_android));
-        } else if (id == R.id.nav_iOS) {
-            setTitle(getResources().getString(R.string.menu_iOS));
-        } else if (id == R.id.nav_app) {
-            setTitle(getResources().getString(R.string.menu_app));
-        } else if (id == R.id.nav_recommend) {
-            setTitle(getResources().getString(R.string.menu_recommend));
-        } else if (id == R.id.nav_video) {
-            setTitle(getResources().getString(R.string.menu_video));
-        } else if (id == R.id.nav_resource) {
-            setTitle(getResources().getString(R.string.menu_resource));
-        } else if (id == R.id.nav_girl) {
-            setTitle(getResources().getString(R.string.menu_girl));
+        } else if (id == R.id.nav_category) {
+            setTitle(getResources().getString(R.string.menu_category));
+        } else if (id == R.id.nav_search) {
+            setTitle(getResources().getString(R.string.menu_search));
+        } else if (id == R.id.nav_setting) {
+            setTitle(getResources().getString(R.string.menu_setting));
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_about) {
@@ -209,14 +199,6 @@ public class MainActivity extends BaseActivity<MainPresenter>
         page = 1;
         presenter.loadData(page);
     }
-
-    Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            isQuit = false;
-        }
-    };
 
     @Override
     protected void onDestroy() {

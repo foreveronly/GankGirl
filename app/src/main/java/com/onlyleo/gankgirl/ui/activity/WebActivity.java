@@ -15,6 +15,7 @@ import com.onlyleo.gankgirl.GlobalString;
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Gank;
 import com.onlyleo.gankgirl.presenter.WebPresenter;
+import com.onlyleo.gankgirl.ui.base.BaseActivity;
 import com.onlyleo.gankgirl.ui.view.IWebView;
 import com.onlyleo.gankgirl.utils.TipsUtil;
 
@@ -34,7 +35,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements IWebView 
     private Gank gank;
 
     @Override
-    protected int provideContentViewId() {
+    protected int getLayout() {
         return R.layout.activity_web;
     }
 

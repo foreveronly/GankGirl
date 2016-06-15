@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:textColor="@color/pure_white"
         android:scaleType="centerCrop"
-        android:contentDescription="@string/menu_girl" />
+        android:contentDescription="@string/category_girl" />
 
     <LinearLayout
         android:id="@+id/ll_title"
