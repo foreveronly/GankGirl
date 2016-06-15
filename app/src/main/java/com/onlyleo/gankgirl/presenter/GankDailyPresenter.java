@@ -48,12 +48,10 @@ public class GankDailyPresenter extends BasePresenter<IGankDailyView> {
                     @Override
                     public void call(List<Gank> gankList) {
                         mView.showGankList(gankList);
-                        mView.hideProgress();
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        mView.hideProgress();
                         mView.showErrorView();
                     }
                 });
