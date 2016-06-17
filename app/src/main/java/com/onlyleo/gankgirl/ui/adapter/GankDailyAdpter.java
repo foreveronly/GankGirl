@@ -23,7 +23,6 @@ public class GankDailyAdpter extends RecyclerView.Adapter<GankDailyAdpter.GankDa
 
     private List<Gank> list;
     private Context context;
-    int lastPosition = 0;
 
     public GankDailyAdpter(Context context, List<Gank> list) {
         this.list = list;
@@ -83,7 +82,6 @@ public class GankDailyAdpter extends RecyclerView.Adapter<GankDailyAdpter.GankDa
         public void onClick() {
             WebActivity.loadWebViewActivity(context, (Gank) gankllList.getTag());
         }
-
 
         public GankDailyHolder(View itemView) {
             super(itemView);
