@@ -1,5 +1,6 @@
 package com.onlyleo.gankgirl.ui.activity;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -7,7 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.VideoView;
 
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Gank;
@@ -27,12 +28,14 @@ import butterknife.Bind;
 
 public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implements IGankDailyView {
 
-    @Bind(R.id.iv_head_girl)
-    ImageView ivHeadGirl;
     @Bind(R.id.recycler_view_gank_daily)
     RecyclerView recyclerViewGankdaily;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    @Bind(R.id.gank_daily_videoview)
+    VideoView gankDailyVideoview;
+    @Bind(R.id.fab)
+    FloatingActionButton fab;
     private Girl girl;
     private List<Gank> list;
     private GankDailyAdpter adapter;
@@ -114,4 +117,5 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
         super.onDestroy();
         presenter.release();
     }
+
 }
