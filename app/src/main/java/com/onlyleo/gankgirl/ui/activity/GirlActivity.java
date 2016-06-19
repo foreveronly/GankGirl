@@ -1,6 +1,7 @@
 package com.onlyleo.gankgirl.ui.activity;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.onlyleo.gankgirl.GlobalConfig;
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.presenter.GirlPresenter;
@@ -55,19 +57,24 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
 
     public void initGirl() {
         photoViewAttacher = new PhotoViewAttacher(ivGirl);
-        Glide.with(this).load(girl.url).asBitmap().into(new SimpleTarget<Bitmap>() {
-            @Override
-            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                ivGirl.setImageBitmap(resource);
-                photoViewAttacher.update();
-                girlbm = resource;
-            }
-
-            @Override
-            public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                ivGirl.setImageDrawable(errorDrawable);
-            }
-        });
+        if (GlobalConfig.shareDrawable != null){
+            ivGirl.setImageDrawable(GlobalConfig.shareDrawable);
+            girlbm = ((BitmapDrawable)GlobalConfig.shareDrawable).getBitmap();
+        }
+        else
+            Glide.with(this).load(girl.url).asBitmap().into(new SimpleTarget<Bitmap>() {
+                @Override
+                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                    ivGirl.setImageBitmap(resource);
+                    photoViewAttacher.update();
+                    girlbm = resource;
+                }
+                @Override
+                public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                    ivGirl.setImageDrawable(errorDrawable);
+                }
+            });
+        photoViewAttacher.update();
         ViewCompat.setTransitionName(ivGirl, getString(R.string.pretty_girl));
         setTitle(CommonTools.toDateTimeStr(girl.publishedAt));
     }
@@ -102,6 +109,7 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        GlobalConfig.shareDrawable = null;
         presenter.release();
     }
 

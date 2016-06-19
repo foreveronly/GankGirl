@@ -11,8 +11,8 @@ import android.webkit.WebView;
 import android.widget.LinearLayout;
 
 import com.daimajia.numberprogressbar.NumberProgressBar;
-import com.onlyleo.gankgirl.GlobalString;
 import com.onlyleo.gankgirl.R;
+import com.onlyleo.gankgirl.GlobalConfig;
 import com.onlyleo.gankgirl.model.entity.Gank;
 import com.onlyleo.gankgirl.presenter.WebPresenter;
 import com.onlyleo.gankgirl.ui.base.BaseActivity;
@@ -41,7 +41,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements IWebView 
 
     public static void loadWebViewActivity(Context from, Gank gank) {
         Intent intent = new Intent(from, WebActivity.class);
-        intent.putExtra(GlobalString.GANK, gank);
+        intent.putExtra(GlobalConfig.GANK, gank);
         from.startActivity(intent);
     }
 
@@ -75,7 +75,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements IWebView 
     @Override
     public void init() {
         initToolbar(toolbar);
-        gank = (Gank) getIntent().getSerializableExtra(GlobalString.GANK);
+        gank = (Gank) getIntent().getSerializableExtra(GlobalConfig.GANK);
         setTitle(gank.desc);
         presenter.settingOfWebView(webView, gank.url);
     }

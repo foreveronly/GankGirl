@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.onlyleo.gankgirl.GankGirlApp;
-import com.onlyleo.gankgirl.ShareElement;
+import com.onlyleo.gankgirl.GlobalConfig;
 import com.onlyleo.gankgirl.presenter.BasePresenter;
 
 import butterknife.ButterKnife;
@@ -94,8 +94,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
-        if (ShareElement.shareDrawable != null) {
-            ShareElement.shareDrawable = null;
+        if (GlobalConfig.shareDrawable != null) {
+            GlobalConfig.shareDrawable = null;
         }
         Log.i(TAG, "onDestroy");
 

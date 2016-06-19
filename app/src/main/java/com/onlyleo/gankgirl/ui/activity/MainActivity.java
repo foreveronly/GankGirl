@@ -89,7 +89,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         list = SPDataTools.getFirstPageGirls(this);
-        if (list == null) list = new ArrayList<>();
+        if(list==null)list = new ArrayList<>();
         adapter = new MainAdapter(list, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -165,9 +165,8 @@ public class MainActivity extends BaseActivity<MainPresenter>
         recyclerView.smoothScrollToPosition(0);
         presenter.loadData(page);
     }
-
     @OnClick(R.id.toolbar)
-    void toolbarClick() {
+    void toolbarClick(){
         recyclerView.smoothScrollToPosition(0);
     }
 

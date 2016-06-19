@@ -1,9 +1,5 @@
 package com.onlyleo.gankgirl.ui.activity;
 
-import android.content.Intent;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,9 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.onlyleo.gankgirl.R;
-import com.onlyleo.gankgirl.ShareElement;
 import com.onlyleo.gankgirl.model.entity.Gank;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.presenter.GankDailyPresenter;
@@ -30,7 +24,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.OnClick;
 
 public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implements IGankDailyView {
 
@@ -44,15 +37,6 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
     private List<Gank> list;
     private GankDailyAdpter adapter;
     private Calendar calendar;
-
-    @OnClick(R.id.iv_head_girl)
-    void girlClick(View view) {
-        Intent intent = new Intent(this, GirlActivity.class);
-        intent.putExtra("girlData", girl);
-        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
-                .makeSceneTransitionAnimation(this, ivHeadGirl, getString(R.string.pretty_girl));
-        ActivityCompat.startActivity(this, intent, optionsCompat.toBundle());
-    }
 
     @Override
     protected int getLayout() {
@@ -98,14 +82,6 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
     }
 
     public void initGankDaily() {
-        if (ShareElement.shareDrawable != null)
-            ivHeadGirl.setImageDrawable(ShareElement.shareDrawable);
-        else
-            Glide.with(this)
-                    .load(girl.url)
-                    .crossFade()
-                    .into(ivHeadGirl);
-        ViewCompat.setTransitionName(ivHeadGirl, getString(R.string.pretty_girl));
         setTitle(CommonTools.toDateTimeStr(girl.publishedAt));
         list = new ArrayList<>();
         adapter = new GankDailyAdpter(this, list);

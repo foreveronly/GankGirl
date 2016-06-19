@@ -3,7 +3,7 @@
     android:id="@+id/main_root"
     android:layout_width="match_parent"
     android:focusable="true"
-    android:layout_height="180dp">
+    android:layout_height="200dp">
 
     <ImageView
         android:id="@+id/iv_girl"
@@ -20,7 +20,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:background="#33000000"
+        android:background="@drawable/gradient_main_item"
         android:gravity="end"
         android:orientation="vertical">
 

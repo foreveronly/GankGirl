@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 /**
  * Created by panl on 16/1/4.
  */
-public class ShareElement {
+public class GlobalConfig {
     public static Drawable shareDrawable;
+    public  final static String GANK = "gank";
 }
