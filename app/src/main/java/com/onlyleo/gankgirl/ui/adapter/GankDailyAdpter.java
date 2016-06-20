@@ -100,7 +100,7 @@ public class GankDailyAdpter extends RecyclerView.Adapter<GankDailyAdpter.GankDa
                 @Override
                 public void run() {
                     Animation animation = AnimationUtils.loadAnimation(context,
-                            R.anim.slide_in_right);
+                            R.anim.slide_in_bottom);
                     animation.setAnimationListener(new Animation.AnimationListener() {
                         @Override public void onAnimationStart(Animation animation) {
                             view.setAlpha(1);

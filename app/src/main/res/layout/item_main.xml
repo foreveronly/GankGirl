@@ -20,7 +20,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:background="@drawable/gradient_main_item"
+        android:background="@drawable/gradient_90"
         android:gravity="end"
         android:orientation="vertical">
 

@@ -37,4 +37,5 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0'
     compile 'com.daimajia.numberprogressbar:library:1.2@aar'
     compile 'com.github.wooplr:Spotlight:1.1'
+    compile 'com.nineoldandroids:library:2.4.0'
 }
