@@ -1,10 +1,12 @@
 package com.onlyleo.gankgirl.ui.base;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.WindowManager;
 
 import com.onlyleo.gankgirl.GankGirlApp;
 import com.onlyleo.gankgirl.GlobalConfig;
@@ -33,6 +35,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected abstract void initPresenter();
 
     public void initToolbar(Toolbar toolbar) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

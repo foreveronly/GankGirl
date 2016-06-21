@@ -7,7 +7,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +20,7 @@ import com.onlyleo.gankgirl.ui.base.BaseActivity;
 import com.onlyleo.gankgirl.ui.view.IMainView;
 import com.onlyleo.gankgirl.utils.SPDataTools;
 import com.onlyleo.gankgirl.utils.TipsUtil;
+import com.onlyleo.gankgirl.widget.CompatToolbar;
 import com.onlyleo.gankgirl.widget.LMRecyclerView;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
     @Bind(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
     @Bind(R.id.toolbar)
-    Toolbar toolbar;
+    CompatToolbar toolbar;
     private List<Girl> list;
     private MainAdapter adapter;
     private boolean isRefresh = true;

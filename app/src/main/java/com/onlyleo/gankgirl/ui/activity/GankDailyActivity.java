@@ -5,7 +5,6 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +19,7 @@ import com.onlyleo.gankgirl.ui.base.BaseActivity;
 import com.onlyleo.gankgirl.ui.view.IGankDailyView;
 import com.onlyleo.gankgirl.utils.CommonTools;
 import com.onlyleo.gankgirl.utils.TipsUtil;
+import com.onlyleo.gankgirl.widget.CompatToolbar;
 import com.onlyleo.gankgirl.widget.VideoImageView;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
     @Bind(R.id.recycler_view_gank_daily)
     RecyclerView recyclerViewGankdaily;
     @Bind(R.id.toolbar)
-    Toolbar toolbar;
+    CompatToolbar toolbar;
     @Bind(R.id.gank_daily_iv)
     VideoImageView gankDailyIv;
     @Bind(R.id.fab)

@@ -56,9 +56,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
     public void onBindViewHolder(final GirlHolder holder, int position) {
         girl = list.get(position);
         holder.card.setTag(girl);
-//        int red = (int) (Math.random() * 255);
-//        int green = (int) (Math.random() * 255);
-//        int blue = (int) (Math.random() * 255);
         holder.ivgirl.setBackgroundColor(Color.WHITE);
         Glide.with(context).load(girl.url).asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
@@ -71,7 +68,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
             }
         });
         String title = girl.desc;
-        holder.tvDate.setText(CommonTools.toDateTimeStr(girl.createdAt));
+        holder.tvDate.setText(CommonTools.toDateTimeStr(girl.publishedAt));
         holder.tvTitle.setText(title);
         showItemAnimation(holder, position);
     }

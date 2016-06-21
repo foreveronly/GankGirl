@@ -2,7 +2,6 @@ package com.onlyleo.gankgirl.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,13 +10,14 @@ import android.webkit.WebView;
 import android.widget.LinearLayout;
 
 import com.daimajia.numberprogressbar.NumberProgressBar;
-import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.GlobalConfig;
+import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Gank;
 import com.onlyleo.gankgirl.presenter.WebPresenter;
 import com.onlyleo.gankgirl.ui.base.BaseActivity;
 import com.onlyleo.gankgirl.ui.view.IWebView;
 import com.onlyleo.gankgirl.utils.TipsUtil;
+import com.onlyleo.gankgirl.widget.CompatToolbar;
 
 import butterknife.Bind;
 
@@ -25,7 +25,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements IWebView 
 
 
     @Bind(R.id.toolbar)
-    Toolbar toolbar;
+    CompatToolbar toolbar;
     @Bind(R.id.progressbar)
     NumberProgressBar progressbar;
     @Bind(R.id.web_view)

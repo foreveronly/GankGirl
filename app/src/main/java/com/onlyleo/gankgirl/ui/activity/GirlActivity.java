@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -21,6 +20,7 @@ import com.onlyleo.gankgirl.ui.view.IGirlView;
 import com.onlyleo.gankgirl.utils.CommonTools;
 import com.onlyleo.gankgirl.utils.FileUtil;
 import com.onlyleo.gankgirl.utils.TipsUtil;
+import com.onlyleo.gankgirl.widget.CompatToolbar;
 
 import butterknife.Bind;
 import uk.co.senab.photoview.PhotoViewAttacher;
@@ -31,7 +31,7 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
     @Bind(R.id.iv_girl_all)
     ImageView ivGirl;
     @Bind(R.id.toolbar)
-    Toolbar toolbar;
+    CompatToolbar toolbar;
     private Girl girl;
 
     private Bitmap girlbm;

@@ -2,16 +2,17 @@ package com.onlyleo.gankgirl.presenter;
 
 import android.app.Activity;
 
+import com.onlyleo.gankgirl.BuildConfig;
 import com.onlyleo.gankgirl.model.PrettyGirlData;
 import com.onlyleo.gankgirl.model.VideoData;
 import com.onlyleo.gankgirl.model.entity.Gank;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.net.GankRetrofit;
 import com.onlyleo.gankgirl.ui.view.IMainView;
-import com.onlyleo.gankgirl.utils.CommonTools;
+import com.orhanobut.logger.Logger;
 
-import java.util.Date;
-import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -66,33 +67,31 @@ public class MainPresenter extends BasePresenter<IMainView> {
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
+                        if (BuildConfig.DEBUG)
+                            Logger.e(throwable.getMessage());
                         mView.showErrorView();
                         mView.hideProgress();
                     }
                 });
     }
 
-
     private PrettyGirlData getGirlAndTitleAndDate(PrettyGirlData girl, VideoData videoData) {
-        for(Girl g:girl.results){
-            g.desc += getFirstVideoDesc(g.publishedAt,videoData.results);
+        Collections.sort(girl.results, new Comparator<Girl>() {
+            @Override
+            public int compare(Girl lhs, Girl rhs) {
+                return rhs.publishedAt.compareTo(lhs.publishedAt);
+            }
+        });
+        Collections.sort(videoData.results, new Comparator<Gank>() {
+            @Override
+            public int compare(Gank lhs, Gank rhs) {
+                return rhs.publishedAt.compareTo(lhs.publishedAt);
+            }
+        });
+        int size = Math.min(girl.results.size(), videoData.results.size());
+        for (int i = 0; i < size; i++) {
+            girl.results.get(i).desc = videoData.results.get(i).desc;
         }
         return girl;
-    }
-
-    private int mLastVideoIndex = 0;
-
-    private String getFirstVideoDesc(Date publishedAt, List<Gank> results) {
-        String videoDesc = "";
-        for (int i = mLastVideoIndex; i < results.size(); i++) {
-            Gank video = results.get(i);
-            if (video.publishedAt == null) video.publishedAt = video.createdAt;
-            if (CommonTools.isTheSameDay(publishedAt, video.publishedAt)) {
-                videoDesc = video.desc;
-                mLastVideoIndex = i;
-                break;
-            }
-        }
-        return videoDesc;
     }
 }

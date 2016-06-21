@@ -55,7 +55,7 @@ public class VideoImageView extends ImageView implements Animator.AnimatorListen
         AnimatorSet anim = new AnimatorSet();
             anim.playTogether(ObjectAnimator.ofFloat(this, "scaleX", 1.5f, 1f, 1.5f),
                     ObjectAnimator.ofFloat(this, "scaleY", 1.5f, 1f, 1.5f));
-        anim.setDuration(10987);
+        anim.setDuration(20000);
         anim.addListener(this);
         anim.start();
     }
