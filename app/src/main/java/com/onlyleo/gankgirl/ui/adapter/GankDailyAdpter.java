@@ -1,6 +1,7 @@
 package com.onlyleo.gankgirl.ui.adapter;
 
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Gank;
 import com.onlyleo.gankgirl.ui.activity.WebActivity;
 import com.onlyleo.gankgirl.utils.CommonTools;
+import com.onlyleo.gankgirl.utils.TipsUtil;
 
 import java.util.List;
 
@@ -25,8 +27,8 @@ public class GankDailyAdpter extends RecyclerView.Adapter<GankDailyAdpter.GankDa
 
     private List<Gank> list;
     private Context context;
-    private static final int DELAY = 138;
     private int mLastPosition = -1;
+
     public GankDailyAdpter(Context context, List<Gank> list) {
         this.list = list;
         this.context = context;
@@ -43,26 +45,26 @@ public class GankDailyAdpter extends RecyclerView.Adapter<GankDailyAdpter.GankDa
     public void onBindViewHolder(GankDailyHolder holder, int position) {
         Gank gank = list.get(position);
         holder.gankllList.setTag(gank);
-        if(position == 0){
-            showTitle(true,holder.titleList);
-        }else{
-            if(list.get(position).type.equals(list.get(position-1).type)){
-                showTitle(false,holder.titleList);
-            }else {
-                showTitle(true,holder.titleList);
+        if (position == 0) {
+            showTitle(true, holder.titleList);
+        } else {
+            if (list.get(position).type.equals(list.get(position - 1).type)) {
+                showTitle(false, holder.titleList);
+            } else {
+                showTitle(true, holder.titleList);
             }
         }
-        if(holder.titleList.getVisibility()==View.VISIBLE){
+        if (holder.titleList.getVisibility() == View.VISIBLE) {
             holder.titleList.setText(gank.type);
         }
         holder.linkList.setText(CommonTools.getGankStyleStr(gank));
-        showItemAnim(holder.linkList,position);
+        showItemAnim(holder.linkList, position);
     }
 
-    public void showTitle(boolean show,TextView titleList){
-        if(show){
+    public void showTitle(boolean show, TextView titleList) {
+        if (show) {
             titleList.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             titleList.setVisibility(View.GONE);
         }
     }
@@ -84,7 +86,20 @@ public class GankDailyAdpter extends RecyclerView.Adapter<GankDailyAdpter.GankDa
 
         @OnClick(R.id.gankll_list)
         public void onClick() {
-            WebActivity.loadWebViewActivity(context, (Gank) gankllList.getTag());
+            if ("休息视频".equals(((Gank) gankllList.getTag()).type)) {
+                if (!CommonTools.isWIFIConnected(context)) {
+                    TipsUtil.showTipWithAction(itemView, "你使用的不是wifi网络，要继续吗？", "继续", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            WebActivity.loadWebViewActivity(context, (Gank) gankllList.getTag());
+                        }
+                    }, Snackbar.LENGTH_LONG);
+                }else{
+                    WebActivity.loadWebViewActivity(context, (Gank) gankllList.getTag());
+                }
+            } else
+                WebActivity.loadWebViewActivity(context, (Gank) gankllList.getTag());
+
         }
 
         public GankDailyHolder(View itemView) {
@@ -92,6 +107,7 @@ public class GankDailyAdpter extends RecyclerView.Adapter<GankDailyAdpter.GankDa
             ButterKnife.bind(this, itemView);
         }
     }
+
     public void showItemAnim(final View view, final int position) {
         final Context context = view.getContext();
         if (position > mLastPosition) {
@@ -102,18 +118,22 @@ public class GankDailyAdpter extends RecyclerView.Adapter<GankDailyAdpter.GankDa
                     Animation animation = AnimationUtils.loadAnimation(context,
                             R.anim.slide_in_bottom);
                     animation.setAnimationListener(new Animation.AnimationListener() {
-                        @Override public void onAnimationStart(Animation animation) {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
                             view.setAlpha(1);
                         }
 
-                        @Override public void onAnimationEnd(Animation animation) {}
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                        }
 
-
-                        @Override public void onAnimationRepeat(Animation animation) {}
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+                        }
                     });
                     view.startAnimation(animation);
                 }
-            },300);
+            }, 300);
             mLastPosition = position;
         }
     }

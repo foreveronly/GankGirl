@@ -2,6 +2,7 @@ package com.onlyleo.gankgirl.presenter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -25,6 +26,7 @@ public class WebPresenter extends BasePresenter<IWebView> {
 
     /**
      * webview设置
+     *
      * @param webView
      * @param url
      */
@@ -38,6 +40,37 @@ public class WebPresenter extends BasePresenter<IWebView> {
         webView.setWebChromeClient(new ChromeClient());
         webView.setWebViewClient(new GankClient());
         webView.loadUrl(url);
+    }
+
+    public void loadWebVideo(WebView webView, String url) {
+        webView.setWebChromeClient(new Chrome());
+        webView.setWebViewClient(new WebViewClient());
+        webView.loadUrl(url);
+    }
+
+    private class Chrome extends WebChromeClient
+            implements MediaPlayer.OnCompletionListener {
+
+        @Override
+        public void onCompletion(MediaPlayer player) {
+            if (player != null) {
+                if (player.isPlaying()) player.stop();
+                player.reset();
+                player.release();
+                player = null;
+            }
+        }
+
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            super.onProgressChanged(view, newProgress);
+            mView.showProgressBar(newProgress);
+        }
+
+        @Override
+        public void onReceivedTitle(WebView view, String title) {
+            super.onReceivedTitle(view, title);
+        }
     }
 
     private class ChromeClient extends WebChromeClient {
@@ -64,6 +97,7 @@ public class WebPresenter extends BasePresenter<IWebView> {
 
     /**
      * 刷新
+     *
      * @param webView
      */
     public void refresh(WebView webView) {
@@ -72,6 +106,7 @@ public class WebPresenter extends BasePresenter<IWebView> {
 
     /**
      * 复制链接
+     *
      * @param text
      */
     public void copyUrl(String text) {
@@ -80,6 +115,7 @@ public class WebPresenter extends BasePresenter<IWebView> {
 
     /**
      * 浏览器打开
+     *
      * @param url
      */
     public void openInBrowser(String url) {
@@ -96,6 +132,7 @@ public class WebPresenter extends BasePresenter<IWebView> {
 
     /**
      * 更多操作
+     *
      * @param gank
      */
     public void moreOperation(Gank gank) {

@@ -2,16 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main_root"
     android:layout_width="match_parent"
-    android:focusable="true"
-    android:layout_height="200dp">
+    android:layout_height="200dp"
+    android:focusable="true">
 
     <ImageView
         android:id="@+id/iv_girl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textColor="@color/pure_white"
+        android:contentDescription="@string/category_girl"
         android:scaleType="centerCrop"
-        android:contentDescription="@string/category_girl" />
+        android:textColor="@color/pure_white" />
 
     <LinearLayout
         android:id="@+id/ll_title"
@@ -36,11 +36,11 @@
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:maxEms="20"
-            android:gravity="end"
             android:ellipsize="marquee"
+            android:gravity="end"
             android:marqueeRepeatLimit="marquee_forever"
+            android:maxEms="20"
+            android:singleLine="true"
             android:textColor="@color/pure_white"
             android:textSize="@dimen/main_act_font" />
     </LinearLayout>

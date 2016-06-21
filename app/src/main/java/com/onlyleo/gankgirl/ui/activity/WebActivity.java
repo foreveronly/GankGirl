@@ -2,6 +2,9 @@ package com.onlyleo.gankgirl.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.os.Build;
+import android.support.design.widget.AppBarLayout;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +20,9 @@ import com.onlyleo.gankgirl.presenter.WebPresenter;
 import com.onlyleo.gankgirl.ui.base.BaseActivity;
 import com.onlyleo.gankgirl.ui.view.IWebView;
 import com.onlyleo.gankgirl.utils.TipsUtil;
+import com.onlyleo.gankgirl.widget.AlwaysMarqueeTextView;
 import com.onlyleo.gankgirl.widget.CompatToolbar;
+import com.onlyleo.gankgirl.widget.LoveVideoView;
 
 import butterknife.Bind;
 
@@ -32,6 +37,12 @@ public class WebActivity extends BaseActivity<WebPresenter> implements IWebView 
     WebView webView;
     @Bind(R.id.contentView)
     LinearLayout contentView;
+    @Bind(R.id.app_bar)
+    AppBarLayout appBar;
+    @Bind(R.id.web_video)
+    LoveVideoView webVideo;
+    @Bind(R.id.tv_title)
+    AlwaysMarqueeTextView tvTitle;
     private Gank gank;
 
     @Override
@@ -64,7 +75,8 @@ public class WebActivity extends BaseActivity<WebPresenter> implements IWebView 
 
     @Override
     public void setWebTitle(String title) {
-        setTitle(title);
+        tvTitle.setText(title);
+//        setTitle(title);
     }
 
     @Override
@@ -77,7 +89,17 @@ public class WebActivity extends BaseActivity<WebPresenter> implements IWebView 
         initToolbar(toolbar);
         gank = (Gank) getIntent().getSerializableExtra(GlobalConfig.GANK);
         setTitle(gank.desc);
-        presenter.settingOfWebView(webView, gank.url);
+        if (("休息视频").equals(gank.type)) {
+            webVideo.setVisibility(View.VISIBLE);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            appBar.setVisibility(View.GONE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                appBar.setElevation(0);
+            presenter.loadWebVideo(webVideo, gank.url);
+        } else {
+            webView.setVisibility(View.VISIBLE);
+            presenter.settingOfWebView(webView, gank.url);
+        }
     }
 
     @Override
@@ -130,18 +152,31 @@ public class WebActivity extends BaseActivity<WebPresenter> implements IWebView 
             webView.destroy();
             webView = null;
         }
+        if (webVideo != null) {
+            webVideo.resumeTimers();
+            webVideo.onResume();
+        }
         presenter.release();
     }
 
     @Override
     protected void onPause() {
         if (webView != null) webView.onPause();
+        if (webVideo != null) {
+            webVideo.onPause();
+            webVideo.pauseTimers();
+        }
         super.onPause();
     }
 
     @Override
     protected void onResume() {
         if (webView != null) webView.onResume();
+        if (webVideo != null) {
+            webVideo.resumeTimers();
+            webVideo.onResume();
+        }
         super.onResume();
     }
+
 }

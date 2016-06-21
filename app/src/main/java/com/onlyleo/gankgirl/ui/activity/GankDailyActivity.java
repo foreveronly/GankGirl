@@ -1,12 +1,12 @@
 package com.onlyleo.gankgirl.ui.activity;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.onlyleo.gankgirl.GlobalConfig;
@@ -27,6 +27,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implements IGankDailyView {
 
@@ -42,6 +43,32 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
     private List<Gank> list;
     private GankDailyAdpter adapter;
     private Calendar calendar;
+
+    @OnClick(R.id.fab)
+    void fabClick() {
+        if (!CommonTools.isWIFIConnected(this)) {
+            TipsUtil.showTipWithAction(fab, "你使用的不是wifi网络，要继续吗？", "继续", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (list.size() > 0 && list.get(0).type.equals("休息视频")) {
+                        Intent intent = new Intent(GankDailyActivity.this, WebActivity.class);
+                        intent.putExtra(GlobalConfig.GANK, list.get(0));
+                        startActivity(intent);
+                    } else {
+                        TipsUtil.showSnackTip(fab, getString(R.string.open_url_failed));
+                    }
+                }
+            }, Snackbar.LENGTH_LONG);
+        } else {
+            if (list.size() > 0 && list.get(0).type.equals("休息视频")) {
+                Intent intent = new Intent(GankDailyActivity.this, WebActivity.class);
+                intent.putExtra(GlobalConfig.GANK, list.get(0));
+                startActivity(intent);
+            } else {
+                TipsUtil.showSnackTip(fab, getString(R.string.open_url_failed));
+            }
+        }
+    }
 
     @Override
     protected int getLayout() {
@@ -97,24 +124,24 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
         ViewCompat.setTransitionName(gankDailyIv, getString(R.string.pretty_girl));
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_gankdaily, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_share:
-
-                break;
-            case R.id.action_open_in_browser:
-
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_gankdaily, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.action_share:
+//
+//                break;
+//            case R.id.action_open_in_browser:
+//
+//                break;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     protected void onDestroy() {

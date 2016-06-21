@@ -19,9 +19,16 @@
         app:progress_text_visibility="invisible"
         app:progress_unreached_bar_height="2dp" />
 
+    <com.onlyleo.gankgirl.widget.LoveVideoView
+        android:id="@+id/web_video"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
     <WebView
         android:id="@+id/web_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
 </LinearLayout>
