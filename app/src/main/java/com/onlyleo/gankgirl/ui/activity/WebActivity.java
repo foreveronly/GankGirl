@@ -133,4 +133,15 @@ public class WebActivity extends BaseActivity<WebPresenter> implements IWebView 
         presenter.release();
     }
 
+    @Override
+    protected void onPause() {
+        if (webView != null) webView.onPause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        if (webView != null) webView.onResume();
+        super.onResume();
+    }
 }

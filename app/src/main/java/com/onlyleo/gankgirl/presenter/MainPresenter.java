@@ -3,9 +3,9 @@ package com.onlyleo.gankgirl.presenter;
 import android.app.Activity;
 
 import com.onlyleo.gankgirl.BuildConfig;
+import com.onlyleo.gankgirl.model.ContentData;
 import com.onlyleo.gankgirl.model.PrettyGirlData;
-import com.onlyleo.gankgirl.model.VideoData;
-import com.onlyleo.gankgirl.model.entity.Gank;
+import com.onlyleo.gankgirl.model.entity.Content;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.net.GankRetrofit;
 import com.onlyleo.gankgirl.ui.view.IMainView;
@@ -40,10 +40,10 @@ public class MainPresenter extends BasePresenter<IMainView> {
      */
     public void loadData(int page) {
         subscription = Observable.zip(GankRetrofit.getGuDongInstance().getPrettyGirlData(PAGE_SIZE, page),
-                GankRetrofit.getGuDongInstance().getVideoData(PAGE_SIZE, page), new Func2<PrettyGirlData, VideoData, PrettyGirlData>() {
+                GankRetrofit.getGuDongInstance().getContentData(PAGE_SIZE, page), new Func2<PrettyGirlData, ContentData, PrettyGirlData>() {
                     @Override
-                    public PrettyGirlData call(PrettyGirlData prettyGirlData, VideoData videoData) {
-                        return getGirlAndTitleAndDate(prettyGirlData, videoData);
+                    public PrettyGirlData call(PrettyGirlData prettyGirlData, ContentData contentData) {
+                        return getGirlAndTitleAndDate(prettyGirlData, contentData);
                     }
                 }).subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
@@ -75,22 +75,22 @@ public class MainPresenter extends BasePresenter<IMainView> {
                 });
     }
 
-    private PrettyGirlData getGirlAndTitleAndDate(PrettyGirlData girl, VideoData videoData) {
+    private PrettyGirlData getGirlAndTitleAndDate(PrettyGirlData girl, ContentData contentData) {
         Collections.sort(girl.results, new Comparator<Girl>() {
             @Override
             public int compare(Girl lhs, Girl rhs) {
                 return rhs.publishedAt.compareTo(lhs.publishedAt);
             }
         });
-        Collections.sort(videoData.results, new Comparator<Gank>() {
+        Collections.sort(contentData.results, new Comparator<Content>() {
             @Override
-            public int compare(Gank lhs, Gank rhs) {
+            public int compare(Content lhs, Content rhs) {
                 return rhs.publishedAt.compareTo(lhs.publishedAt);
             }
         });
-        int size = Math.min(girl.results.size(), videoData.results.size());
+        int size = Math.min(girl.results.size(), contentData.results.size());
         for (int i = 0; i < size; i++) {
-            girl.results.get(i).desc = videoData.results.get(i).desc;
+            girl.results.get(i).desc = contentData.results.get(i).title;
         }
         return girl;
     }
