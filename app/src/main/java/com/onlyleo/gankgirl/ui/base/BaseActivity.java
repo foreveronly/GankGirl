@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.WindowManager;
 
 import com.onlyleo.gankgirl.GankGirlApp;
@@ -43,15 +42,15 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case android.R.id.home:
+//                onBackPressed();
+//                break;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     //检查Presenter是否存在
     private void checkPresenterIsNull() {

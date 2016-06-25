@@ -148,7 +148,19 @@ public class CommonTools {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(Intent.createChooser(intent, context.getString(R.string.share_gank_to)));
     }
-
+    /**
+     * 分享干货
+     * @param context
+     * @param url
+     */
+    public static void shareGankDaily(Context context, String url) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT, "这是今天的干活"+url);
+        intent.setType("text/plain");
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(Intent.createChooser(intent, context.getString(R.string.share_gank_to)));
+    }
 
     /**
      * 分享视频

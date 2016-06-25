@@ -26,6 +26,8 @@ public class GirlPresenter extends BasePresenter<IGirlView> {
     public void release() {
         if (subscription != null)
             subscription.unsubscribe();
+        if (mView != null)
+            mView = null;
     }
 
     /**

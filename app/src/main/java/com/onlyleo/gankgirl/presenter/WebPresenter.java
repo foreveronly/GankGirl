@@ -21,7 +21,8 @@ public class WebPresenter extends BasePresenter<IWebView> {
 
     @Override
     public void release() {
-
+        if (mView != null)
+            mView = null;
     }
 
     /**

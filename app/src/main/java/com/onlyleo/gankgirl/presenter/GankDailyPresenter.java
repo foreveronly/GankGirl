@@ -26,10 +26,13 @@ public class GankDailyPresenter extends BasePresenter<IGankDailyView> {
     public void release() {
         if (subscription != null)
             subscription.unsubscribe();
+        if (mView != null)
+            mView = null;
     }
 
     /**
      * 加载每日数据
+     *
      * @param year
      * @param month
      * @param day
@@ -57,9 +60,10 @@ public class GankDailyPresenter extends BasePresenter<IGankDailyView> {
                 });
     }
 
-    public void loadVideo(String videoUrl){
+    public void loadVideo(String videoUrl) {
 
     }
+
     private List<Gank> addAllResults(GankData.Result results) {
         List<Gank> mGankList = new ArrayList<>();
         if (results.androidList != null) mGankList.addAll(results.androidList);

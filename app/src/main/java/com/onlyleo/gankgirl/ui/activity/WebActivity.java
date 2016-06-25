@@ -20,7 +20,6 @@ import com.onlyleo.gankgirl.presenter.WebPresenter;
 import com.onlyleo.gankgirl.ui.base.BaseActivity;
 import com.onlyleo.gankgirl.ui.view.IWebView;
 import com.onlyleo.gankgirl.utils.TipsUtil;
-import com.onlyleo.gankgirl.widget.AlwaysMarqueeTextView;
 import com.onlyleo.gankgirl.widget.CompatToolbar;
 import com.onlyleo.gankgirl.widget.LoveVideoView;
 
@@ -41,8 +40,6 @@ public class WebActivity extends BaseActivity<WebPresenter> implements IWebView 
     AppBarLayout appBar;
     @Bind(R.id.web_video)
     LoveVideoView webVideo;
-    @Bind(R.id.tv_title)
-    AlwaysMarqueeTextView tvTitle;
     private Gank gank;
 
     @Override
@@ -75,8 +72,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements IWebView 
 
     @Override
     public void setWebTitle(String title) {
-        tvTitle.setText(title);
-//        setTitle(title);
+        setTitle(title);
     }
 
     @Override

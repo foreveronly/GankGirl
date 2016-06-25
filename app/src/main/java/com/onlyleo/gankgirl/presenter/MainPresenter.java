@@ -27,6 +27,8 @@ public class MainPresenter extends BasePresenter<IMainView> {
     public void release() {
         if (subscription != null)
             subscription.unsubscribe();
+        if(mView!=null)
+            mView = null;
     }
 
     public MainPresenter(Activity context, IMainView view) {
@@ -76,6 +78,7 @@ public class MainPresenter extends BasePresenter<IMainView> {
     }
 
     private PrettyGirlData getGirlAndTitleAndDate(PrettyGirlData girl, ContentData contentData) {
+        //list按时间降序排序
         Collections.sort(girl.results, new Comparator<Girl>() {
             @Override
             public int compare(Girl lhs, Girl rhs) {

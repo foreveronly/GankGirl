@@ -7,12 +7,15 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.onlyleo.gankgirl.GlobalConfig;
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Gank;
 import com.onlyleo.gankgirl.model.entity.Girl;
+import com.onlyleo.gankgirl.net.GankRetrofit;
 import com.onlyleo.gankgirl.presenter.GankDailyPresenter;
 import com.onlyleo.gankgirl.ui.adapter.GankDailyAdpter;
 import com.onlyleo.gankgirl.ui.base.BaseActivity;
@@ -124,24 +127,21 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
         ViewCompat.setTransitionName(gankDailyIv, getString(R.string.pretty_girl));
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_gankdaily, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.action_share:
-//
-//                break;
-//            case R.id.action_open_in_browser:
-//
-//                break;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_gankdaily, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_share:
+                CommonTools.shareGankDaily(this, GankRetrofit.HOST+calendar.get(Calendar.YEAR)+"/"+calendar.get(Calendar.MONTH) + 1+"/"+calendar.get(Calendar.DAY_OF_MONTH));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onDestroy() {

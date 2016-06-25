@@ -36,6 +36,11 @@
             android:name=".ui.activity.WebActivity"
             android:label="@string/title_activity_girl"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.CategoryActivity"
+            android:label="@string/title_activity_girl"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

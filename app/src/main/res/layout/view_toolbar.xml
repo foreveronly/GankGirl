@@ -14,16 +14,6 @@
         android:theme="@style/AppTheme.AppBarOverlay"
         app:layout_scrollFlags="scroll|enterAlways|snap"
         app:popupTheme="@style/AppTheme.PopupOverlay">
-
-        <com.onlyleo.gankgirl.widget.AlwaysMarqueeTextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="marquee"
-            android:gravity="center"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:maxLines="1"
-            android:textColor="@color/pure_white" />
     </com.onlyleo.gankgirl.widget.CompatToolbar>
 
 </android.support.design.widget.AppBarLayout>
