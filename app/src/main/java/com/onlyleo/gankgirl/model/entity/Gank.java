@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Gank extends Soul{
 
-
+    //每个干货的链接
     public boolean used;
     public String type;
     public String url;

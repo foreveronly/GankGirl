@@ -2,7 +2,6 @@ package com.onlyleo.gankgirl.ui.view;
 
 
 import com.onlyleo.gankgirl.model.entity.Girl;
-import com.onlyleo.gankgirl.ui.base.IBaseView;
 
 import java.util.List;
 

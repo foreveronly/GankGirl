@@ -10,18 +10,14 @@ import com.onlyleo.gankgirl.presenter.BasePresenter;
 
 import butterknife.ButterKnife;
 
-/**
- * 基础Fragment
- * Created by panl on 16/1/5.
- */
 public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
 
     protected T presenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(getLayout(),container,false);
-        ButterKnife.bind(this,view);
+        View view = inflater.inflate(getLayout(), container, false);
+        ButterKnife.bind(this, view);
         initPresenter();
         return view;
     }
@@ -36,8 +32,4 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
         ButterKnife.unbind(this);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
 }

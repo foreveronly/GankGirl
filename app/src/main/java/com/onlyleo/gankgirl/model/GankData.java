@@ -26,7 +26,6 @@ import java.util.List;
 
 
 public class GankData extends BaseData {
-
     public List<String> category;
     public Result results;
 

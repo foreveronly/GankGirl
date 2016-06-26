@@ -1,4 +1,4 @@
-package com.onlyleo.gankgirl.ui.base;
+package com.onlyleo.gankgirl.ui.view;
 
 
 public interface IBaseView {

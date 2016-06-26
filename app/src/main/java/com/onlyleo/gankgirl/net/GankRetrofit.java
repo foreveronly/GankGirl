@@ -26,6 +26,7 @@ public class GankRetrofit {
                 .build();
     }
 
+    //单例获取API实例
     public static GankAPI getGuDongInstance() {
         synchronized (monitor) {
             if (mGankAPI == null) {

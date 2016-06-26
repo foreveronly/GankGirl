@@ -3,9 +3,6 @@
 
     <group android:id="@+id/nav_main">
         <item
-            android:id="@+id/nav_index"
-            android:title="@string/menu_index" />
-        <item
             android:id="@+id/nav_category"
             android:title="@string/menu_category" />
         <item

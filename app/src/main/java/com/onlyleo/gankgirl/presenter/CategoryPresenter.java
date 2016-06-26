@@ -2,13 +2,10 @@ package com.onlyleo.gankgirl.presenter;
 
 import android.app.Activity;
 
-import com.onlyleo.gankgirl.ui.view.ICategoryView;
+import com.onlyleo.gankgirl.ui.view.IBaseView;
 
-/**
- * Created by BBC on 2016/6/15 0015.
- */
-public class CategoryPresenter extends BasePresenter<ICategoryView> {
-    public CategoryPresenter(Activity context, ICategoryView view) {
+public class CategoryPresenter extends BasePresenter<IBaseView> {
+    public CategoryPresenter(Activity context, IBaseView view) {
         super(context, view);
     }
 
@@ -16,4 +13,6 @@ public class CategoryPresenter extends BasePresenter<ICategoryView> {
     public void release() {
 
     }
+
+
 }

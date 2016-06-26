@@ -1,5 +1,6 @@
 package com.onlyleo.gankgirl.ui.activity;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -89,7 +90,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         list = SPDataTools.getFirstPageGirls(this);
-        if(list==null)list = new ArrayList<>();
+        if (list == null) list = new ArrayList<>();
         adapter = new MainAdapter(list, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -165,8 +166,9 @@ public class MainActivity extends BaseActivity<MainPresenter>
         recyclerView.smoothScrollToPosition(0);
         presenter.loadData(page);
     }
+
     @OnClick(R.id.toolbar)
-    void toolbarClick(){
+    void toolbarClick() {
         recyclerView.smoothScrollToPosition(0);
     }
 
@@ -174,14 +176,10 @@ public class MainActivity extends BaseActivity<MainPresenter>
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.nav_index) {
-            setTitle(getResources().getString(R.string.app_name));
-        } else if (id == R.id.nav_category) {
-            setTitle(getResources().getString(R.string.menu_category));
+        if (id == R.id.nav_category) {
+            startActivity(new Intent(this, CategoryActivity.class));
         } else if (id == R.id.nav_search) {
-            setTitle(getResources().getString(R.string.menu_search));
         } else if (id == R.id.nav_setting) {
-            setTitle(getResources().getString(R.string.menu_setting));
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_about) {
