@@ -15,7 +15,6 @@ import butterknife.Bind;
 
 public class CategoryActivity extends BaseActivity<CategoryPresenter> implements IBaseView {
 
-
     @Bind(R.id.toolbar)
     CompatToolbar toolbar;
     @Bind(R.id.tab_layout)
@@ -37,6 +36,7 @@ public class CategoryActivity extends BaseActivity<CategoryPresenter> implements
     @Override
     public void init() {
         initToolbar(toolbar);
+        setTitle("分类");
         CategoryPagerAdapter pagerAdapter = new CategoryPagerAdapter(getSupportFragmentManager());
         container.setAdapter(pagerAdapter);
         container.setOffscreenPageLimit(4);
