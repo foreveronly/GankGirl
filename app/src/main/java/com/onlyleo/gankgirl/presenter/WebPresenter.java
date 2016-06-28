@@ -78,7 +78,6 @@ public class WebPresenter extends BasePresenter<IWebView> {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             super.onProgressChanged(view, newProgress);
-            mView.showProgressBar(newProgress);
         }
 
         @Override
@@ -121,7 +120,7 @@ public class WebPresenter extends BasePresenter<IWebView> {
      */
     public void openInBrowser(String url) {
         Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_VIEW);
+        intent.setAction("android.intent.action.VIEW");
         Uri uri = Uri.parse(url);
         intent.setData(uri);
         if (intent.resolveActivity(mContext.getPackageManager()) != null) {
