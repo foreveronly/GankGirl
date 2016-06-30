@@ -24,7 +24,7 @@ public class GankGirlApp extends Application {
                     .init(getResources().getString(R.string.app_name))                 // default PRETTYLOGGER or use just init()
                     .methodCount(3)                 // default 2
                     .logLevel(LogLevel.FULL)        // default LogLevel.FULL
-                    .methodOffset(2);        // default 0
+                    .methodOffset(0);        // default 0
         }
 
     }

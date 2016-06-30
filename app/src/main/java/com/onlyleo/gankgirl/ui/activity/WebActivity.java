@@ -83,7 +83,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements IWebView 
     @Override
     public void init() {
         initToolbar(toolbar);
-        gank = (Gank) getIntent().getSerializableExtra(GlobalConfig.GANK);
+        gank = getIntent().getParcelableExtra(GlobalConfig.GANK);
         setTitle(gank.desc);
         if (("休息视频").equals(gank.type)) {
             webVideo.setVisibility(View.VISIBLE);

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Parcelable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
@@ -28,7 +29,6 @@ import com.onlyleo.gankgirl.ui.activity.GirlActivity;
 import com.onlyleo.gankgirl.utils.CommonTools;
 import com.onlyleo.gankgirl.widget.AlwaysMarqueeTextView;
 
-import java.io.Serializable;
 import java.util.List;
 
 import butterknife.Bind;
@@ -93,14 +93,14 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
             if (ivgirl.getDrawable() != null)
                 GlobalConfig.shareDrawable = ivgirl.getDrawable();
             Intent intent = new Intent(context, GankDailyActivity.class);
-            intent.putExtra("girlData", (Serializable) card.getTag());
+            intent.putExtra("girlData", (Parcelable) card.getTag());
             context.startActivity(intent);
         }
 
         @OnClick(R.id.iv_girl)
         void girlClick() {
             Intent intent = new Intent(context, GirlActivity.class);
-            intent.putExtra("girlData", (Serializable) card.getTag());
+            intent.putExtra("girlData", (Parcelable) card.getTag());
             GlobalConfig.shareDrawable = ivgirl.getDrawable();
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
                     .makeSceneTransitionAnimation((Activity) context, ivgirl, context.getString(R.string.pretty_girl));
