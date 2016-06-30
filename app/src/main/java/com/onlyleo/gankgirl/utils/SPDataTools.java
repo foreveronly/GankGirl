@@ -15,9 +15,9 @@ public class SPDataTools {
     private static final String IS_FIRST_OPEN = "is_first_open";
     private static Gson gson = new Gson();
 
-    public static boolean saveFirstPageGirls(Context context, List<Girl> girls) {
+    public static void saveFirstPageGirls(Context context, List<Girl> girls) {
         SharedPreferences preferences = context.getSharedPreferences(GANK, Context.MODE_PRIVATE);
-        return preferences.edit().putString(GIRLS, gson.toJson(girls)).commit();
+        preferences.edit().putString(GIRLS, gson.toJson(girls)).apply();
     }
 
     public static List<Girl> getFirstPageGirls(Context context) {

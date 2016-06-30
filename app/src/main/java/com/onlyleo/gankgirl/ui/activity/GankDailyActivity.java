@@ -110,7 +110,7 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
     }
 
     public void getIntentData() {
-        girl = (Girl) getIntent().getSerializableExtra("girlData");
+        girl = (Girl) getIntent().getParcelableExtra("girlData");
         calendar = Calendar.getInstance();
         calendar.setTime(girl.publishedAt);
         presenter.loadData(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
