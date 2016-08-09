@@ -26,8 +26,8 @@ public class GankDailyPresenter extends BasePresenter<IGankDailyView> {
     public void release() {
         if (subscription != null)
             subscription.unsubscribe();
-        if (mView != null)
-            mView = null;
+//        if (mView != null)
+//            mView = null;
     }
 
     /**
