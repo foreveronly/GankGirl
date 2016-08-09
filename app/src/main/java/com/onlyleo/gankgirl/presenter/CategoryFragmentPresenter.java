@@ -20,8 +20,8 @@ public class CategoryFragmentPresenter extends BasePresenter<ICategoryView> {
     public void release() {
         if (subscription != null)
             subscription.unsubscribe();
-        if (mView != null)
-            mView = null;
+//        if (mView != null)
+//            mView = null;
     }
 
     public void loadData(String category, int page) {
