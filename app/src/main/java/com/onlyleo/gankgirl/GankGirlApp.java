@@ -1,20 +1,21 @@
 package com.onlyleo.gankgirl;
 
-import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
-import java.util.LinkedList;
-import java.util.List;
-
-/**
- * Created by bbc on 16/1/25.
- */
 public class GankGirlApp extends Application {
-    private static GankGirlApp instance = null;
-    private List<Activity> activityList = new LinkedList<>();
+
+
+    private RefWatcher refWatcher;
+
+    public GankGirlApp() {
+
+    }
 
     @Override
     public void onCreate() {
@@ -25,26 +26,22 @@ public class GankGirlApp extends Application {
                     .methodCount(3)                 // default 2
                     .logLevel(LogLevel.FULL)        // default LogLevel.FULL
                     .methodOffset(0);        // default 0
+            refWatcher = LeakCanary.install(this);
         }
 
+    }
+
+    private static class GankGirlAppHolder {
+        private static GankGirlApp instance = new GankGirlApp();
     }
 
     public static GankGirlApp getInstance() {
-        if (instance == null) {
-            instance = new GankGirlApp();
-        }
-        return instance;
+        return GankGirlAppHolder.instance;
     }
 
-    //添加Activity到容器中
-    public void addActivity(Activity activity) {
-        activityList.add(activity);
+    public static RefWatcher getRefWatcher(Context context) {
+        GankGirlApp application = (GankGirlApp) context.getApplicationContext();
+        return application.refWatcher;
     }
 
-    //遍历所有Activity并finish
-    public void exit() {
-        for (Activity activity : activityList) {
-            activity.finish();
-        }
-    }
 }

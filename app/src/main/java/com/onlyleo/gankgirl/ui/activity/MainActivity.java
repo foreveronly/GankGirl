@@ -12,7 +12,6 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.onlyleo.gankgirl.GankGirlApp;
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.presenter.MainPresenter;
@@ -62,7 +61,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
                     TipsUtil.showSnackTip(fab, "再按一次退出程序");
                     quitTime = System.currentTimeMillis();
                 } else {
-                    GankGirlApp.getInstance().exit();
+                    this.finish();
                 }
             }
         }

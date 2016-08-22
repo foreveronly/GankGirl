@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import com.onlyleo.gankgirl.GankGirlApp;
 import com.onlyleo.gankgirl.GlobalConfig;
 import com.onlyleo.gankgirl.presenter.BasePresenter;
+import com.squareup.leakcanary.RefWatcher;
 
 import butterknife.ButterKnife;
 
@@ -23,7 +24,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
-        GankGirlApp.getInstance().addActivity(this);
         ButterKnife.bind(this);
         initPresenter();
         checkPresenterIsNull();
@@ -104,6 +104,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        RefWatcher refWatcher = GankGirlApp.getRefWatcher(this);
+        refWatcher.watch(this);
         ButterKnife.unbind(this);
         if (GlobalConfig.shareDrawable != null) {
             GlobalConfig.shareDrawable = null;

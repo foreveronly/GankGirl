@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.onlyleo.gankgirl.GlobalConfig;
 import com.onlyleo.gankgirl.R;
+import com.onlyleo.gankgirl.model.db.GankDBCURD;
 import com.onlyleo.gankgirl.model.entity.Gank;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.net.GankRetrofit;
@@ -46,10 +47,11 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
     private List<Gank> list;
     private GankDailyAdpter adapter;
     private Calendar calendar;
+    private GankDBCURD dbcurd;
 
     @OnClick(R.id.fab)
     void fabClick() {
-        if (!CommonTools.isWIFIConnected(this)) {
+        if (!CommonTools.isWIFIConnected(this.getApplicationContext())) {
             TipsUtil.showTipWithAction(fab, "你使用的不是wifi网络，要继续吗？", "继续", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -106,14 +108,19 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
     public void init() {
         initToolbar(toolbar);
         getIntentData();
+//        initDBHelper();
         initGankDaily();
     }
 
     public void getIntentData() {
-        girl = (Girl) getIntent().getParcelableExtra("girlData");
+        girl = getIntent().getParcelableExtra("girlData");
         calendar = Calendar.getInstance();
         calendar.setTime(girl.publishedAt);
         presenter.loadData(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+    }
+
+    public void initDBHelper() {
+        dbcurd = new GankDBCURD(this.getApplicationContext());
     }
 
     public void initGankDaily() {
@@ -137,7 +144,7 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_share:
-                CommonTools.shareGankDaily(this, GankRetrofit.HOST+calendar.get(Calendar.YEAR)+"/"+calendar.get(Calendar.MONTH) + 1+"/"+calendar.get(Calendar.DAY_OF_MONTH));
+                CommonTools.shareGankDaily(this.getApplicationContext(), GankRetrofit.HOST + calendar.get(Calendar.YEAR) + "/" + calendar.get(Calendar.MONTH) + 1 + "/" + calendar.get(Calendar.DAY_OF_MONTH));
                 break;
         }
         return super.onOptionsItemSelected(item);
