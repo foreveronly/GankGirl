@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
+import com.bumptech.glide.Glide;
+
 /**
  * 添加加载更多功能
  * Created by panl on 15/12/31.
@@ -56,13 +58,16 @@ public class LMRecyclerView extends RecyclerView {
     public void onScrollStateChanged(int state) {
         LinearLayoutManager layoutManager = (LinearLayoutManager) getLayoutManager();
         if (state == RecyclerView.SCROLL_STATE_IDLE) {
+
+            Glide.with(getContext().getApplicationContext()).resumeRequests();
             int lastVisibleItem = layoutManager.findLastCompletelyVisibleItemPosition();
             int totalItemCount = layoutManager.getItemCount();
             if (lastVisibleItem == (totalItemCount - 1) && isScrollingToBottom) {
                 if (listener != null)
                     listener.loadMore();
             }
-        }
+        }else
+            Glide.with(getContext().getApplicationContext()).pauseRequests();
     }
 
     public interface LoadMoreListener {

@@ -3,14 +3,16 @@ package com.onlyleo.gankgirl.ui.activity;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.nineoldandroids.animation.AnimatorSet;
+import com.nineoldandroids.animation.ObjectAnimator;
 import com.onlyleo.gankgirl.GlobalConfig;
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.db.GankDBCURD;
@@ -24,7 +26,6 @@ import com.onlyleo.gankgirl.ui.view.IGankDailyView;
 import com.onlyleo.gankgirl.utils.CommonTools;
 import com.onlyleo.gankgirl.utils.TipsUtil;
 import com.onlyleo.gankgirl.widget.CompatToolbar;
-import com.onlyleo.gankgirl.widget.VideoImageView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,7 +41,7 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
     @Bind(R.id.toolbar)
     CompatToolbar toolbar;
     @Bind(R.id.gank_daily_iv)
-    VideoImageView gankDailyIv;
+    ImageView gankDailyIv;
     @Bind(R.id.fab)
     FloatingActionButton fab;
     private Girl girl;
@@ -48,6 +49,7 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
     private GankDailyAdpter adapter;
     private Calendar calendar;
     private GankDBCURD dbcurd;
+    private AnimatorSet anim = null;
 
     @OnClick(R.id.fab)
     void fabClick() {
@@ -131,7 +133,7 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
         recyclerViewGankdaily.setItemAnimator(new DefaultItemAnimator());
         recyclerViewGankdaily.setAdapter(adapter);
         gankDailyIv.setImageDrawable(GlobalConfig.shareDrawable);
-        ViewCompat.setTransitionName(gankDailyIv, getString(R.string.pretty_girl));
+        setAnimation(gankDailyIv);
     }
 
     @Override
@@ -154,6 +156,16 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
     protected void onDestroy() {
         super.onDestroy();
         presenter.release();
+        if(anim!=null)
+            anim.cancel();
+
     }
 
+    private void setAnimation(ImageView girl) {
+        anim = new AnimatorSet();
+        anim.playTogether(ObjectAnimator.ofFloat(girl, "scaleX", 1.5f, 1f, 1.5f),
+                ObjectAnimator.ofFloat(girl, "scaleY", 1.5f, 1f, 1.5f));
+        anim.setDuration(20000);
+        anim.start();
+    }
 }
