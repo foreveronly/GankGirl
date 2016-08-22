@@ -15,7 +15,6 @@ import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.onlyleo.gankgirl.GlobalConfig;
 import com.onlyleo.gankgirl.R;
-import com.onlyleo.gankgirl.model.db.GankDBCURD;
 import com.onlyleo.gankgirl.model.entity.Gank;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.net.GankRetrofit;
@@ -48,7 +47,6 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
     private List<Gank> list;
     private GankDailyAdpter adapter;
     private Calendar calendar;
-    private GankDBCURD dbcurd;
     private AnimatorSet anim = null;
 
     @OnClick(R.id.fab)
@@ -121,9 +119,6 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
         presenter.loadData(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
     }
 
-    public void initDBHelper() {
-        dbcurd = new GankDBCURD(this.getApplicationContext());
-    }
 
     public void initGankDaily() {
         setTitle(CommonTools.toDateTimeStr(girl.publishedAt));
@@ -156,7 +151,7 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
     protected void onDestroy() {
         super.onDestroy();
         presenter.release();
-        if(anim!=null)
+        if (anim != null)
             anim.cancel();
 
     }
