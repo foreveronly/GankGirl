@@ -1,16 +1,11 @@
 package com.onlyleo.gankgirl.ui.activity;
 
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.onlyleo.gankgirl.GlobalConfig;
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Girl;
@@ -57,30 +52,19 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
 
     public void initGirl() {
         photoViewAttacher = new PhotoViewAttacher(ivGirl);
-        if (GlobalConfig.shareDrawable != null){
+        if (GlobalConfig.shareDrawable != null) {
             ivGirl.setImageDrawable(GlobalConfig.shareDrawable);
-            girlbm = ((BitmapDrawable)GlobalConfig.shareDrawable).getBitmap();
+        } else {
+            CommonTools.ImageLoaderAsBitmap(ivGirl, girl.url);
         }
-        else
-            Glide.with(this).load(girl.url).asBitmap().into(new SimpleTarget<Bitmap>() {
-                @Override
-                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                    ivGirl.setImageBitmap(resource);
-                    photoViewAttacher.update();
-                    girlbm = resource;
-                }
-                @Override
-                public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                    ivGirl.setImageDrawable(errorDrawable);
-                }
-            });
+        girlbm = CommonTools.drawableToBitamp(ivGirl.getDrawable());
         photoViewAttacher.update();
         ViewCompat.setTransitionName(ivGirl, getString(R.string.pretty_girl));
         setTitle(CommonTools.toDateTimeStr(girl.publishedAt));
     }
 
     public void getIntentData() {
-        girl = (Girl) getIntent().getParcelableExtra("girlData");
+        girl = getIntent().getParcelableExtra("girlData");
     }
 
     @Override

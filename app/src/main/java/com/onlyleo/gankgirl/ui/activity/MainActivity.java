@@ -95,6 +95,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         recyclerView.setLoadMoreListener(this);
+        recyclerView.applyFloatingActionButton(fab);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.post(new Runnable() {

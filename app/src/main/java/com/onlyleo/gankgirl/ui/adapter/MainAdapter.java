@@ -4,9 +4,7 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Parcelable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -18,9 +16,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.onlyleo.gankgirl.GlobalConfig;
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Girl;
@@ -38,8 +33,7 @@ import butterknife.OnClick;
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
     private List<Girl> list;
     private Context context;
-    private Girl girl;
-    int lastPosition = 0;
+    private int lastPosition = 0;
 
     public MainAdapter(List<Girl> list, Context context) {
         this.list = list;
@@ -54,19 +48,14 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
 
     @Override
     public void onBindViewHolder(final GirlHolder holder, int position) {
-        girl = list.get(position);
+        Girl girl = list.get(position);
         holder.card.setTag(girl);
-        holder.ivgirl.setBackgroundColor(Color.WHITE);
-        Glide.with(context).load(girl.url).asBitmap().into(new SimpleTarget<Bitmap>() {
-            @Override
-            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                holder.ivgirl.setImageBitmap(resource);
-            }
-            @Override
-            public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                holder.ivgirl.setImageDrawable(errorDrawable);
-            }
-        });
+        int red = (int) (Math.random() * 255);
+        int green = (int) (Math.random() * 255);
+        int blue = (int) (Math.random() * 255);
+        holder.ivgirl.setBackgroundColor(Color.argb(204, red, green, blue));
+//        holder.ivgirl.setBackgroundColor(Color.WHITE);
+        CommonTools.ImageLoader(holder.ivgirl, girl.url);
         String title = girl.desc;
         holder.tvDate.setText(CommonTools.toDateTimeStr(girl.publishedAt));
         holder.tvTitle.setText(title);
@@ -109,7 +98,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
 
         View card;
 
-        public GirlHolder(View itemView) {
+        GirlHolder(View itemView) {
             super(itemView);
             card = itemView;
             ButterKnife.bind(this, itemView);

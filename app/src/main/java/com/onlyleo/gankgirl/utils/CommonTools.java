@@ -4,7 +4,11 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.PixelFormat;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -12,8 +16,13 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.onlyleo.gankgirl.GankGirlApp;
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Gank;
 
@@ -21,6 +30,54 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class CommonTools {
+
+    /**
+     * 封装图片加载库
+     */
+
+
+    public static void ImageLoader(ImageView imageView, String url) {
+
+        Glide.with(GankGirlApp.getInstance().getApplicationContext()).load(url).crossFade().into(imageView);
+    }
+
+    /**
+     * 封装图片加载库,并缓存到iamgeview
+     */
+    public static void ImageLoaderAsBitmap(final ImageView imageView, String url) {
+        Glide.with(GankGirlApp.getInstance().getApplicationContext()).load(url).asBitmap().into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                imageView.setImageBitmap(resource);
+            }
+
+            @Override
+            public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                imageView.setImageDrawable(errorDrawable);
+            }
+        });
+    }
+
+    /**
+     * drawble转bitmap
+     * @param drawable
+     * @return
+     */
+    public static Bitmap drawableToBitamp(Drawable drawable) {
+
+        int w = drawable.getIntrinsicWidth();
+        int h = drawable.getIntrinsicHeight();
+        Bitmap.Config config =
+                drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
+                        : Bitmap.Config.RGB_565;
+        Bitmap bitmap = Bitmap.createBitmap(w,h,config);
+        //注意，下面三行代码要用到，否在在View或者surfaceview里的canvas.drawBitmap会看不到图
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, w, h);
+        drawable.draw(canvas);
+        return bitmap;
+    }
+
     /**
      * 拼接String
      *
@@ -37,6 +94,7 @@ public class CommonTools {
 
     /**
      * 复制到剪切板
+     *
      * @param context
      * @param text
      * @param success
@@ -63,6 +121,7 @@ public class CommonTools {
 
     /**
      * 日期做标题
+     *
      * @param date
      * @return
      */
@@ -77,6 +136,7 @@ public class CommonTools {
 
     /**
      * 日期做标题2
+     *
      * @param date
      * @return
      */
@@ -91,6 +151,7 @@ public class CommonTools {
 
     /**
      * 比较日期
+     *
      * @param one
      * @param another
      * @return
@@ -109,6 +170,7 @@ public class CommonTools {
 
     /**
      * 分享图片
+     *
      * @param context
      * @param uri
      * @param title
@@ -124,6 +186,7 @@ public class CommonTools {
 
     /**
      * 分享app
+     *
      * @param context
      */
     public static void shareApp(Context context) {
@@ -137,6 +200,7 @@ public class CommonTools {
 
     /**
      * 分享干货
+     *
      * @param context
      * @param gank
      */
@@ -148,15 +212,17 @@ public class CommonTools {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(Intent.createChooser(intent, context.getString(R.string.share_gank_to)));
     }
+
     /**
      * 分享干货
+     *
      * @param context
      * @param url
      */
     public static void shareGankDaily(Context context, String url) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_TEXT, "这是今天的干活"+url);
+        intent.putExtra(Intent.EXTRA_TEXT, "这是今天的干活" + url);
         intent.setType("text/plain");
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(Intent.createChooser(intent, context.getString(R.string.share_gank_to)));
@@ -164,6 +230,7 @@ public class CommonTools {
 
     /**
      * 分享视频
+     *
      * @param context
      * @param gank
      */
@@ -175,4 +242,6 @@ public class CommonTools {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(Intent.createChooser(intent, context.getString(R.string.share_video_to)));
     }
+
+
 }

@@ -7,10 +7,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
-/**
- * 添加加载更多功能
- * Created by panl on 15/12/31.
- */
+import com.bumptech.glide.Glide;
+import com.orhanobut.logger.Logger;
+
+
 public class LMRecyclerView extends RecyclerView {
     private boolean isScrollingToBottom = true;
     private FloatingActionButton floatingActionButton;
@@ -33,35 +33,53 @@ public class LMRecyclerView extends RecyclerView {
         this.floatingActionButton = floatingActionButton;
     }
 
-    public void setLoadMoreListener(LoadMoreListener loadMoreListener){
+    public void setLoadMoreListener(LoadMoreListener loadMoreListener) {
         this.listener = loadMoreListener;
     }
 
 
-    @Override
-    public void onScrolled(int dx, int dy) {
-        isScrollingToBottom = dy > 0;
-        if (floatingActionButton != null) {
-            if (isScrollingToBottom) {
-                if (floatingActionButton.isShown())
-                    floatingActionButton.hide();
-            } else {
-                if (!floatingActionButton.isShown())
-                    floatingActionButton.show();
-            }
-        }
-    }
+//    @Override
+//    public void onScrolled(int dx, int dy) {
+//        isScrollingToBottom = dy > 0;
+//        if (floatingActionButton != null) {
+//            if (isScrollingToBottom) {
+//                if (floatingActionButton.isShown())
+//                    floatingActionButton.hide();
+//            } else {
+//                if (!floatingActionButton.isShown())
+//                    floatingActionButton.show();
+//            }
+//        }
+//    }
 
     @Override
     public void onScrollStateChanged(int state) {
         LinearLayoutManager layoutManager = (LinearLayoutManager) getLayoutManager();
-        if (state == RecyclerView.SCROLL_STATE_IDLE) {
-            int lastVisibleItem = layoutManager.findLastCompletelyVisibleItemPosition();
-            int totalItemCount = layoutManager.getItemCount();
-            if (lastVisibleItem == (totalItemCount - 1) && isScrollingToBottom) {
-                if (listener != null)
-                    listener.loadMore();
-            }
+        switch (state) {
+            case SCROLL_STATE_IDLE:
+                Logger.d("SCROLL_STATE_IDLE");
+                if (!floatingActionButton.isShown())
+                    floatingActionButton.show();
+                Glide.with(getContext().getApplicationContext()).resumeRequests();
+                int lastVisibleItem = layoutManager.findLastCompletelyVisibleItemPosition();
+                int totalItemCount = layoutManager.getItemCount();
+                if (lastVisibleItem == (totalItemCount - 1) && isScrollingToBottom) {
+                    if (listener != null)
+                        listener.loadMore();
+                }
+                break;
+            case SCROLL_STATE_DRAGGING:
+                Logger.d("SCROLL_STATE_DRAGGING");
+                if (floatingActionButton.isShown())
+                    floatingActionButton.hide();
+                Glide.with(getContext().getApplicationContext()).pauseRequests();
+                break;
+            case SCROLL_STATE_SETTLING:
+                Logger.d("SCROLL_STATE_SETTLING");
+                if (floatingActionButton.isShown())
+                    floatingActionButton.hide();
+                Glide.with(getContext().getApplicationContext()).pauseRequests();
+                break;
         }
     }
 

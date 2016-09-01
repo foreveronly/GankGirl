@@ -45,12 +45,14 @@
     public *;
 }
 
--keep public class me.drakeet.meizhi.R$*{
+#-keepresourcexmlelements manifest/application/meta-data@value=GlideModule
+
+-keep public class com.onlyleo.gankgirl.R$*{
 		public static final int *;
 }
 
 
--keep class me.drakeet.meizhi.BuildConfig { *; }
+-keep class com.onlyleo.gankgirl.BuildConfig { *; }
 -keep public class * extends android.os.Binder
 
 # Keep the support library
@@ -84,7 +86,7 @@
     native <methods>;
 }
 
--keep class me.drakeet.meizhi.** { *;}
+-keep class com.onlyleo.gankgirl.** { *;}
 
 -keepclasseswithmembernames class * {
     native <methods>;
@@ -151,7 +153,7 @@
    public <init>(org.json.JSONObject);
 }
 
--keep public class me.drakeet.meizhi.R$*{
+-keep public class com.onlyleo.gankgirl.R$*{
     public static final int *;
 }
 
