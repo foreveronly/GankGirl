@@ -50,8 +50,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
     public void onBindViewHolder(final GirlHolder holder, int position) {
         Girl girl = list.get(position);
         holder.card.setTag(girl);
-        holder.ivgirl.setBackgroundColor(Color.WHITE);
-        CommonTools.ImageLoader(context.getApplicationContext(), holder.ivgirl, girl.url);
+        int red = (int) (Math.random() * 255);
+        int green = (int) (Math.random() * 255);
+        int blue = (int) (Math.random() * 255);
+        holder.ivgirl.setBackgroundColor(Color.argb(204, red, green, blue));
+//        holder.ivgirl.setBackgroundColor(Color.WHITE);
+        CommonTools.ImageLoader(holder.ivgirl, girl.url);
         String title = girl.desc;
         holder.tvDate.setText(CommonTools.toDateTimeStr(girl.publishedAt));
         holder.tvTitle.setText(title);

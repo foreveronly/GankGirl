@@ -12,8 +12,8 @@ android {
         applicationId "com.onlyleo.gankgirl"
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 3
-        versionName "0.1"
+        versionCode 4
+        versionName "1.0"
         // dex突破65535的限制
         multiDexEnabled true
         // 默认是umeng的渠道
@@ -44,8 +44,7 @@ android {
         release {
             // 不显示Log
             buildConfigField "boolean", "LOG_DEBUG", "false"
-
-            minifyEnabled false
+            minifyEnabled true
             zipAlignEnabled true
             // 移除无用的resource文件
             shrinkResources true
@@ -91,9 +90,8 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     compile 'com.daimajia.numberprogressbar:library:1.2@aar'
-    compile 'com.github.wooplr:Spotlight:1.1'
     compile 'com.nineoldandroids:library:2.4.0'
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+//    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
+//    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+//    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
 }

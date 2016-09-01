@@ -1,21 +1,14 @@
 package com.onlyleo.gankgirl;
 
 import android.app.Application;
-import android.content.Context;
 
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
-import com.squareup.leakcanary.LeakCanary;
-import com.squareup.leakcanary.RefWatcher;
 
 public class GankGirlApp extends Application {
 
-
-    private RefWatcher refWatcher;
-
-    public GankGirlApp() {
-
-    }
+    private static GankGirlApp INSTANCE = null;
+//    private RefWatcher refWatcher;
 
     @Override
     public void onCreate() {
@@ -26,22 +19,20 @@ public class GankGirlApp extends Application {
                     .methodCount(3)                 // default 2
                     .logLevel(LogLevel.FULL)        // default LogLevel.FULL
                     .methodOffset(0);        // default 0
-            refWatcher = LeakCanary.install(this);
+//            refWatcher = LeakCanary.install(this);
+            INSTANCE = this;
         }
 
     }
 
-    private static class GankGirlAppHolder {
-        private static GankGirlApp instance = new GankGirlApp();
-    }
 
     public static GankGirlApp getInstance() {
-        return GankGirlAppHolder.instance;
-    }
+        return INSTANCE;
+        }
 
-    public static RefWatcher getRefWatcher(Context context) {
-        GankGirlApp application = (GankGirlApp) context.getApplicationContext();
-        return application.refWatcher;
-    }
+//    public static RefWatcher getRefWatcher(Context context) {
+//        GankGirlApp application = (GankGirlApp) context.getApplicationContext();
+////        return application.refWatcher;
+//    }
 
 }

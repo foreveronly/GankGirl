@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.onlyleo.gankgirl.GankGirlApp;
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Gank;
 
@@ -35,15 +36,16 @@ public class CommonTools {
      */
 
 
-    public static void ImageLoader(Context context, ImageView imageView, String url) {
-        Glide.with(context).load(url).centerCrop().into(imageView);
+    public static void ImageLoader(ImageView imageView, String url) {
+
+        Glide.with(GankGirlApp.getInstance().getApplicationContext()).load(url).crossFade().into(imageView);
     }
 
     /**
      * 封装图片加载库,并缓存到iamgeview
      */
-    public static void ImageLoaderAsBitmap(Context context, final ImageView imageView, String url) {
-        Glide.with(context).load(url).asBitmap().into(new SimpleTarget<Bitmap>() {
+    public static void ImageLoaderAsBitmap(final ImageView imageView, String url) {
+        Glide.with(GankGirlApp.getInstance().getApplicationContext()).load(url).asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                 imageView.setImageBitmap(resource);
