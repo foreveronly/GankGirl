@@ -12,7 +12,7 @@ import com.onlyleo.gankgirl.ui.fragment.CategoryFragment;
 public class CategoryPagerAdapter extends FragmentStatePagerAdapter {
 
 
-    String[] title = {"Android","iOS","前端","瞎推荐","拓展资源","App"};
+    private String[] title = {"Android","iOS","前端","瞎推荐","拓展资源","App"};
 
     public CategoryPagerAdapter(FragmentManager fm) {
         super(fm);

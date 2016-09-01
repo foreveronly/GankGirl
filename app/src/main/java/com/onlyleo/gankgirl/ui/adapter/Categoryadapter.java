@@ -60,7 +60,7 @@ public class Categoryadapter extends RecyclerView.Adapter<Categoryadapter.Catego
         LinearLayout gankllList;
 
         @OnClick(R.id.gankll_list)
-        public void onClick() {
+        void onClick() {
             if ("休息视频".equals(((Gank) gankllList.getTag()).type)) {
                 if (!CommonTools.isWIFIConnected(context)) {
                     TipsUtil.showTipWithAction(itemView, "你使用的不是wifi网络，要继续吗？", "继续", new View.OnClickListener() {

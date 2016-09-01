@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main_root"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="230dp"
     android:focusable="true">
 
     <ImageView
@@ -37,9 +37,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
-            android:gravity="end"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:maxEms="20"
             android:singleLine="true"
             android:textColor="@color/pure_white"
             android:textSize="@dimen/main_act_font" />

@@ -85,7 +85,7 @@ public class GankDailyAdpter extends RecyclerView.Adapter<GankDailyAdpter.GankDa
         TextView linkList;
 
         @OnClick(R.id.gankll_list)
-        public void onClick() {
+        void onClick() {
             if ("休息视频".equals(((Gank) gankllList.getTag()).type)) {
                 if (!CommonTools.isWIFIConnected(context)) {
                     TipsUtil.showTipWithAction(itemView, "你使用的不是wifi网络，要继续吗？", "继续", new View.OnClickListener() {
@@ -102,13 +102,13 @@ public class GankDailyAdpter extends RecyclerView.Adapter<GankDailyAdpter.GankDa
 
         }
 
-        public GankDailyHolder(View itemView) {
+        GankDailyHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
 
-    public void showItemAnim(final View view, final int position) {
+    private void showItemAnim(final View view, final int position) {
         final Context context = view.getContext();
         if (position > mLastPosition) {
             view.setAlpha(0);
