@@ -61,7 +61,7 @@ public class GankDailyAdpter extends RecyclerView.Adapter<GankDailyAdpter.GankDa
         showItemAnim(holder.linkList, position);
     }
 
-    public void showTitle(boolean show, TextView titleList) {
+    private void showTitle(boolean show, TextView titleList) {
         if (show) {
             titleList.setVisibility(View.VISIBLE);
         } else {

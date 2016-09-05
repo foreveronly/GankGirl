@@ -36,7 +36,7 @@ public class CommonTools {
      */
 
 
-    public static void ImageLoader(ImageView imageView, String url) {
+    public static void ImageLoader(Context context,ImageView imageView, String url) {
 
         Glide.with(GankGirlApp.getInstance().getApplicationContext()).load(url).crossFade().into(imageView);
     }
@@ -44,8 +44,8 @@ public class CommonTools {
     /**
      * 封装图片加载库,并缓存到iamgeview
      */
-    public static void ImageLoaderAsBitmap(final ImageView imageView, String url) {
-        Glide.with(GankGirlApp.getInstance().getApplicationContext()).load(url).asBitmap().into(new SimpleTarget<Bitmap>() {
+    public static void ImageLoaderAsBitmap(Context context, final ImageView imageView, String url) {
+        Glide.with(context).load(url).asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                 imageView.setImageBitmap(resource);

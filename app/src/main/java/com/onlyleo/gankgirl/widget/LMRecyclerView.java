@@ -69,13 +69,11 @@ public class LMRecyclerView extends RecyclerView {
                 }
                 break;
             case SCROLL_STATE_DRAGGING:
-                Logger.d("SCROLL_STATE_DRAGGING");
                 if (floatingActionButton.isShown())
                     floatingActionButton.hide();
                 Glide.with(getContext().getApplicationContext()).pauseRequests();
                 break;
             case SCROLL_STATE_SETTLING:
-                Logger.d("SCROLL_STATE_SETTLING");
                 if (floatingActionButton.isShown())
                     floatingActionButton.hide();
                 Glide.with(getContext().getApplicationContext()).pauseRequests();
