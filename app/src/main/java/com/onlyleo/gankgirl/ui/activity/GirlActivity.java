@@ -55,7 +55,7 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
         if (GlobalConfig.shareDrawable != null) {
             ivGirl.setImageDrawable(GlobalConfig.shareDrawable);
         } else {
-            CommonTools.ImageLoaderAsBitmap(ivGirl, girl.url);
+            CommonTools.ImageLoaderAsBitmap(this,ivGirl, girl.url);
         }
         girlbm = CommonTools.drawableToBitamp(ivGirl.getDrawable());
         photoViewAttacher.update();
