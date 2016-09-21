@@ -35,8 +35,7 @@ public class CommonTools {
      * 封装图片加载库
      */
 
-
-    public static void ImageLoader(Context context,ImageView imageView, String url) {
+    public static void ImageLoader(Context context, ImageView imageView, String url) {
 
         Glide.with(GankGirlApp.getInstance().getApplicationContext()).load(url).crossFade().into(imageView);
     }
@@ -60,6 +59,7 @@ public class CommonTools {
 
     /**
      * drawble转bitmap
+     *
      * @param drawable
      * @return
      */
@@ -70,7 +70,7 @@ public class CommonTools {
         Bitmap.Config config =
                 drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
                         : Bitmap.Config.RGB_565;
-        Bitmap bitmap = Bitmap.createBitmap(w,h,config);
+        Bitmap bitmap = Bitmap.createBitmap(w, h, config);
         //注意，下面三行代码要用到，否在在View或者surfaceview里的canvas.drawBitmap会看不到图
         Canvas canvas = new Canvas(bitmap);
         drawable.setBounds(0, 0, w, h);
@@ -149,6 +149,7 @@ public class CommonTools {
         return year + "年" + month + "月" + day + "日";
     }
 
+
     /**
      * 比较日期
      *
@@ -163,7 +164,6 @@ public class CommonTools {
         _another.setTime(another);
         int oneDay = _one.get(Calendar.DAY_OF_YEAR);
         int anotherDay = _another.get(Calendar.DAY_OF_YEAR);
-
         return oneDay == anotherDay;
     }
     //================分享

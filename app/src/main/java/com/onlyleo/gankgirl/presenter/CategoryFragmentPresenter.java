@@ -25,6 +25,7 @@ public class CategoryFragmentPresenter extends BasePresenter<ICategoryView> {
     }
 
     public void loadData(String category, int page) {
+        
         subscription = GankRetrofit.getGuDongInstance().getCategoryData(category, PAGE_SIZE, page)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {

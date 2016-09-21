@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
 import com.bumptech.glide.Glide;
-import com.orhanobut.logger.Logger;
 
 
 public class LMRecyclerView extends RecyclerView {
@@ -57,8 +56,7 @@ public class LMRecyclerView extends RecyclerView {
         LinearLayoutManager layoutManager = (LinearLayoutManager) getLayoutManager();
         switch (state) {
             case SCROLL_STATE_IDLE:
-                Logger.d("SCROLL_STATE_IDLE");
-                if (!floatingActionButton.isShown())
+                if (floatingActionButton != null && !floatingActionButton.isShown())
                     floatingActionButton.show();
                 Glide.with(getContext().getApplicationContext()).resumeRequests();
                 int lastVisibleItem = layoutManager.findLastCompletelyVisibleItemPosition();
@@ -69,12 +67,12 @@ public class LMRecyclerView extends RecyclerView {
                 }
                 break;
             case SCROLL_STATE_DRAGGING:
-                if (floatingActionButton.isShown())
+                if (floatingActionButton != null && floatingActionButton.isShown())
                     floatingActionButton.hide();
                 Glide.with(getContext().getApplicationContext()).pauseRequests();
                 break;
             case SCROLL_STATE_SETTLING:
-                if (floatingActionButton.isShown())
+                if (floatingActionButton != null && floatingActionButton.isShown())
                     floatingActionButton.hide();
                 Glide.with(getContext().getApplicationContext()).pauseRequests();
                 break;

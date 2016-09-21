@@ -38,6 +38,7 @@ public class CategoryFragment extends BaseFragment<CategoryFragmentPresenter> im
 
     }
 
+
     public static CategoryFragment newInstance(String type) {
         CategoryFragment fragment = new CategoryFragment();
         Bundle args = new Bundle();

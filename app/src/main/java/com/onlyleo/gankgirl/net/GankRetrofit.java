@@ -15,7 +15,6 @@ public class GankRetrofit {
     public static final String HOST = "http://gank.io/api/";
     private static Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").serializeNulls().create();
     private static Retrofit retrofit;
-    private static GankAPI mGankAPI;
     private static final Object monitor = new Object();
 
     static {
@@ -26,13 +25,15 @@ public class GankRetrofit {
                 .build();
     }
 
+
     //单例获取API实例
     public static GankAPI getGuDongInstance() {
-        synchronized (monitor) {
-            if (mGankAPI == null) {
-                mGankAPI = retrofit.create(GankAPI.class);
-            }
-            return mGankAPI;
-        }
+        return GankAPIHolder.mGankAPI;
     }
+
+    //内部类，在装载该内部类时才会去创建单利对象
+    private static class GankAPIHolder {
+        private static GankAPI mGankAPI = retrofit.create(GankAPI.class);
+    }
+
 }
