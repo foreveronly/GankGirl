@@ -9,15 +9,10 @@ import com.onlyleo.gankgirl.model.entity.Content;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.net.GankRetrofit;
 import com.onlyleo.gankgirl.ui.view.IMainView;
-import com.onlyleo.gankgirl.utils.CommonTools;
-import com.onlyleo.gankgirl.utils.SPDataTools;
-import com.onlyleo.gankgirl.utils.ToastUtils;
 import com.orhanobut.logger.Logger;
 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -46,48 +41,40 @@ public class MainPresenter extends BasePresenter<IMainView> {
      * @param page
      */
     public void loadData(int page) {
-        List<Girl> list = SPDataTools.getFirstPageGirls(mContext);
-        Girl girl = list.get(0);
-        if (CommonTools.isTheSameDay(girl.publishedAt, new Date())) {
-            mView.showProgress();
-            ToastUtils.showShort(mContext,"已经是最新的了!");
-            mView.hideProgress();
-        } else {
-            subscription = Observable.zip(GankRetrofit.getGuDongInstance().getPrettyGirlData(PAGE_SIZE, page),
-                    GankRetrofit.getGuDongInstance().getContentData(PAGE_SIZE, page), new Func2<PrettyGirlData, ContentData, PrettyGirlData>() {
-                        @Override
-                        public PrettyGirlData call(PrettyGirlData prettyGirlData, ContentData contentData) {
-                            return getGirlAndTitleAndDate(prettyGirlData, contentData);
+        subscription = Observable.zip(GankRetrofit.getGuDongInstance().getPrettyGirlData(PAGE_SIZE, page),
+                GankRetrofit.getGuDongInstance().getContentData(PAGE_SIZE, page), new Func2<PrettyGirlData, ContentData, PrettyGirlData>() {
+                    @Override
+                    public PrettyGirlData call(PrettyGirlData prettyGirlData, ContentData contentData) {
+                        return getGirlAndTitleAndDate(prettyGirlData, contentData);
+                    }
+                }).subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mView.showProgress();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<PrettyGirlData>() {
+                    @Override
+                    public void call(PrettyGirlData prettyGirlData) {
+                        if (prettyGirlData.results.size() == 0) {
+                            mView.showNoMoreData();
+                        } else {
+                            mView.showGirlList(prettyGirlData.results);
                         }
-                    }).subscribeOn(Schedulers.io())
-                    .doOnSubscribe(new Action0() {
-                        @Override
-                        public void call() {
-                            mView.showProgress();
-                        }
-                    })
-                    .subscribeOn(AndroidSchedulers.mainThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<PrettyGirlData>() {
-                        @Override
-                        public void call(PrettyGirlData prettyGirlData) {
-                            if (prettyGirlData.results.size() == 0) {
-                                mView.showNoMoreData();
-                            } else {
-                                mView.showGirlList(prettyGirlData.results);
-                            }
-                            mView.hideProgress();
-                        }
-                    }, new Action1<Throwable>() {
-                        @Override
-                        public void call(Throwable throwable) {
-                            if (BuildConfig.DEBUG)
-                                Logger.e(throwable.getMessage());
-                            mView.showErrorView();
-                            mView.hideProgress();
-                        }
-                    });
-        }
+                        mView.hideProgress();
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        if (BuildConfig.DEBUG)
+                            Logger.e(throwable.getMessage());
+                        mView.showErrorView();
+                        mView.hideProgress();
+                    }
+                });
 
     }
 

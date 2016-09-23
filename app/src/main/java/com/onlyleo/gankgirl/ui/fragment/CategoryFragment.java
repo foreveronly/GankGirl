@@ -8,7 +8,7 @@ import android.view.View;
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Gank;
 import com.onlyleo.gankgirl.presenter.CategoryFragmentPresenter;
-import com.onlyleo.gankgirl.ui.adapter.Categoryadapter;
+import com.onlyleo.gankgirl.ui.adapter.CategoryAdapter;
 import com.onlyleo.gankgirl.ui.base.BaseFragment;
 import com.onlyleo.gankgirl.ui.view.ICategoryView;
 import com.onlyleo.gankgirl.utils.TipsUtil;
@@ -28,11 +28,13 @@ public class CategoryFragment extends BaseFragment<CategoryFragmentPresenter> im
     SwipeRefreshLayout swipeRefreshLayout;
     public static final String TYPE = "type";
     private String type;
-    private Categoryadapter categoryadapter;
+    private CategoryAdapter categoryadapter;
     private List<Gank> list;
     private boolean isRefresh = true;
     private int page = 1;
     private boolean canLoading = true;
+    private boolean isPrepared;
+    private boolean mHasLoadedOnce;
 
     public CategoryFragment() {
 
@@ -44,6 +46,9 @@ public class CategoryFragment extends BaseFragment<CategoryFragmentPresenter> im
         Bundle args = new Bundle();
         args.putString(TYPE, type);
         fragment.setArguments(args);
+
+
+
         return fragment;
     }
 
@@ -69,6 +74,7 @@ public class CategoryFragment extends BaseFragment<CategoryFragmentPresenter> im
 
     @Override
     public void loadMore() {
+        ++page;
         if (canLoading) {
             presenter.loadData(type, page);
             canLoading = false;
@@ -117,7 +123,7 @@ public class CategoryFragment extends BaseFragment<CategoryFragmentPresenter> im
     @Override
     public void showCategoryData(List<Gank> list) {
         canLoading = true;
-        page++;
+
         if (isRefresh) {
             this.list.clear();
             this.list.addAll(list);
@@ -131,24 +137,38 @@ public class CategoryFragment extends BaseFragment<CategoryFragmentPresenter> im
 
     @Override
     public void init() {
-        list = new ArrayList<>();
-        categoryadapter = new Categoryadapter(getContext(), list);
-        recyclerViewCategory.setLoadMoreListener(this);
-        recyclerViewCategory.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerViewCategory.setAdapter(categoryadapter);
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                presenter.loadData(type, page);
-            }
-        });
+        isPrepared = true;
+        lazyLoad();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         presenter.release();
+    }
+
+    @Override
+    protected void lazyLoad() {
+        if (!isPrepared || !isVisible || mHasLoadedOnce) {
+            return;
+        } else {
+            mHasLoadedOnce = true;
+            list = new ArrayList<>();
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            categoryadapter = new CategoryAdapter(getContext(), list);
+            recyclerViewCategory.setAdapter(categoryadapter);
+            recyclerViewCategory.setLoadMoreListener(this);
+            recyclerViewCategory.setLayoutManager(layoutManager);
+            swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
+            swipeRefreshLayout.setOnRefreshListener(this);
+            swipeRefreshLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    presenter.loadData(type, page);
+                }
+            });
+        }
+
     }
 }

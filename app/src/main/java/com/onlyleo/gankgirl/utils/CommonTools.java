@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.onlyleo.gankgirl.GankGirlApp;
@@ -37,7 +38,7 @@ public class CommonTools {
 
     public static void ImageLoader(Context context, ImageView imageView, String url) {
 
-        Glide.with(GankGirlApp.getInstance().getApplicationContext()).load(url).crossFade().into(imageView);
+        Glide.with(GankGirlApp.getInstance().getApplicationContext()).load(url).diskCacheStrategy(DiskCacheStrategy.RESULT).crossFade().into(imageView);
     }
 
     /**

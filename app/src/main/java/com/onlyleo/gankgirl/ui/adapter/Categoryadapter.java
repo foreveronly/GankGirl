@@ -22,13 +22,13 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class Categoryadapter extends RecyclerView.Adapter<Categoryadapter.CategoryViewHolder> {
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
 
     private Context context;
     private List<Gank> list;
     private int lastPosition = -1;
 
-    public Categoryadapter(Context context, List<Gank> list) {
+    public CategoryAdapter(Context context, List<Gank> list) {
         this.context = context;
         this.list = list;
     }
@@ -78,7 +78,7 @@ public class Categoryadapter extends RecyclerView.Adapter<Categoryadapter.Catego
 
         View card;
 
-        public CategoryViewHolder(View itemView) {
+        CategoryViewHolder(View itemView) {
             super(itemView);
             card = itemView;
             ButterKnife.bind(this, itemView);
