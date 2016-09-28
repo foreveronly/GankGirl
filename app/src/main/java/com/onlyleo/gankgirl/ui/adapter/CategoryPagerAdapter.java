@@ -5,10 +5,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.onlyleo.gankgirl.ui.fragment.CategoryFragment;
-
-/**
- * Created by panl on 16/1/5.
- */
 public class CategoryPagerAdapter extends FragmentStatePagerAdapter {
 
 

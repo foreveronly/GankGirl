@@ -40,6 +40,22 @@ public class CategoryActivity extends BaseActivity<CategoryPresenter> implements
         CategoryPagerAdapter pagerAdapter = new CategoryPagerAdapter(getSupportFragmentManager());
         container.setAdapter(pagerAdapter);
         container.setOffscreenPageLimit(4);
+        container.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setupWithViewPager(container);
     }

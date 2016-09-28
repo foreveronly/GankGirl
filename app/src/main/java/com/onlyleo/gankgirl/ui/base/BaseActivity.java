@@ -47,15 +47,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case android.R.id.home:
-//                onBackPressed();
-//                break;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     //检查Presenter是否存在
     private void checkPresenterIsNull() {

@@ -48,6 +48,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
 
     @Override
     public void onBindViewHolder(final GirlHolder holder, int position) {
+
         Girl girl = list.get(position);
         holder.card.setTag(girl);
         int red = (int) (Math.random() * 255);

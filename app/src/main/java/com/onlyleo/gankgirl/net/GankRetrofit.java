@@ -15,7 +15,6 @@ public class GankRetrofit {
     public static final String HOST = "http://gank.io/api/";
     private static Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").serializeNulls().create();
     private static Retrofit retrofit;
-    private static final Object monitor = new Object();
 
     static {
         retrofit = new Retrofit.Builder()

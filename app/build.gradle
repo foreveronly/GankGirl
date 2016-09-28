@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.onlyleo.gankgirl"
-        minSdkVersion 14
+        minSdkVersion 19
         targetSdkVersion 24
         versionCode 4
         versionName "1.0"
