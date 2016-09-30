@@ -46,9 +46,6 @@ public class CategoryFragment extends BaseFragment<CategoryFragmentPresenter> im
         Bundle args = new Bundle();
         args.putString(TYPE, type);
         fragment.setArguments(args);
-
-
-
         return fragment;
     }
 
@@ -149,9 +146,7 @@ public class CategoryFragment extends BaseFragment<CategoryFragmentPresenter> im
 
     @Override
     protected void lazyLoad() {
-        if (!isPrepared || !isVisible || mHasLoadedOnce) {
-            return;
-        } else {
+        if (isPrepared && isVisible && !mHasLoadedOnce) {
             mHasLoadedOnce = true;
             list = new ArrayList<>();
             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
