@@ -41,8 +41,8 @@ public class MainPresenter extends BasePresenter<IMainView> {
      * @param page
      */
     public void loadData(int page) {
-        subscription = Observable.zip(GankRetrofit.getGuDongInstance().getPrettyGirlData(PAGE_SIZE, page),
-                GankRetrofit.getGuDongInstance().getContentData(PAGE_SIZE, page), new Func2<PrettyGirlData, ContentData, PrettyGirlData>() {
+        subscription = Observable.zip(GankRetrofit.getGankApi().getPrettyGirlData(PAGE_SIZE, page),
+                GankRetrofit.getGankApi().getContentData(PAGE_SIZE, page), new Func2<PrettyGirlData, ContentData, PrettyGirlData>() {
                     @Override
                     public PrettyGirlData call(PrettyGirlData prettyGirlData, ContentData contentData) {
                         return getGirlAndTitleAndDate(prettyGirlData, contentData);

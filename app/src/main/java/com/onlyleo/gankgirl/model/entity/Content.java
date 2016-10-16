@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 public class Content extends Soul implements Parcelable {
     public String content;
-    public String publishedAt;
+    private String publishedAt;
     public String title;
 
     @Override
@@ -20,8 +20,6 @@ public class Content extends Soul implements Parcelable {
         dest.writeString(this.title);
     }
 
-    public Content() {
-    }
 
     protected Content(Parcel in) {
         this.content = in.readString();

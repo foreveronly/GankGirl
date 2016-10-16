@@ -38,7 +38,7 @@ public class GankDailyPresenter extends BasePresenter<IGankDailyView> {
      * @param day
      */
     public void loadData(int year, int month, int day) {
-        subscription = GankRetrofit.getGuDongInstance().getGankData(year, month, day)
+        subscription = GankRetrofit.getGankApi().getGankData(year, month, day)
                 .subscribeOn(Schedulers.io())
                 .map(new Func1<GankData, List<Gank>>() {
                     @Override
