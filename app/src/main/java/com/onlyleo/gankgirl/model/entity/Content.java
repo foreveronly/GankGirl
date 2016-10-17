@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 public class Content extends Soul implements Parcelable {
     public String content;
-    private String publishedAt;
+    public String publishedAt;
     public String title;
 
     @Override
