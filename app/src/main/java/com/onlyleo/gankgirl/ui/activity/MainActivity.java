@@ -18,6 +18,7 @@ import com.onlyleo.gankgirl.presenter.MainPresenter;
 import com.onlyleo.gankgirl.ui.adapter.MainAdapter;
 import com.onlyleo.gankgirl.ui.base.BaseActivity;
 import com.onlyleo.gankgirl.ui.view.IMainView;
+import com.onlyleo.gankgirl.utils.CheckVersion;
 import com.onlyleo.gankgirl.utils.SPDataTools;
 import com.onlyleo.gankgirl.utils.TipsUtil;
 import com.onlyleo.gankgirl.widget.CompatToolbar;
@@ -75,6 +76,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
 
     @Override
     protected void initPresenter() {
+        CheckVersion.checkVersion(this,true);
         presenter = new MainPresenter(this, this);
         presenter.init();
     }
@@ -180,8 +182,8 @@ public class MainActivity extends BaseActivity<MainPresenter>
             startActivity(new Intent(this, CategoryActivity.class));
         } else if (id == R.id.nav_search) {
         } else if (id == R.id.nav_setting) {
-        } else if (id == R.id.nav_share) {
-
+        } else if (id == R.id.nav_update) {
+            CheckVersion.checkVersion(this,false);
         } else if (id == R.id.nav_about) {
 
         }

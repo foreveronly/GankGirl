@@ -5,6 +5,7 @@ import android.content.Context;
 import com.onlyleo.gankgirl.model.CategoryData;
 import com.onlyleo.gankgirl.net.GankRetrofit;
 import com.onlyleo.gankgirl.ui.view.ICategoryView;
+import com.orhanobut.logger.Logger;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
@@ -37,11 +38,12 @@ public class CategoryFragmentPresenter extends BasePresenter<ICategoryView> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<CategoryData>() {
                     @Override
-                    public void call(CategoryData videoData) {
-                        if (videoData.results.size() == 0) {
+                    public void call(CategoryData categoryData) {
+                        Logger.d(categoryData.results.get(0).toString());
+                        if (categoryData.results.size() == 0) {
                             mView.showNoMoreData();
                         } else {
-                            mView.showCategoryData(videoData.results);
+                            mView.showCategoryData(categoryData.results);
                         }
                         mView.hideProgress();
                     }

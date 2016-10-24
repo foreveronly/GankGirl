@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class VersionRetrofit {
-    public static final String HOST = "http://fir.im/api/v2/app/version/";
+    public static final String HOST = "http://api.fir.im/apps/latest/";
     private static Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").serializeNulls().create();
     private static Retrofit retrofit;
 

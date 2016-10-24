@@ -17,7 +17,8 @@ public class Version extends Soul implements Parcelable {
     public String install_url;
     public String direct_install_url;
     public String update_url;
-    public int fsize;
+
+    private BinaryBean binary;
 
     protected Version(Parcel in) {
         name = in.readString();
@@ -30,7 +31,6 @@ public class Version extends Soul implements Parcelable {
         install_url = in.readString();
         direct_install_url = in.readString();
         update_url = in.readString();
-        fsize = in.readInt();
     }
 
     public static final Creator<Version> CREATOR = new Creator<Version>() {
@@ -62,6 +62,52 @@ public class Version extends Soul implements Parcelable {
         dest.writeString(install_url);
         dest.writeString(direct_install_url);
         dest.writeString(update_url);
-        dest.writeInt(fsize);
+    }
+
+    public static class BinaryBean implements Parcelable {
+        private int fsize;
+
+        protected BinaryBean(Parcel in) {
+            fsize = in.readInt();
+        }
+
+        public static final Creator<BinaryBean> CREATOR = new Creator<BinaryBean>() {
+            @Override
+            public BinaryBean createFromParcel(Parcel in) {
+                return new BinaryBean(in);
+            }
+
+            @Override
+            public BinaryBean[] newArray(int size) {
+                return new BinaryBean[size];
+            }
+        };
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(fsize);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "name='" + name + '\'' +
+                ", version='" + version + '\'' +
+                ", changelog='" + changelog + '\'' +
+                ", updated_at=" + updated_at +
+                ", versionShort='" + versionShort + '\'' +
+                ", build='" + build + '\'' +
+                ", installUrl='" + installUrl + '\'' +
+                ", install_url='" + install_url + '\'' +
+                ", direct_install_url='" + direct_install_url + '\'' +
+                ", update_url='" + update_url + '\'' +
+                ", fsize=" + binary.fsize +
+                '}';
     }
 }

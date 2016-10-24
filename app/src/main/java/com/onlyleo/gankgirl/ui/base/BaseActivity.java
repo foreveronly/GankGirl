@@ -73,7 +73,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected void onResume() {
         super.onResume();
         Log.i(TAG, "onResume");
-
     }
 
     @Override
@@ -87,7 +86,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected void onStop() {
         super.onStop();
         Log.i(TAG, "onStop");
-
     }
 
     @Override
