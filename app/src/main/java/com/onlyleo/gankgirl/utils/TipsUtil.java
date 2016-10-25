@@ -24,4 +24,6 @@ public class TipsUtil {
     public static void showSnackTip(View view, String tipText) {
         Snackbar.make(view, tipText, Snackbar.LENGTH_SHORT).show();
     }
+
+
 }

@@ -5,6 +5,8 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 
@@ -28,9 +30,9 @@ public class CheckVersion {
 
     private final static String appId = "575fb1e3e75e2d2bed000015";
     private final static String token = "4075cf1614935e8378de168581693fcf";
-    private final static String FILE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath();
+    private final static String FILE_PATH = Environment.getExternalStorageDirectory().getPath();
 
-    public static void checkVersion(final Context context, final boolean auto) {
+    public void checkVersion(final Context context, final boolean auto) {
 
         VersionRetrofit.getGankApi().getVersionInfo(appId, token)
                 .subscribeOn(Schedulers.io())
@@ -56,15 +58,18 @@ public class CheckVersion {
                 });
     }
 
-    private static void update(final Context context, final Version version) {
+    private void update(final Context context, final Version version) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        AlertDialog dialog = builder.create();
-        dialog.setTitle("发现新版本:");
-        dialog.setMessage("版本号" + version.versionShort + "\n" + version.changelog);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.setButton(DialogInterface.BUTTON_POSITIVE, "现在下载", new DialogInterface.OnClickListener() {
+
+        AlertDialog updateDialog = builder.create();
+        final AlertDialog downloading = builder.create();
+        updateDialog.setTitle("发现新版本:");
+        updateDialog.setMessage("版本号" + version.versionShort + "\n" + version.changelog);
+        updateDialog.setCanceledOnTouchOutside(false);
+        updateDialog.setButton(DialogInterface.BUTTON_POSITIVE, "现在下载", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(final DialogInterface dialog, int which) {
+
                 AndPermission.with((Activity) context)
                         .requestCode(101)
                         .permission(Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -73,25 +78,58 @@ public class CheckVersion {
                 OkHttpUtils.get().url(version.installUrl).build().execute(new FileCallBack(FILE_PATH,version.name+"_"+version.versionShort+".apk") {
                     @Override
                     public void onError(Call call, Exception e, int id) {
+
                     }
 
                     @Override
                     public void onResponse(File response, int id) {
+                        if (!response.exists()) {
+                            return;
+                        }else {
+                            Logger.d(FILE_PATH);
+                            final Intent i = new Intent(Intent.ACTION_VIEW);
+                            i.setDataAndType(Uri.parse("file://" + response.toString()),
+                                    "application/vnd.android.package-archive");
+                            if(CommonTools.isWIFIConnected(context)){
+                                context.startActivity(i);
+                            }else {
+                                downloading.setTitle("提示");
+                                downloading.setMessage("您现在没有连接 WIFI , 是否继续下载？");
+                                downloading.setCanceledOnTouchOutside(false);
+                                downloading.setButton(DialogInterface.BUTTON_NEGATIVE, "否", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                                downloading.setButton(DialogInterface.BUTTON_POSITIVE, "是", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        context.startActivity(i);
+                                    }
+                                });
+                                downloading.show();
+                            }
+
+                        }
+
+
                     }
 
                     @Override
                     public void inProgress(float progress, long total, int id) {
+
                     }
                 });
             }
         });
-        dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "取消", new DialogInterface.OnClickListener() {
+        updateDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
-        dialog.show();
+        updateDialog.show();
     }
 
 

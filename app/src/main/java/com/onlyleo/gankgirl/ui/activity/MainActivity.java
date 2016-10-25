@@ -52,6 +52,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
     private int page = 1;
     private long quitTime = 0;
 
+    protected CheckVersion checkVersion;
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -76,7 +77,8 @@ public class MainActivity extends BaseActivity<MainPresenter>
 
     @Override
     protected void initPresenter() {
-        CheckVersion.checkVersion(this,true);
+        checkVersion = new CheckVersion();
+        checkVersion.checkVersion(this,true);
         presenter = new MainPresenter(this, this);
         presenter.init();
     }
@@ -183,7 +185,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
         } else if (id == R.id.nav_search) {
         } else if (id == R.id.nav_setting) {
         } else if (id == R.id.nav_update) {
-            CheckVersion.checkVersion(this,false);
+            checkVersion.checkVersion(this,true);
         } else if (id == R.id.nav_about) {
 
         }
