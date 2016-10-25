@@ -75,52 +75,78 @@ public class CheckVersion {
                         .permission(Manifest.permission.READ_EXTERNAL_STORAGE,
                                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         .send();
-                OkHttpUtils.get().url(version.installUrl).build().execute(new FileCallBack(FILE_PATH,version.name+"_"+version.versionShort+".apk") {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
 
-                    }
-
-                    @Override
-                    public void onResponse(File response, int id) {
-                        if (!response.exists()) {
-                            return;
-                        }else {
-                            Logger.d(FILE_PATH);
-                            final Intent i = new Intent(Intent.ACTION_VIEW);
-                            i.setDataAndType(Uri.parse("file://" + response.toString()),
-                                    "application/vnd.android.package-archive");
-                            if(CommonTools.isWIFIConnected(context)){
-                                context.startActivity(i);
-                            }else {
-                                downloading.setTitle("提示");
-                                downloading.setMessage("您现在没有连接 WIFI , 是否继续下载？");
-                                downloading.setCanceledOnTouchOutside(false);
-                                downloading.setButton(DialogInterface.BUTTON_NEGATIVE, "否", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                                downloading.setButton(DialogInterface.BUTTON_POSITIVE, "是", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        context.startActivity(i);
-                                    }
-                                });
-                                downloading.show();
-                            }
+                if (CommonTools.isWIFIConnected(context)) {
+                    OkHttpUtils.get().url(version.installUrl).build().execute(new FileCallBack(FILE_PATH, version.name + "_" + version.versionShort + ".apk") {
+                        @Override
+                        public void onError(Call call, Exception e, int id) {
 
                         }
 
+                        @Override
+                        public void onResponse(File response, int id) {
+                            if (!response.exists()) {
+                                return;
+                            } else {
+                                Logger.d(FILE_PATH);
+                                final Intent i = new Intent(Intent.ACTION_VIEW);
+                                i.setDataAndType(Uri.parse("file://" + response.toString()),
+                                        "application/vnd.android.package-archive");
+                                context.startActivity(i);
+                            }
 
-                    }
 
-                    @Override
-                    public void inProgress(float progress, long total, int id) {
+                        }
 
-                    }
-                });
+                        @Override
+                        public void inProgress(float progress, long total, int id) {
+
+                        }
+                    });
+                } else {
+                    downloading.setTitle("提示");
+                    downloading.setMessage("您现在没有连接 WIFI , 是否继续下载？");
+                    downloading.setCanceledOnTouchOutside(false);
+                    downloading.setButton(DialogInterface.BUTTON_NEGATIVE, "否", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    downloading.setButton(DialogInterface.BUTTON_POSITIVE, "是", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            OkHttpUtils.get().url(version.installUrl).build().execute(new FileCallBack(FILE_PATH, version.name + "_" + version.versionShort + ".apk") {
+                                @Override
+                                public void onError(Call call, Exception e, int id) {
+
+                                }
+
+                                @Override
+                                public void onResponse(File response, int id) {
+                                    if (!response.exists()) {
+                                        return;
+                                    } else {
+                                        Logger.d(FILE_PATH);
+                                        final Intent i = new Intent(Intent.ACTION_VIEW);
+                                        i.setDataAndType(Uri.parse("file://" + response.toString()),
+                                                "application/vnd.android.package-archive");
+                                        context.startActivity(i);
+                                    }
+
+
+                                }
+
+                                @Override
+                                public void inProgress(float progress, long total, int id) {
+
+                                }
+                            });
+                        }
+                    });
+                    downloading.show();
+                }
+
             }
         });
         updateDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "取消", new DialogInterface.OnClickListener() {

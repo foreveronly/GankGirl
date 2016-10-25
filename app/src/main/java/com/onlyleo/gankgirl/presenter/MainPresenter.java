@@ -59,11 +59,13 @@ public class MainPresenter extends BasePresenter<IMainView> {
                 .subscribe(new Action1<PrettyGirlData>() {
                     @Override
                     public void call(PrettyGirlData prettyGirlData) {
-                        mView.hideProgress();
+
                         if (prettyGirlData.results.size() == 0) {
                             mView.showNoMoreData();
+                            mView.hideProgress();
                         } else {
                             mView.showGirlList(prettyGirlData.results);
+                            mView.hideProgress();
                         }
                     }
                 }, new Action1<Throwable>() {
