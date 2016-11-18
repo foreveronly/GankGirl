@@ -77,8 +77,8 @@ public class MainActivity extends BaseActivity<MainPresenter>
 
     @Override
     protected void initPresenter() {
-        checkVersion = new CheckVersion();
-        checkVersion.checkVersion(this,true);
+        checkVersion = new CheckVersion(this);
+        checkVersion.checkVersion(true);
         presenter = new MainPresenter(this, this);
         presenter.init();
     }
@@ -185,7 +185,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
         } else if (id == R.id.nav_search) {
         } else if (id == R.id.nav_setting) {
         } else if (id == R.id.nav_update) {
-            checkVersion.checkVersion(this,true);
+            checkVersion.checkVersion(true);
         } else if (id == R.id.nav_about) {
 
         }

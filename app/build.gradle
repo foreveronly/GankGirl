@@ -73,7 +73,7 @@ android {
         flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
     }
 }
-ext.supportLibVersion = "24.2.1"
+ext.supportLibVersion = "25.0.0"
 
 dependencies {
     compile fileTree(include: ["*.jar"], dir: "libs")
