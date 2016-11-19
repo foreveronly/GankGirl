@@ -93,7 +93,6 @@ dependencies {
     compile "com.daimajia.numberprogressbar:library:1.2@aar"
     compile "com.nineoldandroids:library:2.4.0"
     compile 'com.squareup.okio:okio:1.5.0'
-    compile 'com.zhy:okhttputils:2.6.2'
     compile 'com.yanzhenjie:permission:1.0.3'
     //    debugCompile "com.squareup.leakcanary:leakcanary-android:1.4-beta2"
     //    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2"
