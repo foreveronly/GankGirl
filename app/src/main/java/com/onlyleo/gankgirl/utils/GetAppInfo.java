@@ -5,11 +5,9 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.os.Environment;
 import android.util.Log;
 
-/**
- * Created by only1 on 2016/10/18 0018.
- */
 
 public class GetAppInfo {
     public static String getAppName(Context context) {
@@ -43,7 +41,7 @@ public class GetAppInfo {
     }
 
     public static int getAppVersionCode(Context context) {
-        int versionCode =  -1;
+        int versionCode = -1;
         try {
             PackageInfo pi = context.getPackageManager()
                     .getPackageInfo(context.getPackageName(), 0);
@@ -81,6 +79,10 @@ public class GetAppInfo {
             return appInfo.packageName;
         }
         return null;
+    }
+
+    public static String getApkPath() {
+        return Environment.getExternalStorageDirectory().getPath();
     }
 
 }

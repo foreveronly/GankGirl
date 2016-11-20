@@ -1,7 +1,7 @@
 apply plugin: "com.android.application"
 
 def releaseTime() {
-    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+    return new Date().format("yyyyMMdd")
 }
 
 android {
@@ -10,10 +10,10 @@ android {
 
     defaultConfig {
         applicationId "com.onlyleo.gankgirl"
-        minSdkVersion 19
+        minSdkVersion 16
         targetSdkVersion 24
-        versionCode 5
-        versionName "0.2.2"
+        versionCode 7
+        versionName "0.9.1"
         // dex突破65535的限制
         multiDexEnabled true
         // 默认是umeng的渠道
