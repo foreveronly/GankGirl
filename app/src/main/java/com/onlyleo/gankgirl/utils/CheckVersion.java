@@ -53,7 +53,6 @@ public class CheckVersion {
     }
 
     public void checkVersion(final boolean auto) {
-
         VersionRetrofit.getGankApi().getVersionInfo(appId, token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -63,6 +62,11 @@ public class CheckVersion {
                         int versionCode = Integer.valueOf(version.version);
                         int appVersionCode = GetAppInfo.getAppVersionCode(GankGirlApp.getInstance().getApplicationContext());
                         if (appVersionCode != -1 && versionCode > appVersionCode) {
+                            File file = new File(FILE_PATH,version.name + "_" + version.versionShort + ".apk");
+                            if(file.exists()){
+                                installApk(file);
+                            }
+                            else
                             update(context, version);
                         } else {
                             if (!auto) {
@@ -78,6 +82,29 @@ public class CheckVersion {
                 });
     }
 
+    private void installApk(final File file){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog updateDialog = builder.create();
+        downloading = builder.create();
+        updateDialog.setTitle("现版本已下载");
+        updateDialog.setMessage("是否现在安装");
+        updateDialog.setCanceledOnTouchOutside(false);
+        updateDialog.setButton(DialogInterface.BUTTON_POSITIVE, "是", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(final DialogInterface dialog, int which) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setDataAndType(Uri.parse("file://" + file.toString()),
+                        "application/vnd.android.package-archive");
+            }
+        });
+        updateDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "否", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        updateDialog.show();
+    }
     private void update(final Context context, final Version version) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         AlertDialog updateDialog = builder.create();
@@ -88,7 +115,6 @@ public class CheckVersion {
         updateDialog.setButton(DialogInterface.BUTTON_POSITIVE, "现在下载", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(final DialogInterface dialog, int which) {
-
                 AndPermission.with((Activity) context)
                         .requestCode(101)
                         .permission(Manifest.permission.READ_EXTERNAL_STORAGE,

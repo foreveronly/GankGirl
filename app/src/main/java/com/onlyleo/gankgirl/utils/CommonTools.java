@@ -36,7 +36,7 @@ public class CommonTools {
      * 封装图片加载库
      */
 
-    public static void ImageLoader(Context context, ImageView imageView, String url) {
+    public static void ImageLoader(ImageView imageView, String url) {
 
         Glide.with(GankGirlApp.getInstance().getApplicationContext()).load(url).diskCacheStrategy(DiskCacheStrategy.RESULT).crossFade().into(imageView);
     }

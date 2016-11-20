@@ -12,8 +12,8 @@ android {
         applicationId "com.onlyleo.gankgirl"
         minSdkVersion 19
         targetSdkVersion 24
-        versionCode 4
-        versionName "0.2.0"
+        versionCode 5
+        versionName "0.2.2"
         // dex突破65535的限制
         multiDexEnabled true
         // 默认是umeng的渠道
@@ -47,7 +47,7 @@ android {
             minifyEnabled true
             zipAlignEnabled true
             // 移除无用的resource文件
-            shrinkResources true
+            shrinkResources false
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             signingConfig signingConfigs.release
 
@@ -55,7 +55,6 @@ android {
                 variant.outputs.each { output ->
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith(".apk")) {
-                        // 输出apk名称为boohee_v1.0_2015-01-15_wandoujia.apk
                         def fileName = "gankgirl_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
                         output.outputFile = new File(outputFile.parent, fileName)
                     }
@@ -67,6 +66,7 @@ android {
         tencent {}
         wandoujia {}
         google {}
+        firim{}
     }
 
     productFlavors.all {

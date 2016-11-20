@@ -20,8 +20,8 @@ public class GankGirlApp extends Application {
                     .logLevel(LogLevel.FULL)        // default LogLevel.FULL
                     .methodOffset(0);        // default 0
 //            refWatcher = LeakCanary.install(this);
-            INSTANCE = this;
-        }
+            }
+        INSTANCE = this;
     }
 
     public static GankGirlApp getInstance() {
