@@ -41,5 +41,10 @@ public class FileUtil {
         }
         return Uri.fromFile(file);
     }
+    public static void deleteFile(File file) {
 
+        if (file.isFile() && file.exists()) {
+            file.delete();
+        }
+    }
 }

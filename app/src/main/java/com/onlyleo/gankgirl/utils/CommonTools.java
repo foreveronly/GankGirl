@@ -16,14 +16,8 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.onlyleo.gankgirl.GankGirlApp;
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Gank;
 
@@ -31,32 +25,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class CommonTools {
-
-    /**
-     * 封装图片加载库
-     */
-
-    public static void ImageLoader(ImageView imageView, String url) {
-
-        Glide.with(GankGirlApp.getInstance().getApplicationContext()).load(url).diskCacheStrategy(DiskCacheStrategy.RESULT).crossFade().into(imageView);
-    }
-
-    /**
-     * 封装图片加载库,并缓存到iamgeview
-     */
-    public static void ImageLoaderAsBitmap(Context context, final ImageView imageView, String url) {
-        Glide.with(context).load(url).asBitmap().into(new SimpleTarget<Bitmap>() {
-            @Override
-            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                imageView.setImageBitmap(resource);
-            }
-
-            @Override
-            public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                imageView.setImageDrawable(errorDrawable);
-            }
-        });
-    }
 
     /**
      * drawble转bitmap

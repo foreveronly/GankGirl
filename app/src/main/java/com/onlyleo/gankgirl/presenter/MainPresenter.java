@@ -27,8 +27,6 @@ public class MainPresenter extends BasePresenter<IMainView> {
     public void release() {
         if (subscription != null)
             subscription.unsubscribe();
-//        if(mView!=null)
-//            mView = null;
     }
 
     public MainPresenter(Activity context, IMainView view) {
@@ -60,19 +58,19 @@ public class MainPresenter extends BasePresenter<IMainView> {
                     @Override
                     public void call(PrettyGirlData prettyGirlData) {
 
+                        mView.hideProgress();
                         if (prettyGirlData.results.size() == 0) {
                             mView.showNoMoreData();
-                            mView.hideProgress();
                         } else {
                             mView.showGirlList(prettyGirlData.results);
-                            mView.hideProgress();
                         }
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
                         if (BuildConfig.DEBUG)
-                            Logger.e(throwable.getMessage());
+                            Logger.e(throwable.getMessage()+throwable.getStackTrace());
+
                         mView.showErrorView();
                         mView.hideProgress();
                     }

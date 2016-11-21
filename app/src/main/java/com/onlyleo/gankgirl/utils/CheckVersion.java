@@ -18,6 +18,7 @@ import com.onlyleo.gankgirl.GankGirlApp;
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Version;
 import com.onlyleo.gankgirl.net.VersionRetrofit;
+import com.onlyleo.gankgirl.widget.ProgressListener;
 import com.orhanobut.logger.Logger;
 import com.yanzhenjie.permission.AndPermission;
 
@@ -82,6 +83,7 @@ public class CheckVersion {
                             } else
                                 update();
                         } else {
+                            context = null;
                             if (!auto) {
                                 ToastUtils.showShort("已经是最新版本了！");
                             }

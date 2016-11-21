@@ -1,9 +1,14 @@
 package com.onlyleo.gankgirl.ui.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.onlyleo.gankgirl.GlobalConfig;
@@ -14,6 +19,7 @@ import com.onlyleo.gankgirl.ui.base.BaseActivity;
 import com.onlyleo.gankgirl.ui.view.IGirlView;
 import com.onlyleo.gankgirl.utils.CommonTools;
 import com.onlyleo.gankgirl.utils.FileUtil;
+import com.onlyleo.gankgirl.utils.GlideTools;
 import com.onlyleo.gankgirl.utils.TipsUtil;
 import com.onlyleo.gankgirl.widget.CompatToolbar;
 
@@ -51,13 +57,8 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
     }
 
     public void initGirl() {
+        GlideTools.ImageLoade(ivGirl,girl.url);
         photoViewAttacher = new PhotoViewAttacher(ivGirl);
-        if (GlobalConfig.shareDrawable != null) {
-            ivGirl.setImageDrawable(GlobalConfig.shareDrawable);
-        } else {
-            CommonTools.ImageLoaderAsBitmap(this,ivGirl, girl.url);
-        }
-        girlbm = CommonTools.drawableToBitamp(ivGirl.getDrawable());
         photoViewAttacher.update();
         ViewCompat.setTransitionName(ivGirl, getString(R.string.pretty_girl));
         setTitle(CommonTools.toDateTimeStr(girl.publishedAt));
@@ -65,6 +66,7 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
 
     public void getIntentData() {
         girl = getIntent().getParcelableExtra("girlData");
+
     }
 
     @Override
@@ -100,5 +102,13 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
     @Override
     public void showSaveGirlResult(String result) {
         TipsUtil.showSnackTip(ivGirl, result);
+    }
+
+    public static void LaunchGirlActivity(Activity activity, View imageView, Girl girl) {
+        Intent girlIntent = new Intent(activity, GirlActivity.class);
+        girlIntent.putExtra("girlData", girl);
+        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                .makeSceneTransitionAnimation(activity, imageView, activity.getString(R.string.pretty_girl));
+        ActivityCompat.startActivity(activity, girlIntent, optionsCompat.toBundle());
     }
 }

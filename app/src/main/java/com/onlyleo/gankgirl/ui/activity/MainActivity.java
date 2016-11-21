@@ -81,7 +81,6 @@ public class MainActivity extends BaseActivity<MainPresenter>
         presenter.init();
     }
 
-
     @Override
     public void init() {
         setSupportActionBar(toolbar);

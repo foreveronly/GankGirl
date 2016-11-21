@@ -1,4 +1,4 @@
-package com.onlyleo.gankgirl.utils;
+package com.onlyleo.gankgirl.widget;
 
 import java.io.IOException;
 
@@ -15,11 +15,11 @@ import okio.Source;
  */
 
 // 监听进度的接口
-interface ProgressListener {
-    void update(long bytesRead, long contentLength, boolean done);
+public interface ProgressListener {
+     void update(long bytesRead, long contentLength, boolean done);
 
     // 处理进度的自定义响应体
-    static class ProgressResponseBody extends ResponseBody {
+    class ProgressResponseBody extends ResponseBody {
 
         private final ResponseBody responseBody;
         private final ProgressListener progressListener;

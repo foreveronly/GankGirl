@@ -1,8 +1,12 @@
 package com.onlyleo.gankgirl.ui.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +27,7 @@ import com.onlyleo.gankgirl.ui.adapter.GankDailyAdpter;
 import com.onlyleo.gankgirl.ui.base.BaseActivity;
 import com.onlyleo.gankgirl.ui.view.IGankDailyView;
 import com.onlyleo.gankgirl.utils.CommonTools;
+import com.onlyleo.gankgirl.utils.GlideTools;
 import com.onlyleo.gankgirl.utils.TipsUtil;
 import com.onlyleo.gankgirl.widget.CompatToolbar;
 
@@ -127,7 +132,10 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
         recyclerViewGankdaily.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewGankdaily.setItemAnimator(new DefaultItemAnimator());
         recyclerViewGankdaily.setAdapter(adapter);
-        gankDailyIv.setImageDrawable(GlobalConfig.shareDrawable);
+//        gankDailyIv.setImageDrawable(GlobalConfig.shareDrawable);
+
+        GlideTools.ImageLoade(gankDailyIv,girl.url);
+        ViewCompat.setTransitionName(gankDailyIv, getString(R.string.pretty_girl));
         setAnimation(gankDailyIv);
     }
 
@@ -162,5 +170,12 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
                 ObjectAnimator.ofFloat(girl, "scaleY", 1.5f, 1f, 1.5f));
         anim.setDuration(20000);
         anim.start();
+    }
+    public static void LaunchGankDailyActivity(Activity activity, View imageView, Girl girl) {
+        Intent Intent = new Intent(activity, GankDailyActivity.class);
+        Intent.putExtra("girlData", girl);
+        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                .makeSceneTransitionAnimation(activity, imageView, activity.getString(R.string.pretty_girl));
+        ActivityCompat.startActivity(activity, Intent, optionsCompat.toBundle());
     }
 }
