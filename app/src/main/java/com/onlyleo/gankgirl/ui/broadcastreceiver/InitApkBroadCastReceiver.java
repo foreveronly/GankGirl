@@ -1,4 +1,4 @@
-package com.onlyleo.gankgirl.ui.BroadCastReceiver;
+package com.onlyleo.gankgirl.ui.broadcastreceiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

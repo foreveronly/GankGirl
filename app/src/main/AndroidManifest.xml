@@ -41,7 +41,7 @@
             android:label="@string/title_activity_girl"
             android:screenOrientation="portrait" />
         <receiver
-            android:name=".ui.BroadCastReceiver.InitApkBroadCastReceiver"
+            android:name=".ui.broadcastreceiver.InitApkBroadCastReceiver"
             android:enabled="true" >
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
