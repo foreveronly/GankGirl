@@ -1,6 +1,5 @@
 package com.onlyleo.gankgirl.ui.adapter;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -47,7 +46,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
         GlideTools.LoadImage(context, holder.ivGirl, list.get(position).url);
         holder.tvDate.setText(CommonTools.toDateTimeStr(list.get(position).publishedAt));
         holder.tvTitle.setText(list.get(position).desc);
-        showItemAnimation(holder, position);
     }
 
     @Override
@@ -85,12 +83,4 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
         }
     }
 
-    private void showItemAnimation(GirlHolder holder, int position) {
-        if (position > lastPosition) {
-            lastPosition = position;
-            ObjectAnimator.ofFloat(holder.card, "translationY", 1f * holder.card.getHeight(), 0f)
-                    .setDuration(500)
-                    .start();
-        }
-    }
 }

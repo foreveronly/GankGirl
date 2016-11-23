@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import it.gmariotti.recyclerview.adapter.AlphaAnimatorAdapter;
 
 public class CategoryFragment extends BaseFragment<CategoryFragmentPresenter> implements ICategoryView,
         LMRecyclerView.LoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
@@ -152,9 +153,10 @@ public class CategoryFragment extends BaseFragment<CategoryFragmentPresenter> im
             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             categoryadapter = new CategoryAdapter(getContext(), list);
-            recyclerViewCategory.setAdapter(categoryadapter);
             recyclerViewCategory.setLoadMoreListener(this);
             recyclerViewCategory.setLayoutManager(layoutManager);
+            AlphaAnimatorAdapter alphaAnimatorAdapter = new AlphaAnimatorAdapter(categoryadapter,recyclerViewCategory);
+                        recyclerViewCategory.setAdapter(alphaAnimatorAdapter);
             swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
             swipeRefreshLayout.setOnRefreshListener(this);
             swipeRefreshLayout.post(new Runnable() {

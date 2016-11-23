@@ -29,6 +29,9 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import it.gmariotti.recyclerview.adapter.ScaleInAnimatorAdapter;
+
+import static com.onlyleo.gankgirl.utils.SPDataTools.getFirstPageGirls;
 
 public class MainActivity extends BaseActivity<MainPresenter>
         implements NavigationView.OnNavigationItemSelectedListener, IMainView, SwipeRefreshLayout.OnRefreshListener, LMRecyclerView.LoadMoreListener {
@@ -47,7 +50,6 @@ public class MainActivity extends BaseActivity<MainPresenter>
     CompatToolbar toolbar;
     private List<Girl> list;
     private MainAdapter adapter;
-    private boolean isRefresh = true;
     private boolean canLoading = true;
     private int page = 1;
     private long quitTime = 0;
@@ -89,13 +91,14 @@ public class MainActivity extends BaseActivity<MainPresenter>
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-        list = SPDataTools.getFirstPageGirls(this);
+        list = getFirstPageGirls(this);
         if (list == null) list = new ArrayList<>();
         adapter = new MainAdapter(list, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
         recyclerView.setLoadMoreListener(this);
         recyclerView.applyFloatingActionButton(fab);
+        ScaleInAnimatorAdapter animatorAdapter = new ScaleInAnimatorAdapter(adapter,recyclerView);
+        recyclerView.setAdapter(animatorAdapter);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.post(new Runnable() {
@@ -138,22 +141,30 @@ public class MainActivity extends BaseActivity<MainPresenter>
     @Override
     public void showGirlList(List<Girl> girlList) {
         canLoading = true;
-        page++;
-        if (isRefresh) {
-            SPDataTools.saveFirstPageGirls(this, girlList);
-            list.clear();
-            list.addAll(girlList);
-            adapter.notifyDataSetChanged();
-            isRefresh = false;
+
+        if(page==1){
+            if(list!=null){
+                Girl netGirl = girlList.get(0);
+                Girl spGirl = SPDataTools.getFirstPageGirls(this).get(0);
+                if(!netGirl.url.equals(spGirl.url)){
+                    list.clear();
+                    list.addAll(girlList);
+                    adapter.notifyDataSetChanged();
+                }
+            }else{
+                SPDataTools.saveFirstPageGirls(this, girlList);
+                list.addAll(girlList);
+                adapter.notifyDataSetChanged();
+            }
         } else {
             list.addAll(girlList);
             adapter.notifyDataSetChanged();
         }
+
     }
 
     @OnClick(R.id.fab)
     public void fabClick(View view) {
-        isRefresh = true;
         page = 1;
         recyclerView.smoothScrollToPosition(0);
         presenter.loadData(page);
@@ -170,19 +181,19 @@ public class MainActivity extends BaseActivity<MainPresenter>
         int id = item.getItemId();
         if (id == R.id.nav_category) {
             startActivity(new Intent(this, CategoryActivity.class));
-        } else if (id == R.id.nav_search) {
-        } else if (id == R.id.nav_setting) {
+//        } else if (id == R.id.nav_search) {
+//        } else if (id == R.id.nav_setting) {
         } else if (id == R.id.nav_update) {
             CheckVersion.getInstance(this).checkVersion(false);
-        } else if (id == R.id.nav_about) {
         }
+//        else if (id == R.id.nav_about) {
+//        }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
     @Override
     public void onRefresh() {
-        isRefresh = true;
         page = 1;
         presenter.loadData(page);
     }
@@ -195,7 +206,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
 
     @Override
     public void loadMore() {
-        isRefresh = false;
+        ++page;
         if (canLoading) {
             presenter.loadData(page);
             canLoading = false;

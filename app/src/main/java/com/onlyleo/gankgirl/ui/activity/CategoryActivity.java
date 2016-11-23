@@ -69,7 +69,6 @@ public class CategoryActivity extends BaseActivity<CategoryPresenter> implements
             midTv.setAlpha(1f - (positionOffset * 7 / 10));
             rightTv.setAlpha(0.3f + (positionOffset * 7 / 10));
         }
-
     }
 
     @Override

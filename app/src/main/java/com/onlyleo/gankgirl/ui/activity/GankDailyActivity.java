@@ -37,6 +37,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import it.gmariotti.recyclerview.adapter.SlideInRightAnimatorAdapter;
 
 public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implements IGankDailyView {
 
@@ -134,9 +135,8 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
         adapter = new GankDailyAdpter(this, list);
         recyclerViewGankdaily.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewGankdaily.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewGankdaily.setAdapter(adapter);
-//        gankDailyIv.setImageDrawable(GlobalConfig.shareDrawable);
-
+        SlideInRightAnimatorAdapter animatorAdapter = new SlideInRightAnimatorAdapter(adapter,recyclerViewGankdaily);
+        recyclerViewGankdaily.setAdapter(animatorAdapter);
         ViewCompat.setTransitionName(gankDailyIv, getString(R.string.pretty_girl));
         setAnimation(gankDailyIv);
     }

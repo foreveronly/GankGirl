@@ -135,6 +135,22 @@ public class CommonTools {
         int anotherDay = _another.get(Calendar.DAY_OF_YEAR);
         return oneDay == anotherDay;
     }
+    /**
+     * 比较日期
+     *
+     * @param one
+     * @param another
+     * @return
+     */
+    public static int GapofDay(Date one, Date another) {
+        Calendar _one = Calendar.getInstance();
+        _one.setTime(one);
+        Calendar _another = Calendar.getInstance();
+        _another.setTime(another);
+        int oneDay = _one.get(Calendar.DAY_OF_YEAR);
+        int anotherDay = _another.get(Calendar.DAY_OF_YEAR);
+        return oneDay - anotherDay;
+    }
     //================分享
 
     /**
@@ -191,9 +207,8 @@ public class CommonTools {
     public static void shareGankDaily(Context context, String url) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_TEXT, "这是今天的干活" + url);
         intent.setType("text/plain");
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(Intent.EXTRA_TEXT, "这是今天的干活" + url);
         context.startActivity(Intent.createChooser(intent, context.getString(R.string.share_gank_to)));
     }
 
