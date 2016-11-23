@@ -69,7 +69,7 @@ public class MainPresenter extends BasePresenter<IMainView> {
                     @Override
                     public void call(Throwable throwable) {
                         if (BuildConfig.DEBUG)
-                            Logger.e(throwable.getMessage()+throwable.getStackTrace());
+                            Logger.e(throwable.getMessage());
 
                         mView.showErrorView();
                         mView.hideProgress();

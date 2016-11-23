@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.onlyleo.gankgirl.GlobalConfig;
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.presenter.GirlPresenter;
@@ -35,9 +34,6 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
     CompatToolbar toolbar;
     private Girl girl;
 
-    private Bitmap girlbm;
-    private PhotoViewAttacher photoViewAttacher;
-
     @Override
     protected int getLayout() {
         return R.layout.activity_girl;
@@ -57,8 +53,8 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
     }
 
     public void initGirl() {
-        GlideTools.ImageLoade(ivGirl,girl.url);
-        photoViewAttacher = new PhotoViewAttacher(ivGirl);
+        GlideTools.LoadImage(this,ivGirl,girl.url);
+        PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher(ivGirl);
         photoViewAttacher.update();
         ViewCompat.setTransitionName(ivGirl, getString(R.string.pretty_girl));
         setTitle(CommonTools.toDateTimeStr(girl.publishedAt));
@@ -77,6 +73,7 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Bitmap girlbm = CommonTools.drawableToBitamp(ivGirl.getDrawable());
         switch (item.getItemId()) {
             case R.id.action_save:
                 if (!FileUtil.isSDCardEnable() || girl == null) {
@@ -95,7 +92,6 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        GlobalConfig.shareDrawable = null;
         presenter.release();
     }
 

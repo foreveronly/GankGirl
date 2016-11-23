@@ -113,8 +113,9 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
     public void init() {
         initToolbar(toolbar);
         getIntentData();
-//        initDBHelper();
         initGankDaily();
+
+
     }
 
     public void getIntentData() {
@@ -126,6 +127,8 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
 
 
     public void initGankDaily() {
+        GlideTools.LoadImage(this, gankDailyIv, girl.url);
+
         setTitle(CommonTools.toDateTimeStr(girl.publishedAt));
         list = new ArrayList<>();
         adapter = new GankDailyAdpter(this, list);
@@ -134,7 +137,6 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
         recyclerViewGankdaily.setAdapter(adapter);
 //        gankDailyIv.setImageDrawable(GlobalConfig.shareDrawable);
 
-        GlideTools.ImageLoade(gankDailyIv,girl.url);
         ViewCompat.setTransitionName(gankDailyIv, getString(R.string.pretty_girl));
         setAnimation(gankDailyIv);
     }
@@ -171,6 +173,7 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
         anim.setDuration(20000);
         anim.start();
     }
+
     public static void LaunchGankDailyActivity(Activity activity, View imageView, Girl girl) {
         Intent Intent = new Intent(activity, GankDailyActivity.class);
         Intent.putExtra("girlData", girl);

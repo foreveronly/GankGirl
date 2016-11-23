@@ -50,5 +50,8 @@
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
+        <meta-data
+            android:name="com.onlyleo.gankgirl.utils.MainGlideModule"
+            android:value="GlideModule" />
     </application>
 </manifest>

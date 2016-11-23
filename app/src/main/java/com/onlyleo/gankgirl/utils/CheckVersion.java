@@ -18,7 +18,7 @@ import com.onlyleo.gankgirl.GankGirlApp;
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Version;
 import com.onlyleo.gankgirl.net.VersionRetrofit;
-import com.onlyleo.gankgirl.widget.ProgressListener;
+import com.onlyleo.gankgirl.ui.listener.ProgressListener;
 import com.orhanobut.logger.Logger;
 import com.yanzhenjie.permission.AndPermission;
 
@@ -73,7 +73,6 @@ public class CheckVersion {
                     @Override
                     public void call(Version version) {
                         setVersion(version);
-                        Logger.d(GetAppInfo.getApkPath());
                         int versionCode = Integer.valueOf(version.version);
                         int appVersionCode = GetAppInfo.getAppVersionCode(GankGirlApp.getInstance().getApplicationContext());
                         if (versionCode > appVersionCode) {
@@ -234,6 +233,7 @@ public class CheckVersion {
                         fos.write(buf, 0, len);
                     }
                     fos.flush();
+
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     i.setDataAndType(Uri.parse("file://" + file.toString()),
                             "application/vnd.android.package-archive");

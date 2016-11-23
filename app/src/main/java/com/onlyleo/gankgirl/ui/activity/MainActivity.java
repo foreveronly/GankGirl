@@ -31,7 +31,7 @@ import butterknife.Bind;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity<MainPresenter>
-        implements NavigationView.OnNavigationItemSelectedListener, IMainView, LMRecyclerView.LoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
+        implements NavigationView.OnNavigationItemSelectedListener, IMainView, SwipeRefreshLayout.OnRefreshListener, LMRecyclerView.LoadMoreListener {
 
     @Bind(R.id.fab)
     FloatingActionButton fab;
@@ -151,15 +151,6 @@ public class MainActivity extends BaseActivity<MainPresenter>
         }
     }
 
-    @Override
-    public void loadMore() {
-        isRefresh = false;
-        if (canLoading) {
-            presenter.loadData(page);
-            canLoading = false;
-        }
-    }
-
     @OnClick(R.id.fab)
     public void fabClick(View view) {
         isRefresh = true;
@@ -184,7 +175,6 @@ public class MainActivity extends BaseActivity<MainPresenter>
         } else if (id == R.id.nav_update) {
             CheckVersion.getInstance(this).checkVersion(false);
         } else if (id == R.id.nav_about) {
-
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
@@ -201,5 +191,14 @@ public class MainActivity extends BaseActivity<MainPresenter>
     protected void onDestroy() {
         super.onDestroy();
         presenter.release();
+    }
+
+    @Override
+    public void loadMore() {
+        isRefresh = false;
+        if (canLoading) {
+            presenter.loadData(page);
+            canLoading = false;
+        }
     }
 }

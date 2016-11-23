@@ -1,4 +1,4 @@
-package com.onlyleo.gankgirl.widget;
+package com.onlyleo.gankgirl.ui.listener;
 
 import java.io.IOException;
 
@@ -10,9 +10,7 @@ import okio.ForwardingSource;
 import okio.Okio;
 import okio.Source;
 
-/**
- * Created by only1 on 2016/11/19 0019.
- */
+
 
 // 监听进度的接口
 public interface ProgressListener {

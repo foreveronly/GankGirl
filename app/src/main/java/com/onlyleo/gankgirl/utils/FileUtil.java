@@ -7,10 +7,6 @@ import android.os.Environment;
 import java.io.File;
 import java.io.FileOutputStream;
 
-/**
- * 文件操作辅助类
- * Created by panl on 16/1/4.
- */
 public class FileUtil {
 
     private FileUtil() {
@@ -26,13 +22,13 @@ public class FileUtil {
         if (!appDir.exists()) {
             appDir.mkdirs();
         }
-        String fileName = title.replace("/","-") + "-girl.jpg";
-        File file = new File(appDir,fileName);
+        String fileName = title.replace("/", "-") + "-girl.jpg";
+        File file = new File(appDir, fileName);
         FileOutputStream outputStream;
         try {
             outputStream = new FileOutputStream(file);
             assert bitmap != null;
-            bitmap.compress(Bitmap.CompressFormat.JPEG,100,outputStream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
             outputStream.flush();
             outputStream.close();
         } catch (Exception e) {
@@ -41,6 +37,7 @@ public class FileUtil {
         }
         return Uri.fromFile(file);
     }
+
     public static void deleteFile(File file) {
 
         if (file.isFile() && file.exists()) {

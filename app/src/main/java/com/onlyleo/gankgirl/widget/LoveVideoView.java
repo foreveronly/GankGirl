@@ -33,11 +33,6 @@ import com.onlyleo.gankgirl.BuildConfig;
 
 import java.io.InputStream;
 
-
-/**
- * It's a lovely adult video view.
- * Created by drakeet on 8/14/15.
- */
 public class LoveVideoView extends WebView {
 
     private final Context mContext;

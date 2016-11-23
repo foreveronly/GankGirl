@@ -2,7 +2,6 @@ package com.onlyleo.gankgirl.ui.adapter;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,14 +43,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
 
     @Override
     public void onBindViewHolder(final GirlHolder holder, int position) {
-
         holder.card.setTag(list.get(position));
-        int red = (int) (Math.random() * 255);
-        int green = (int) (Math.random() * 255);
-        int blue = (int) (Math.random() * 255);
-        holder.ivGirl.setBackgroundColor(Color.argb(204, red, green, blue));
-//        holder.ivGirl.setBackgroundColor(Color.WHITE);
-        GlideTools.ImageLoade(holder.ivGirl, list.get(position).url);
+        GlideTools.LoadImage(context, holder.ivGirl, list.get(position).url);
         holder.tvDate.setText(CommonTools.toDateTimeStr(list.get(position).publishedAt));
         holder.tvTitle.setText(list.get(position).desc);
         showItemAnimation(holder, position);

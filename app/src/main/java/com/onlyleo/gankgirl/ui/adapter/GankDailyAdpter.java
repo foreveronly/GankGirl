@@ -43,8 +43,7 @@ public class GankDailyAdpter extends RecyclerView.Adapter<GankDailyAdpter.GankDa
 
     @Override
     public void onBindViewHolder(GankDailyHolder holder, int position) {
-        Gank gank = list.get(position);
-        holder.gankllList.setTag(gank);
+        holder.gankllList.setTag(list.get(position));
         if (position == 0) {
             showTitle(true, holder.titleList);
         } else {
@@ -55,9 +54,9 @@ public class GankDailyAdpter extends RecyclerView.Adapter<GankDailyAdpter.GankDa
             }
         }
         if (holder.titleList.getVisibility() == View.VISIBLE) {
-            holder.titleList.setText(gank.type);
+            holder.titleList.setText(list.get(position).type);
         }
-        holder.linkList.setText(CommonTools.getGankStyleStr(gank));
+        holder.linkList.setText(CommonTools.getGankStyleStr(list.get(position)));
         showItemAnim(holder.linkList, position);
     }
 
@@ -129,6 +128,7 @@ public class GankDailyAdpter extends RecyclerView.Adapter<GankDailyAdpter.GankDa
 
                         @Override
                         public void onAnimationRepeat(Animation animation) {
+
                         }
                     });
                     view.startAnimation(animation);

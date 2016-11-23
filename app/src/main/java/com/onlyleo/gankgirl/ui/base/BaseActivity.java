@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.onlyleo.gankgirl.GlobalConfig;
 import com.onlyleo.gankgirl.presenter.BasePresenter;
 
 import butterknife.ButterKnife;
@@ -17,6 +16,7 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
     protected String TAG = this.getClass().getSimpleName();
     protected P presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,9 +93,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 //        RefWatcher refWatcher = GankGirlApp.getRefWatcher(this);
 //        refWatcher.watch(this);
         ButterKnife.unbind(this);
-        if (GlobalConfig.shareDrawable != null) {
-            GlobalConfig.shareDrawable = null;
-        }
         Log.i(TAG, "onDestroy");
 
     }

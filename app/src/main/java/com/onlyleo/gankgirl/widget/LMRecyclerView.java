@@ -43,7 +43,6 @@ public class LMRecyclerView extends RecyclerView {
             case SCROLL_STATE_IDLE:
                 if (floatingActionButton != null && !floatingActionButton.isShown())
                     floatingActionButton.show();
-//                Glide.with(getContext().getApplicationContext()).resumeRequests();
                 int lastVisibleItem = layoutManager.findLastCompletelyVisibleItemPosition();
                 int totalItemCount = layoutManager.getItemCount();
                 if (lastVisibleItem == (totalItemCount - 1) && isScrollingToBottom) {
@@ -54,12 +53,10 @@ public class LMRecyclerView extends RecyclerView {
             case SCROLL_STATE_DRAGGING:
                 if (floatingActionButton != null && floatingActionButton.isShown())
                     floatingActionButton.hide();
-//                Glide.with(getContext().getApplicationContext()).pauseRequests();
                 break;
             case SCROLL_STATE_SETTLING:
                 if (floatingActionButton != null && floatingActionButton.isShown())
                     floatingActionButton.hide();
-//                Glide.with(getContext().getApplicationContext()).pauseRequests();
                 break;
         }
     }

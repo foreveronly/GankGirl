@@ -3,10 +3,6 @@ package com.onlyleo.gankgirl.utils;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 
-/**
- * 用于显示提示信息
- * Created by panl on 15/12/26.
- */
 public class TipsUtil {
 
     private TipsUtil() {
