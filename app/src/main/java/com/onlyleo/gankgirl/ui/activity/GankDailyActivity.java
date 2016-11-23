@@ -151,7 +151,7 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_share:
-                CommonTools.shareGankDaily(this.getApplicationContext(), GankRetrofit.HOST + calendar.get(Calendar.YEAR) + "/" + calendar.get(Calendar.MONTH) + 1 + "/" + calendar.get(Calendar.DAY_OF_MONTH));
+                CommonTools.shareGankDaily(this, GankRetrofit.HOST + calendar.get(Calendar.YEAR) + "/" + calendar.get(Calendar.MONTH) + 1 + "/" + calendar.get(Calendar.DAY_OF_MONTH));
                 break;
         }
         return super.onOptionsItemSelected(item);
