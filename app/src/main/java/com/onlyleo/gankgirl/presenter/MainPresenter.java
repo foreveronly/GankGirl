@@ -69,7 +69,6 @@ public class MainPresenter extends BasePresenter<IMainView> {
                     public void call(Throwable throwable) {
                         if (BuildConfig.DEBUG)
                             Logger.e(throwable.getMessage());
-
                         mView.showErrorView();
                         mView.hideProgress();
                     }

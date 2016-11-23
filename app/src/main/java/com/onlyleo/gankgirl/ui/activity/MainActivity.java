@@ -31,7 +31,6 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import it.gmariotti.recyclerview.adapter.ScaleInAnimatorAdapter;
 
-import static com.onlyleo.gankgirl.utils.SPDataTools.getFirstPageGirls;
 
 public class MainActivity extends BaseActivity<MainPresenter>
         implements NavigationView.OnNavigationItemSelectedListener, IMainView, SwipeRefreshLayout.OnRefreshListener, LMRecyclerView.LoadMoreListener {
@@ -91,7 +90,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-        list = getFirstPageGirls(this);
+        list = SPDataTools.getFirstPageGirls(this);
         if (list == null) list = new ArrayList<>();
         adapter = new MainAdapter(list, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -141,11 +140,10 @@ public class MainActivity extends BaseActivity<MainPresenter>
     @Override
     public void showGirlList(List<Girl> girlList) {
         canLoading = true;
-
         if(page==1){
-            if(list!=null){
+            if(list!=null&&list.size()!=0){
                 Girl netGirl = girlList.get(0);
-                Girl spGirl = SPDataTools.getFirstPageGirls(this).get(0);
+                Girl spGirl = list.get(0);
                 if(!netGirl.url.equals(spGirl.url)){
                     list.clear();
                     list.addAll(girlList);

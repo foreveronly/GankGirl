@@ -1,6 +1,5 @@
 package com.onlyleo.gankgirl.ui.adapter;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
@@ -26,7 +25,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     private Context context;
     private List<Gank> list;
-    private int lastPosition = -1;
 
     public CategoryAdapter(Context context, List<Gank> list) {
         this.context = context;
@@ -41,11 +39,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     @Override
     public void onBindViewHolder(CategoryViewHolder holder, int position) {
-        Gank gank = list.get(position);
-        holder.card.setTag(gank);
-        holder.gankllList.setTag(gank);
-        holder.linkList.setText(CommonTools.getGankStyleStr(gank));
-        showItemAnimation(holder, position);
+        holder.card.setTag(list.get(position));
+        holder.gankllList.setTag(list.get(position));
+        holder.linkList.setText(CommonTools.getGankStyleStr(list.get(position)));
     }
 
     @Override
@@ -82,15 +78,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             super(itemView);
             card = itemView;
             ButterKnife.bind(this, itemView);
-        }
-    }
-
-    private void showItemAnimation(CategoryViewHolder holder, int position) {
-        if (position > lastPosition) {
-            lastPosition = position;
-            ObjectAnimator.ofFloat(holder.card, "translationY", 1f * holder.card.getHeight(), 0f)
-                    .setDuration(500)
-                    .start();
         }
     }
 }
