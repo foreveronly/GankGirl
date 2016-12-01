@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
     <application
         android:name=".GankGirlApp"
         android:icon="@mipmap/ic_launcher"
@@ -20,7 +21,6 @@
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -40,9 +40,14 @@
             android:name=".ui.activity.CategoryActivity"
             android:label="@string/title_activity_girl"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.SearchActivity"
+            android:label="@string/title_activity_girl"
+            android:screenOrientation="portrait" />
+
         <receiver
             android:name=".ui.broadcastreceiver.InitApkBroadCastReceiver"
-            android:enabled="true" >
+            android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
                 <action android:name="android.intent.action.PACKAGE_REPLACED" />
@@ -50,8 +55,11 @@
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
+
         <meta-data
             android:name="com.onlyleo.gankgirl.utils.MainGlideModule"
             android:value="GlideModule" />
+
     </application>
+
 </manifest>

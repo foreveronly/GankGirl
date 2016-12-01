@@ -11,7 +11,7 @@ public class CategoryPresenter extends BasePresenter<IBaseView> {
 
     @Override
     public void release() {
-
+        
     }
 
 

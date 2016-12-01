@@ -2,11 +2,11 @@ package com.onlyleo.gankgirl.presenter;
 
 import android.app.Activity;
 
-import com.onlyleo.gankgirl.BuildConfig;
 import com.onlyleo.gankgirl.model.ContentData;
 import com.onlyleo.gankgirl.model.PrettyGirlData;
 import com.onlyleo.gankgirl.model.entity.Content;
 import com.onlyleo.gankgirl.model.entity.Girl;
+import com.onlyleo.gankgirl.net.BaseSubscriber;
 import com.onlyleo.gankgirl.net.GankRetrofit;
 import com.onlyleo.gankgirl.ui.view.IMainView;
 import com.orhanobut.logger.Logger;
@@ -45,7 +45,8 @@ public class MainPresenter extends BasePresenter<IMainView> {
                     public PrettyGirlData call(PrettyGirlData prettyGirlData, ContentData contentData) {
                         return getGirlAndTitleAndDate(prettyGirlData, contentData);
                     }
-                }).subscribeOn(Schedulers.io())
+                })
+                .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
@@ -54,23 +55,25 @@ public class MainPresenter extends BasePresenter<IMainView> {
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<PrettyGirlData>() {
+                .doOnError(new Action1<Throwable>() {
                     @Override
-                    public void call(PrettyGirlData prettyGirlData) {
+                    public void call(Throwable throwable) {
+                        Logger.e(throwable.getMessage());
+                    }
+                })
+                .subscribe(new BaseSubscriber<PrettyGirlData>((Activity) mContext) {
+                    @Override
+                    public void onError(Throwable e) {
+                        Logger.e(e.getMessage());
+                    }
+                    @Override
+                    public void onNext(PrettyGirlData prettyGirlData) {
                         mView.hideProgress();
                         if (prettyGirlData.results.size() == 0) {
                             mView.showNoMoreData();
                         } else {
                             mView.showGirlList(prettyGirlData.results);
                         }
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        if (BuildConfig.DEBUG)
-                            Logger.e(throwable.getMessage());
-                        mView.showErrorView();
-                        mView.hideProgress();
                     }
                 });
 

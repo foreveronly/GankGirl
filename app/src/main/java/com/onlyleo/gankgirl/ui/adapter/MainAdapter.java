@@ -27,7 +27,6 @@ import butterknife.OnClick;
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
     private List<Girl> list;
     private Context context;
-    private int lastPosition = 0;
 
     public MainAdapter(List<Girl> list, Context context) {
         this.list = list;

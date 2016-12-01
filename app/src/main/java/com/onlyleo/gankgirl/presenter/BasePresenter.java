@@ -8,10 +8,10 @@ import rx.Subscription;
 
 
 public abstract class BasePresenter<GV extends IBaseView> {
-    protected Subscription subscription;
-    protected GV mView;
-    protected Context mContext;
-    protected final static int PAGE_SIZE = 20;
+    Subscription subscription;
+    GV mView;
+    Context mContext;
+    final static int PAGE_SIZE = 20;
 
     public abstract void release();
 

@@ -1,6 +1,6 @@
 package com.onlyleo.gankgirl.ui.view;
 
-import com.onlyleo.gankgirl.model.entity.Gank;
+import com.onlyleo.gankgirl.model.entity.Category;
 
 import java.util.List;
 
@@ -16,5 +16,5 @@ public interface ICategoryView extends IBaseView {
 
     void showNoMoreData();
 
-    void showCategoryData(List<Gank> list);
+    void showCategoryData(List<Category> list);
 }

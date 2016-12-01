@@ -4,6 +4,9 @@ package com.onlyleo.gankgirl.net;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -21,6 +24,7 @@ public class GankRetrofit {
                 .baseUrl(HOST)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .client(genericClient())
                 .build();
     }
 
@@ -34,4 +38,12 @@ public class GankRetrofit {
         private static GankAPI mGankAPI = retrofit.create(GankAPI.class);
     }
 
+    private static OkHttpClient genericClient() {
+
+        return new OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .build();
+    }
 }

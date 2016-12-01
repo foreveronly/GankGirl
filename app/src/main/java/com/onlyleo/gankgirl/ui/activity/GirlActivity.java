@@ -53,7 +53,7 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
     }
 
     public void initGirl() {
-        GlideTools.LoadImage(this,ivGirl,girl.url);
+        GlideTools.LoadImage(this, ivGirl, girl.url);
         PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher(ivGirl);
         photoViewAttacher.update();
         ViewCompat.setTransitionName(ivGirl, getString(R.string.pretty_girl));
@@ -100,6 +100,7 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
         TipsUtil.showSnackTip(ivGirl, result);
     }
 
+
     public static void LaunchGirlActivity(Activity activity, View imageView, Girl girl) {
         Intent girlIntent = new Intent(activity, GirlActivity.class);
         girlIntent.putExtra("girlData", girl);
@@ -107,4 +108,5 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
                 .makeSceneTransitionAnimation(activity, imageView, activity.getString(R.string.pretty_girl));
         ActivityCompat.startActivity(activity, girlIntent, optionsCompat.toBundle());
     }
+
 }

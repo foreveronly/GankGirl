@@ -1,8 +1,10 @@
 package com.onlyleo.gankgirl.presenter;
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.onlyleo.gankgirl.model.CategoryData;
+import com.onlyleo.gankgirl.net.BaseSubscriber;
 import com.onlyleo.gankgirl.net.GankRetrofit;
 import com.onlyleo.gankgirl.ui.view.ICategoryView;
 import com.orhanobut.logger.Logger;
@@ -36,21 +38,25 @@ public class CategoryFragmentPresenter extends BasePresenter<ICategoryView> {
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<CategoryData>() {
+                .doOnError(new Action1<Throwable>() {
                     @Override
-                    public void call(CategoryData categoryData) {
-                        Logger.d(categoryData.results.get(0).toString());
+                    public void call(Throwable throwable) {
+                        Logger.e(throwable.getMessage());
+                    }
+                })
+                .subscribe(new BaseSubscriber<CategoryData>((Activity) mContext) {
+                    @Override
+                    public void onError(Throwable e) {
+                        Logger.e(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(CategoryData categoryData) {
                         if (categoryData.results.size() == 0) {
                             mView.showNoMoreData();
                         } else {
                             mView.showCategoryData(categoryData.results);
                         }
-                        mView.hideProgress();
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        mView.showErrorView();
                         mView.hideProgress();
                     }
                 });

@@ -2,13 +2,13 @@ package com.onlyleo.gankgirl.ui.activity;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -31,16 +31,15 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import it.gmariotti.recyclerview.adapter.ScaleInAnimatorAdapter;
 
+/**
+ * 主页面
+ */
 
 public class MainActivity extends BaseActivity<MainPresenter>
-        implements NavigationView.OnNavigationItemSelectedListener, IMainView, SwipeRefreshLayout.OnRefreshListener, LMRecyclerView.LoadMoreListener {
+        implements IMainView, SwipeRefreshLayout.OnRefreshListener, LMRecyclerView.LoadMoreListener {
 
     @Bind(R.id.fab)
     FloatingActionButton fab;
-    @Bind(R.id.nav_view)
-    NavigationView navigationView;
-    @Bind(R.id.drawer_layout)
-    DrawerLayout drawerLayout;
     @Bind(R.id.recycler_view_main)
     LMRecyclerView recyclerView;
     @Bind(R.id.swipe_refresh_layout)
@@ -50,15 +49,17 @@ public class MainActivity extends BaseActivity<MainPresenter>
     private List<Girl> list;
     private MainAdapter adapter;
     private boolean canLoading = true;
-    private int page = 1;
-    private long quitTime = 0;
+    private int page = 1; //页数
+    private long quitTime = 0; //记录按 back 键的时间
+    private SearchView searchView;
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-            } else {
+
+            if(searchView.isShown()){
+                searchView.onActionViewCollapsed();  //collapse your ActionView
+            }else {
                 if (System.currentTimeMillis() - quitTime > 2000) {
                     TipsUtil.showSnackTip(fab, "再按一次退出程序");
                     quitTime = System.currentTimeMillis();
@@ -66,8 +67,9 @@ public class MainActivity extends BaseActivity<MainPresenter>
                     this.finish();
                 }
             }
+
         }
-        return false;
+        return true;
     }
 
     @Override
@@ -77,35 +79,69 @@ public class MainActivity extends BaseActivity<MainPresenter>
 
     @Override
     protected void initPresenter() {
-        CheckVersion.getInstance(this).checkVersion(true);
+        CheckVersion.getInstance(this).checkVersion(true); //检查更新
         presenter = new MainPresenter(this, this);
         presenter.init();
     }
 
     @Override
     public void init() {
-        setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.setDrawerListener(toggle);
-        toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
-        list = SPDataTools.getFirstPageGirls(this);
-        if (list == null) list = new ArrayList<>();
-        adapter = new MainAdapter(list, this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setLoadMoreListener(this);
-        recyclerView.applyFloatingActionButton(fab);
-        ScaleInAnimatorAdapter animatorAdapter = new ScaleInAnimatorAdapter(adapter,recyclerView);
-        recyclerView.setAdapter(animatorAdapter);
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.post(new Runnable() {
+        initToolbar(toolbar);
+        initRecyclerView();
+    }
+
+    @Override
+    public void initToolbar(Toolbar toolbar) {
+        toolbar.setTitle(R.string.app_name);
+        toolbar.inflateMenu(R.menu.menu_toolbar);
+        setSupportActionBar(toolbar);//使活动支持ToolBar
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
+        MenuItem searchItem = menu.findItem(R.id.tool_search);
+        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setIconifiedByDefault(true);
+        searchView.setSubmitButtonEnabled(true);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void run() {
-                presenter.loadData(page);
+            public boolean onQueryTextSubmit(String query) {
+                Intent intent = new Intent(MainActivity.this,SearchActivity.class);
+                intent.putExtra("query",query);
+                intent.putExtra("category","all");
+                startActivity(intent);
+                searchView.onActionViewCollapsed();
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return true;
             }
         });
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.tool_category:
+                startActivity(new Intent(MainActivity.this, CategoryActivity.class));
+                break;
+            case R.id.tool_setting:
+
+                break;
+            case R.id.tool_update:
+                CheckVersion.getInstance(MainActivity.this).checkVersion(false);
+                break;
+            case R.id.tool_about:
+
+                break;
+        }
+        return true;
     }
 
     @Override
@@ -140,25 +176,24 @@ public class MainActivity extends BaseActivity<MainPresenter>
     @Override
     public void showGirlList(List<Girl> girlList) {
         canLoading = true;
-        if(page==1){
-            if(list!=null&&list.size()!=0){
+        if (page == 1) {
+            if (list != null && list.size() != 0) {
                 Girl netGirl = girlList.get(0);
                 Girl spGirl = list.get(0);
-                if(!netGirl.url.equals(spGirl.url)){
+                if (!netGirl.url.equals(spGirl.url)) {
                     list.clear();
                     list.addAll(girlList);
                     adapter.notifyDataSetChanged();
-                }
-            }else{
-                SPDataTools.saveFirstPageGirls(this, girlList);
+                } else TipsUtil.showSnackTip(fab, "已经是最新内容了！");
+            } else {
                 list.addAll(girlList);
                 adapter.notifyDataSetChanged();
             }
+            SPDataTools.saveFirstPageGirls(this, girlList);
         } else {
             list.addAll(girlList);
             adapter.notifyDataSetChanged();
         }
-
     }
 
     @OnClick(R.id.fab)
@@ -173,22 +208,6 @@ public class MainActivity extends BaseActivity<MainPresenter>
         recyclerView.smoothScrollToPosition(0);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.nav_category) {
-            startActivity(new Intent(this, CategoryActivity.class));
-//        } else if (id == R.id.nav_search) {
-//        } else if (id == R.id.nav_setting) {
-        } else if (id == R.id.nav_update) {
-            CheckVersion.getInstance(this).checkVersion(false);
-        }
-//        else if (id == R.id.nav_about) {
-//        }
-        drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
-    }
 
     @Override
     public void onRefresh() {
@@ -210,4 +229,25 @@ public class MainActivity extends BaseActivity<MainPresenter>
             canLoading = false;
         }
     }
+
+    private void initRecyclerView(){
+        list = SPDataTools.getFirstPageGirls(this);
+        if (list == null) list = new ArrayList<>();
+        adapter = new MainAdapter(list, this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLoadMoreListener(this);
+        recyclerView.applyFloatingActionButton(fab);
+        ScaleInAnimatorAdapter animatorAdapter = new ScaleInAnimatorAdapter(adapter, recyclerView);
+        recyclerView.setAdapter(animatorAdapter);
+
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                presenter.loadData(page);
+            }
+        });
+    }
+
 }

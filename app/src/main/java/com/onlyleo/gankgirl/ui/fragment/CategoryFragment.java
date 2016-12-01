@@ -6,9 +6,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.onlyleo.gankgirl.R;
+import com.onlyleo.gankgirl.model.entity.Category;
 import com.onlyleo.gankgirl.model.entity.Gank;
 import com.onlyleo.gankgirl.presenter.CategoryFragmentPresenter;
-import com.onlyleo.gankgirl.ui.adapter.CategoryAdapter;
+import com.onlyleo.gankgirl.ui.adapter.GankListAdapter;
 import com.onlyleo.gankgirl.ui.base.BaseFragment;
 import com.onlyleo.gankgirl.ui.view.ICategoryView;
 import com.onlyleo.gankgirl.utils.TipsUtil;
@@ -29,9 +30,8 @@ public class CategoryFragment extends BaseFragment<CategoryFragmentPresenter> im
     SwipeRefreshLayout swipeRefreshLayout;
     public static final String TYPE = "type";
     private String type;
-    private CategoryAdapter categoryadapter;
-    private List<Gank> list;
-    private boolean isRefresh = true;
+    private GankListAdapter categoryadapter;
+    private List<Category> list;
     private int page = 1;
     private boolean canLoading = true;
     private boolean isPrepared;
@@ -81,7 +81,6 @@ public class CategoryFragment extends BaseFragment<CategoryFragmentPresenter> im
 
     @Override
     public void onRefresh() {
-        isRefresh = true;
         page = 1;
         presenter.loadData(type, page);
         if (!swipeRefreshLayout.isRefreshing())
@@ -119,14 +118,13 @@ public class CategoryFragment extends BaseFragment<CategoryFragmentPresenter> im
     }
 
     @Override
-    public void showCategoryData(List<Gank> list) {
+    public void showCategoryData(List<Category> list) {
         canLoading = true;
 
-        if (isRefresh) {
+        if (page == 1) {
             this.list.clear();
             this.list.addAll(list);
             categoryadapter.notifyDataSetChanged();
-            isRefresh = false;
         } else {
             this.list.addAll(list);
             categoryadapter.notifyDataSetChanged();
@@ -150,13 +148,15 @@ public class CategoryFragment extends BaseFragment<CategoryFragmentPresenter> im
         if (isPrepared && isVisible && !mHasLoadedOnce) {
             mHasLoadedOnce = true;
             list = new ArrayList<>();
-            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-            categoryadapter = new CategoryAdapter(getContext(), list);
+            categoryadapter = new GankListAdapter(getActivity(), list);
             recyclerViewCategory.setLoadMoreListener(this);
             recyclerViewCategory.setLayoutManager(layoutManager);
-            AlphaAnimatorAdapter alphaAnimatorAdapter = new AlphaAnimatorAdapter(categoryadapter,recyclerViewCategory);
-                        recyclerViewCategory.setAdapter(alphaAnimatorAdapter);
+
+            AlphaAnimatorAdapter alphaAnimatorAdapter = new AlphaAnimatorAdapter(categoryadapter, recyclerViewCategory);
+
+            recyclerViewCategory.setAdapter(alphaAnimatorAdapter);
             swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
             swipeRefreshLayout.setOnRefreshListener(this);
             swipeRefreshLayout.post(new Runnable() {

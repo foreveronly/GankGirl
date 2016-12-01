@@ -6,9 +6,11 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
 
+import com.onlyleo.gankgirl.net.BaseSubscriber;
 import com.onlyleo.gankgirl.ui.view.IGirlView;
 import com.onlyleo.gankgirl.utils.CommonTools;
 import com.onlyleo.gankgirl.utils.FileUtil;
+import com.orhanobut.logger.Logger;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -26,12 +28,11 @@ public class GirlPresenter extends BasePresenter<IGirlView> {
     public void release() {
         if (subscription != null)
             subscription.unsubscribe();
-//        if (mView != null)
-//            mView = null;
     }
 
     /**
      * 保存妹子图片
+     *
      * @param bitmap
      * @param title
      */
@@ -47,18 +48,25 @@ public class GirlPresenter extends BasePresenter<IGirlView> {
                     subscriber.onCompleted();
                 }
             }
-        }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Uri>() {
+        })
+                .doOnError(new Action1<Throwable>() {
                     @Override
-                    public void call(Uri uri) {
+                    public void call(Throwable throwable) {
+                        Logger.e(throwable.getMessage());
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<Uri>((Activity) mContext) {
+                    @Override
+                    public void onNext(Uri uri) {
                         Intent scannerIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
                         mContext.sendBroadcast(scannerIntent);
                         mView.showSaveGirlResult("保存成功!");
                     }
-                }, new Action1<Throwable>() {
+
                     @Override
-                    public void call(Throwable throwable) {
+                    public void onError(Throwable e) {
                         mView.showSaveGirlResult("保存失败!");
                     }
                 });
@@ -66,6 +74,7 @@ public class GirlPresenter extends BasePresenter<IGirlView> {
 
     /**
      * 分享妹子图片
+     *
      * @param bitmap
      * @param title
      */
@@ -75,7 +84,7 @@ public class GirlPresenter extends BasePresenter<IGirlView> {
             public void call(Subscriber<? super Uri> subscriber) {
                 Uri uri = FileUtil.saveBitmapToSDCard(bitmap, title);
                 if (uri == null) {
-                    subscriber.onError(new Exception("保存失败!"));
+                    subscriber.onError(new Exception("分享失败!"));
                 } else {
                     subscriber.onNext(uri);
                     subscriber.onCompleted();

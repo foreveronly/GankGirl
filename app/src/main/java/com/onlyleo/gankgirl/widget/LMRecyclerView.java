@@ -9,7 +9,6 @@ import android.util.AttributeSet;
 
 
 public class LMRecyclerView extends RecyclerView {
-    private boolean isScrollingToBottom = true;
     private FloatingActionButton floatingActionButton;
     private LoadMoreListener listener;
 
@@ -45,7 +44,7 @@ public class LMRecyclerView extends RecyclerView {
                     floatingActionButton.show();
                 int lastVisibleItem = layoutManager.findLastCompletelyVisibleItemPosition();
                 int totalItemCount = layoutManager.getItemCount();
-                if (lastVisibleItem == (totalItemCount - 1) && isScrollingToBottom) {
+                if (lastVisibleItem == totalItemCount - 1) {
                     if (listener != null)
                         listener.loadMore();
                 }

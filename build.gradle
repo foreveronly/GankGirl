@@ -6,7 +6,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.2'
-
+        classpath 'com.antfortune.freeline:gradle:0.8.2'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -17,5 +17,16 @@ allprojects {
         jcenter()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://jitpack.io" }
+    }
+// Define versions in a single place
+    ext {
+        // Sdk and tools
+        minSdkVersion = 15
+        targetSdkVersion = 24
+        compileSdkVersion = 24
+        buildToolsVersion = '24.0.3'
+
+        // App dependencies
+        supportLibraryVersion = '24.2.1'
     }
 }

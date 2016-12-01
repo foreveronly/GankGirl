@@ -4,8 +4,10 @@ import android.app.Activity;
 
 import com.onlyleo.gankgirl.model.GankData;
 import com.onlyleo.gankgirl.model.entity.Gank;
+import com.onlyleo.gankgirl.net.BaseSubscriber;
 import com.onlyleo.gankgirl.net.GankRetrofit;
 import com.onlyleo.gankgirl.ui.view.IGankDailyView;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +28,6 @@ public class GankDailyPresenter extends BasePresenter<IGankDailyView> {
     public void release() {
         if (subscription != null)
             subscription.unsubscribe();
-//        if (mView != null)
-//            mView = null;
     }
 
     /**
@@ -47,15 +47,20 @@ public class GankDailyPresenter extends BasePresenter<IGankDailyView> {
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<Gank>>() {
-                    @Override
-                    public void call(List<Gank> gankList) {
-                        mView.showGankList(gankList);
-                    }
-                }, new Action1<Throwable>() {
+                .doOnError(new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        mView.showErrorView();
+                        Logger.e(throwable.getMessage());
+                    }
+                })
+                .subscribe(new BaseSubscriber<List<Gank>>((Activity) mContext) {
+                    @Override
+                    public void onError(Throwable e) {
+                        Logger.e(e.getMessage());
+                    }
+                    @Override
+                    public void onNext(List<Gank> ganks) {
+                        mView.showGankList(ganks);
                     }
                 });
     }
