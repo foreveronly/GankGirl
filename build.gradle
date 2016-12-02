@@ -27,6 +27,6 @@ allprojects {
         buildToolsVersion = '24.0.3'
 
         // App dependencies
-        supportLibraryVersion = '24.2.1'
+        supportLibraryVersion = '25.0.1'
     }
 }

@@ -12,7 +12,6 @@ import com.onlyleo.gankgirl.ui.view.ISearchView;
 import com.onlyleo.gankgirl.utils.ToastUtils;
 import com.onlyleo.gankgirl.widget.CompatToolbar;
 import com.onlyleo.gankgirl.widget.LMRecyclerView;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,8 +122,6 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements ISe
 
     @Override
     public void loadMore() {
-
-        Logger.d("加载");
         ++page;
         if (canLoading) {
             presenter.search(query, category, page);

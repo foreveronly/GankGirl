@@ -24,4 +24,6 @@ public class SPDataTools {
         SharedPreferences preferences = context.getSharedPreferences(GANK, Context.MODE_PRIVATE);
        return gson.fromJson(preferences.getString(GIRLS, ""), new TypeToken<List<Girl>>() {}.getType());
     }
+
+
 }
