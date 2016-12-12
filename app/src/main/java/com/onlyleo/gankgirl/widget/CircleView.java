@@ -19,7 +19,7 @@ import android.widget.ImageView;
 import com.onlyleo.gankgirl.R;
 
 
-public class CircleImageView extends ImageView {
+public class CircleView extends ImageView {
 
     private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;
 
@@ -50,22 +50,22 @@ public class CircleImageView extends ImageView {
     private boolean mReady;
     private boolean mSetupPending;
 
-    public CircleImageView(Context context) {
+    public CircleView(Context context) {
         super(context);
     }
 
-    public CircleImageView(Context context, AttributeSet attrs) {
+    public CircleView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public CircleImageView(Context context, AttributeSet attrs, int defStyle) {
+    public CircleView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         super.setScaleType(SCALE_TYPE);
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView, defStyle, 0);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircleView, defStyle, 0);
 
-        mBorderWidth = a.getDimensionPixelSize(R.styleable.CircleImageView_border_width, DEFAULT_BORDER_WIDTH);
-        mBorderColor = a.getColor(R.styleable.CircleImageView_border_color, DEFAULT_BORDER_COLOR);
+        mBorderWidth = a.getDimensionPixelSize(R.styleable.CircleView_border_width, DEFAULT_BORDER_WIDTH);
+        mBorderColor = a.getColor(R.styleable.CircleView_border_color, DEFAULT_BORDER_COLOR);
 
         a.recycle();
 

@@ -55,6 +55,7 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
     public void initGirl() {
         GlideTools.LoadImage(this, ivGirl, girl.url);
         PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher(ivGirl);
+        photoViewAttacher.setScaleType(ImageView.ScaleType.FIT_CENTER);
         photoViewAttacher.update();
         ViewCompat.setTransitionName(ivGirl, getString(R.string.pretty_girl));
         setTitle(CommonTools.toDateTimeStr(girl.publishedAt));
@@ -62,7 +63,6 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
 
     public void getIntentData() {
         girl = getIntent().getParcelableExtra("girlData");
-
     }
 
     @Override

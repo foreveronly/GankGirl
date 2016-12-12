@@ -1,5 +1,6 @@
 package com.onlyleo.gankgirl.utils;
 
+import android.annotation.TargetApi;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -82,10 +83,11 @@ public class CommonTools {
      * @param context
      * @return false
      */
+    @TargetApi(21)
     public static boolean isWIFIConnected(Context context) {
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo info = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        return info != null && info.isConnected();
+        NetworkInfo info = manager.getActiveNetworkInfo();
+        return info.getType() == ConnectivityManager.TYPE_WIFI && info.isConnected();
     }
 
     /**

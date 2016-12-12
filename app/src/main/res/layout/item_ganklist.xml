@@ -3,7 +3,6 @@
     android:id="@+id/gankll_list"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:paddingBottom="5dp"
@@ -15,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/gank_daily_margin_link"
         android:layout_marginStart="@dimen/gank_daily_margin_link"
-        android:text="·"
+        android:text="@string/dot"
         android:textColor="@color/little_grey"
         android:textSize="@dimen/font_normal" />
 

@@ -17,7 +17,6 @@ public class MainGlideModule implements GlideModule {
 
     private int maxMemory = (int) Runtime.getRuntime().maxMemory();//获取系统分配给应用的总内存大小
     private int memoryCacheSize = maxMemory / 8;//设置图片内存缓存占用八分之一
-    private int diskCacheSize = 1024 * 1024 * 30;//最多可以缓存多少字节的数据
 
     @Override
     public void applyOptions(Context context, GlideBuilder builder) {
@@ -25,6 +24,7 @@ public class MainGlideModule implements GlideModule {
         if (!cacheDir.isDirectory() || !cacheDir.exists())
             cacheDir.mkdir();
         builder.setMemoryCache(new LruResourceCache(memoryCacheSize));//设置磁盘缓存大小
+        int diskCacheSize = 1024 * 1024 * 30;
         builder.setDiskCache(new DiskLruCacheFactory(cacheDir.getPath(), "glide", diskCacheSize));//设置内存缓存大小
         builder.setBitmapPool(new LruBitmapPool(memoryCacheSize));
     }

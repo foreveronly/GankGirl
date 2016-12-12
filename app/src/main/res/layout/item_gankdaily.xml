@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/gank_daily_margin_link"
             android:layout_marginStart="@dimen/gank_daily_margin_link"
-            android:text="●"
+            android:text="@string/dots"
             android:textColor="@color/little_grey"
             android:textSize="@dimen/font_normal" />
 

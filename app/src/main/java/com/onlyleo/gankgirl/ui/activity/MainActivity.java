@@ -121,7 +121,6 @@ public class MainActivity extends BaseActivity<MainPresenter>
                 return true;
             }
         });
-
         return super.onCreateOptionsMenu(menu);
     }
 

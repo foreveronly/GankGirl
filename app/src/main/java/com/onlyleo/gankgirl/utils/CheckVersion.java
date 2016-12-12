@@ -51,9 +51,9 @@ public class CheckVersion {
     private AlertDialog downloading;
     private Version version = null;
 
-    public static CheckVersion getInstance(Context c) {
+    public static CheckVersion getInstance(Context context) {
         if (instance == null)
-            instance = new CheckVersion(c);
+            instance = new CheckVersion(context);
         return instance;
     }
 

@@ -12,7 +12,6 @@ public class LMRecyclerView extends RecyclerView {
     private FloatingActionButton floatingActionButton;
     private LoadMoreListener listener;
 
-
     public LMRecyclerView(Context context) {
         super(context);
     }
@@ -34,7 +33,6 @@ public class LMRecyclerView extends RecyclerView {
     }
 
 
-
     @Override
     public void onScrollStateChanged(int state) {
         LinearLayoutManager layoutManager = (LinearLayoutManager) getLayoutManager();
@@ -44,7 +42,7 @@ public class LMRecyclerView extends RecyclerView {
                     floatingActionButton.show();
                 int lastVisibleItem = layoutManager.findLastCompletelyVisibleItemPosition();
                 int totalItemCount = layoutManager.getItemCount();
-                if (lastVisibleItem == totalItemCount - 1) {
+                if (lastVisibleItem + 1 == totalItemCount) {
                     if (listener != null)
                         listener.loadMore();
                 }
@@ -59,6 +57,8 @@ public class LMRecyclerView extends RecyclerView {
                 break;
         }
     }
+
+
 
     public interface LoadMoreListener {
         void loadMore();

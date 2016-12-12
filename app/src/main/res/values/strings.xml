@@ -40,4 +40,7 @@
     <string name="open_url_failed">打开失败!</string>
     <string name="copy_success">复制成功</string>
     <string name="action_more_operation">更多操作</string>
+    <string name="dot">·</string>
+    <string name="dots">●</string>
+
 </resources>
