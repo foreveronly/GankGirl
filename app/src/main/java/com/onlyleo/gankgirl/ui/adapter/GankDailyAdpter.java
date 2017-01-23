@@ -20,13 +20,16 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import smartisanos.api.OneStepHelper;
 
 public class GankDailyAdpter extends RecyclerView.Adapter<GankDailyAdpter.GankDailyHolder> {
 
     private List<Gank> list;
     private Context context;
+    private OneStepHelper mOneStepHelper;
 
     public GankDailyAdpter(Context context, List<Gank> list) {
+        mOneStepHelper = OneStepHelper.getInstance(context);
         this.list = list;
         this.context = context;
     }
@@ -39,7 +42,7 @@ public class GankDailyAdpter extends RecyclerView.Adapter<GankDailyAdpter.GankDa
 
 
     @Override
-    public void onBindViewHolder(GankDailyHolder holder, int position) {
+    public void onBindViewHolder(GankDailyHolder holder, final int position) {
         holder.gankllList.setTag(list.get(position));
         if (position == 0) {
             showTitle(true, holder.titleList);
@@ -54,6 +57,16 @@ public class GankDailyAdpter extends RecyclerView.Adapter<GankDailyAdpter.GankDa
             holder.titleList.setText(list.get(position).type);
         }
         holder.linkList.setText(CommonTools.getGankStyleStr(list.get(position)));
+        holder.gankllList.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (mOneStepHelper.isOneStepShowing()) {
+                    mOneStepHelper.dragLink(v,list.get(position).url);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     private void showTitle(boolean show, TextView titleList) {
@@ -89,7 +102,7 @@ public class GankDailyAdpter extends RecyclerView.Adapter<GankDailyAdpter.GankDa
                             WebActivity.loadWebViewActivity(context, (Gank) gankllList.getTag());
                         }
                     }, Snackbar.LENGTH_LONG);
-                }else{
+                } else {
                     WebActivity.loadWebViewActivity(context, (Gank) gankllList.getTag());
                 }
             } else

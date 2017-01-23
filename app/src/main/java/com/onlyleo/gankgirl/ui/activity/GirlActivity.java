@@ -22,6 +22,8 @@ import com.onlyleo.gankgirl.utils.GlideTools;
 import com.onlyleo.gankgirl.utils.TipsUtil;
 import com.onlyleo.gankgirl.widget.CompatToolbar;
 
+import java.io.File;
+
 import butterknife.Bind;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -55,10 +57,22 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
     public void initGirl() {
         GlideTools.LoadImage(this, ivGirl, girl.url);
         PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher(ivGirl);
-        photoViewAttacher.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        photoViewAttacher.setScaleType(ImageView.ScaleType.CENTER);
         photoViewAttacher.update();
         ViewCompat.setTransitionName(ivGirl, getString(R.string.pretty_girl));
         setTitle(CommonTools.toDateTimeStr(girl.publishedAt));
+        photoViewAttacher.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (mOneStepHelper.isOneStepShowing()) {
+                    Bitmap girlbm = CommonTools.drawableToBitamp(ivGirl.getDrawable());
+                    File file = FileUtil.getFileByBitmap(girlbm, CommonTools.toDateString(girl.publishedAt).toString());
+                    mOneStepHelper.dragImage(v, file, "image/jpeg");
+                    return false;
+                }
+                return false;
+            }
+        });
     }
 
     public void getIntentData() {
@@ -99,7 +113,6 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
     public void showSaveGirlResult(String result) {
         TipsUtil.showSnackTip(ivGirl, result);
     }
-
 
     public static void LaunchGirlActivity(Activity activity, View imageView, Girl girl) {
         Intent girlIntent = new Intent(activity, GirlActivity.class);

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Girl;
+import com.onlyleo.gankgirl.net.GankRetrofit;
 import com.onlyleo.gankgirl.ui.activity.GankDailyActivity;
 import com.onlyleo.gankgirl.ui.activity.GirlActivity;
 import com.onlyleo.gankgirl.ui.activity.MainActivity;
@@ -18,17 +19,22 @@ import com.onlyleo.gankgirl.utils.CommonTools;
 import com.onlyleo.gankgirl.utils.GlideTools;
 import com.onlyleo.gankgirl.widget.AlwaysMarqueeTextView;
 
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import smartisanos.api.OneStepHelper;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
     private List<Girl> list;
     private Context context;
 
+    private OneStepHelper mOneStepHelper;
+
     public MainAdapter(List<Girl> list, Context context) {
+        mOneStepHelper = OneStepHelper.getInstance(context);
         this.list = list;
         this.context = context;
     }
@@ -45,6 +51,18 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
         GlideTools.LoadImage(context, holder.ivGirl, list.get(position).url);
         holder.tvDate.setText(CommonTools.toDateTimeStr(list.get(position).publishedAt));
         holder.tvTitle.setText(list.get(position).desc);
+        holder.ivGirl.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(mOneStepHelper.isOneStepShowing()){
+                    Calendar calendar = Calendar.getInstance();
+                    String url = GankRetrofit.BaseURL + calendar.get(Calendar.YEAR) + "/" + calendar.get(Calendar.MONTH) + 1 + "/" + calendar.get(Calendar.DAY_OF_MONTH);
+                    mOneStepHelper.dragLink(v,url);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -62,7 +80,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
         @Bind(R.id.ll_title)
         LinearLayout llTitle;
 
-
         @OnClick(R.id.ll_title)
         void itemCilick() {
             GankDailyActivity.LaunchGankDailyActivity((MainActivity) context, ivGirl, (Girl) card.getTag());
@@ -72,7 +89,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
         void girlClick() {
             GirlActivity.LaunchGirlActivity((MainActivity) context, ivGirl, (Girl) card.getTag());
         }
-
         View card;
 
         GirlHolder(View itemView) {

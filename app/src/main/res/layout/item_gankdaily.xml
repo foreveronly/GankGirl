@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/gankll_list"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="7dp"
+    android:paddingTop="7dp">
 
     <TextView
         android:id="@+id/title_list"
+        android:clickable="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -15,10 +19,9 @@
         android:textStyle="bold" />
 
     <LinearLayout
-        android:id="@+id/gankll_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
+        android:background="@drawable/selector_item"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingBottom="5dp"
@@ -37,9 +40,9 @@
             android:id="@+id/link_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/gank_daily_margin_link"
             android:layout_marginLeft="@dimen/gank_daily_margin_link"
             android:layout_marginRight="@dimen/gank_daily_margin_link"
-            android:layout_marginEnd="@dimen/gank_daily_margin_link"
             android:layout_marginStart="@dimen/gank_daily_margin_link"
             android:textColor="@color/little_grey"
             android:textSize="@dimen/font_normal" />

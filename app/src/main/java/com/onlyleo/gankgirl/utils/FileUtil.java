@@ -38,6 +38,27 @@ public class FileUtil {
         return Uri.fromFile(file);
     }
 
+    public static File getFileByBitmap(Bitmap bitmap, String title) {
+        File appDir = new File(Environment.getExternalStorageDirectory(), "Gank");
+        if (!appDir.exists()) {
+            appDir.mkdirs();
+        }
+        String fileName = title.replace("/", "-") + "-girl.jpg";
+        File file = new File(appDir, fileName);
+        FileOutputStream outputStream;
+        try {
+            outputStream = new FileOutputStream(file);
+            assert bitmap != null;
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            outputStream.flush();
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return file;
+    }
+
     public static void deleteFile(File file) {
 
         if (file.isFile() && file.exists()) {

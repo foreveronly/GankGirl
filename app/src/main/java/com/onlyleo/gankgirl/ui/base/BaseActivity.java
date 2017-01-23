@@ -11,12 +11,13 @@ import android.view.WindowManager;
 import com.onlyleo.gankgirl.presenter.BasePresenter;
 
 import butterknife.ButterKnife;
+import smartisanos.api.OneStepHelper;
 
 
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
     protected String TAG = this.getClass().getSimpleName();
     protected P presenter;
-
+    protected OneStepHelper mOneStepHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +25,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         ButterKnife.bind(this);
         initPresenter();
         checkPresenterIsNull();
+        mOneStepHelper = OneStepHelper.getInstance(this);
         Log.i(TAG, "onCreate");
     }
 

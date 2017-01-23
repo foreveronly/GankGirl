@@ -16,6 +16,7 @@ public class GankRetrofit {
      * 数据主机地址
      */
     public static final String HOST = "http://gank.io/api/";
+    public static final String BaseURL = "http://gank.io/";
     private static Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").serializeNulls().create();
     private static Retrofit retrofit;
 

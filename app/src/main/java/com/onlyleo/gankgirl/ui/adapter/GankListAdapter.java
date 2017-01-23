@@ -21,6 +21,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import smartisanos.api.OneStepHelper;
 
 /**
  * 用于 gank 的 recyerview 的适配器
@@ -29,8 +30,10 @@ public class GankListAdapter extends RecyclerView.Adapter<GankListAdapter.GankLi
 
     private Activity context;
     private List<Category> list;
+    private OneStepHelper mOneStepHelper;
 
     public GankListAdapter(Activity context, List<Category> list) {
+        mOneStepHelper = OneStepHelper.getInstance(context);
         this.context = context;
         this.list = list;
     }
@@ -42,10 +45,20 @@ public class GankListAdapter extends RecyclerView.Adapter<GankListAdapter.GankLi
     }
 
     @Override
-    public void onBindViewHolder(GankListViewHolder holder, int position) {
+    public void onBindViewHolder(GankListViewHolder holder, final int position) {
         holder.card.setTag(list.get(position));
         holder.gankllList.setTag(list.get(position));
         holder.linkList.setText(CommonTools.getGankStyleStr(list.get(position)));
+        holder.gankllList.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (mOneStepHelper.isOneStepShowing()) {
+                    mOneStepHelper.dragLink(v,list.get(position).url);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     @Override

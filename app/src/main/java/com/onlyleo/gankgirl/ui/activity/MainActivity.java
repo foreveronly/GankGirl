@@ -57,9 +57,9 @@ public class MainActivity extends BaseActivity<MainPresenter>
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
 
-            if(searchView.isShown()){
+            if (searchView.isShown()) {
                 searchView.onActionViewCollapsed();  //collapse your ActionView
-            }else {
+            } else {
                 if (System.currentTimeMillis() - quitTime > 2000) {
                     TipsUtil.showSnackTip(fab, "再按一次退出程序");
                     quitTime = System.currentTimeMillis();
@@ -107,9 +107,9 @@ public class MainActivity extends BaseActivity<MainPresenter>
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Intent intent = new Intent(MainActivity.this,SearchActivity.class);
-                intent.putExtra("query",query);
-                intent.putExtra("category","all");
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                intent.putExtra("query", query);
+                intent.putExtra("category", "all");
                 startActivity(intent);
                 searchView.onActionViewCollapsed();
 
@@ -229,7 +229,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
         }
     }
 
-    private void initRecyclerView(){
+    private void initRecyclerView() {
         list = SPDataTools.getFirstPageGirls(this);
         if (list == null) list = new ArrayList<>();
         adapter = new MainAdapter(list, this);
