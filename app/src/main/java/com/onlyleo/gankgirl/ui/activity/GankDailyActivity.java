@@ -129,7 +129,6 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
 
     public void initGankDaily() {
         GlideTools.LoadImage(this, gankDailyIv, girl.url);
-
         setTitle(CommonTools.toDateTimeStr(girl.publishedAt));
         list = new ArrayList<>();
         adapter = new GankDailyAdpter(this, list);

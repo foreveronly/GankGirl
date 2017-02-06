@@ -1,7 +1,6 @@
 package com.onlyleo.gankgirl.utils;
 
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -20,7 +19,6 @@ import com.onlyleo.gankgirl.model.entity.Version;
 import com.onlyleo.gankgirl.net.VersionRetrofit;
 import com.onlyleo.gankgirl.ui.listener.ProgressListener;
 import com.orhanobut.logger.Logger;
-import com.yanzhenjie.permission.AndPermission;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -41,7 +39,7 @@ import rx.schedulers.Schedulers;
 public class CheckVersion {
 
     private static CheckVersion instance = null;
-    private Context context;
+    private Activity context;
     private final static String appId = "575fb1e3e75e2d2bed000015";
     private final static String token = "4075cf1614935e8378de168581693fcf";
     private NotificationManager manager;
@@ -51,13 +49,13 @@ public class CheckVersion {
     private AlertDialog downloading;
     private Version version = null;
 
-    public static CheckVersion getInstance(Context context) {
+    public static CheckVersion getInstance(Activity context) {
         if (instance == null)
             instance = new CheckVersion(context);
         return instance;
     }
 
-    private CheckVersion(Context context) {
+    private CheckVersion(Activity context) {
         this.context = context;
     }
 
@@ -137,11 +135,11 @@ public class CheckVersion {
         updateDialog.setButton(DialogInterface.BUTTON_POSITIVE, "现在下载", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(final DialogInterface dialog, int which) {
-                AndPermission.with((Activity) context)
-                        .requestCode(101)
-                        .permission(Manifest.permission.READ_EXTERNAL_STORAGE,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        .send();
+//                AndPermission.with((Activity) context)
+//                        .requestCode(101)
+//                        .permission(Manifest.permission.READ_EXTERNAL_STORAGE,
+//                                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                        .send();
 
                 if (CommonTools.isWIFIConnected(context)) {
                     downNewVersion();

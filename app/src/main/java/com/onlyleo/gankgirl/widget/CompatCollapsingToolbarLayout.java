@@ -29,7 +29,7 @@ public class CompatCollapsingToolbarLayout extends CollapsingToolbarLayout {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         if (!mLayoutReady) {
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
                 if ((getWindowSystemUiVisibility() &
                         (SYSTEM_UI_FLAG_LAYOUT_STABLE|SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)) ==
                         (SYSTEM_UI_FLAG_LAYOUT_STABLE|SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)) {
