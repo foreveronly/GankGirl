@@ -1,7 +1,14 @@
 package com.onlyleo.gankgirl.ui.activity;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -56,7 +63,6 @@ public class MainActivity extends BaseActivity<MainPresenter>
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-
             if (searchView.isShown()) {
                 searchView.onActionViewCollapsed();  //collapse your ActionView
             } else {
@@ -79,9 +85,45 @@ public class MainActivity extends BaseActivity<MainPresenter>
 
     @Override
     protected void initPresenter() {
-        CheckVersion.getInstance(this).checkVersion(true); //检查更新
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int permissionWRITE = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            int permissionREAD = ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+            if (permissionWRITE == PackageManager.PERMISSION_DENIED || permissionREAD == PackageManager.PERMISSION_DENIED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage("应用需要获取您的SD卡读取写入权限,是否授权？")
+                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //请求权限
+                                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                                }
+                            }).setNegativeButton("取消", null)
+                            .create().show();
+                } else {
+                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                }
+            } else {
+                CheckVersion.getInstance(this).checkVersion(true); //检查更新
+            }
+        } else {
+            CheckVersion.getInstance(this).checkVersion(true); //检查更新
+        }
         presenter = new MainPresenter(this, this);
         presenter.init();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1 && grantResults.length > 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                TipsUtil.showSnackTip(fab, "获取SD卡写入权限失败");
+            }
+            if (grantResults[1] == PackageManager.PERMISSION_DENIED) {
+                TipsUtil.showSnackTip(fab, "获取SD卡读取权限失败");
+            }
+        }
     }
 
     @Override
@@ -184,9 +226,6 @@ public class MainActivity extends BaseActivity<MainPresenter>
                     list.addAll(girlList);
                     adapter.notifyDataSetChanged();
                 } else TipsUtil.showSnackTip(fab, "已经是最新内容了！");
-            } else {
-                list.addAll(girlList);
-                adapter.notifyDataSetChanged();
             }
             SPDataTools.saveFirstPageGirls(this, girlList);
         } else {

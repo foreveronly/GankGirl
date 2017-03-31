@@ -29,7 +29,7 @@ public class GankData extends BaseData {
     public List<String> category;
     public Result results;
 
-    public class Result {
+    public static class Result {
         @SerializedName("Android")
         public List<Gank> androidList;
         @SerializedName("休息视频")

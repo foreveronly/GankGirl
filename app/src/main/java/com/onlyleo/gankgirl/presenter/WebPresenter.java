@@ -87,7 +87,7 @@ public class WebPresenter extends BasePresenter<IWebView> {
         }
     }
 
-    private class GankClient extends WebViewClient {
+    private static class GankClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             if (url != null) view.loadUrl(url);

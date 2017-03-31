@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.onlyleo.gankgirl.R;
@@ -41,7 +40,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
 
     @Override
     public GirlHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_main, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.itemcard_main, parent, false);
         return new GirlHolder(view);
     }
 
@@ -77,8 +76,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
         TextView tvDate;
         @Bind(R.id.tv_title)
         AlwaysMarqueeTextView tvTitle;
-        @Bind(R.id.ll_title)
-        LinearLayout llTitle;
+//        @Bind(R.id.ll_title)
+//        LinearLayout llTitle;
 
         @OnClick(R.id.ll_title)
         void itemCilick() {

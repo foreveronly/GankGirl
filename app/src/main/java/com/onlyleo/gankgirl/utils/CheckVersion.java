@@ -71,7 +71,7 @@ public class CheckVersion {
                     @Override
                     public void call(Version version) {
                         setVersion(version);
-                        int versionCode = Integer.valueOf(version.version);
+                        int versionCode = Integer.parseInt(version.version);
                         int appVersionCode = GetAppInfo.getAppVersionCode(GankGirlApp.getInstance().getApplicationContext());
                         if (versionCode > appVersionCode) {
                             File file = new File(GetAppInfo.getApkPath(), "GankGirl.apk");

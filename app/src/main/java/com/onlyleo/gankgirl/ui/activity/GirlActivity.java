@@ -55,6 +55,8 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
     }
 
     public void initGirl() {
+
+
         GlideTools.LoadImage(this, ivGirl, girl.url);
         PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher(ivGirl);
         photoViewAttacher.setScaleType(ImageView.ScaleType.CENTER);
@@ -90,11 +92,13 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
         Bitmap girlbm = CommonTools.drawableToBitamp(ivGirl.getDrawable());
         switch (item.getItemId()) {
             case R.id.action_save:
+
                 if (!FileUtil.isSDCardEnable() || girl == null) {
                     TipsUtil.showSnackTip(ivGirl, "保存失败!");
                 } else {
                     presenter.saveGirl(girlbm, CommonTools.toDateString(girl.publishedAt).toString());
                 }
+
                 break;
             case R.id.action_share:
                 presenter.shareGirl(girlbm, CommonTools.toDateString(girl.publishedAt).toString());
