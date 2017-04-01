@@ -13,10 +13,16 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.onlyleo.gankgirl.R;
@@ -245,7 +251,7 @@ public class CommonTools {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, "这是今天的干活" + url);
+        intent.putExtra(Intent.EXTRA_TEXT, "这是今天的干货" + url);
         context.startActivity(Intent.createChooser(intent, context.getString(R.string.share_gank_to)));
     }
 
@@ -264,5 +270,26 @@ public class CommonTools {
         context.startActivity(Intent.createChooser(intent, context.getString(R.string.share_video_to)));
     }
 
-
+    public static TextView getToolbarTitleView(AppCompatActivity activity, Toolbar toolbar){
+        ActionBar actionBar = activity.getSupportActionBar();
+        CharSequence actionbarTitle = null;
+        if(actionBar != null)
+            actionbarTitle = actionBar.getTitle();
+        actionbarTitle = TextUtils.isEmpty(actionbarTitle) ? toolbar.getTitle() : actionbarTitle;
+        if(TextUtils.isEmpty(actionbarTitle)) return null;
+        // can't find if title not set
+        for(int i= 0; i < toolbar.getChildCount(); i++){
+            View v = toolbar.getChildAt(i);
+            if(v != null && v instanceof TextView){
+                TextView t = (TextView) v;
+                CharSequence title = t.getText();
+                if(!TextUtils.isEmpty(title) && actionbarTitle.equals(title) && t.getId() == View.NO_ID){
+                    //Toolbar does not assign id to views with layout params SYSTEM, hence getId() == View.NO_ID
+                    //in same manner subtitle TextView can be obtained.
+                    return t;
+                }
+            }
+        }
+        return null;
+    }
 }

@@ -9,10 +9,11 @@
 
     <TextView
         android:id="@+id/title_list"
-        android:clickable="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:clickable="false"
+        android:elevation="5dp"
         android:padding="10dp"
         android:textColor="@color/pure_black"
         android:textSize="@dimen/font_title"
@@ -21,7 +22,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/selector_item"
+        android:background="@drawable/ripple_bg"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingBottom="5dp"
@@ -32,6 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/gank_daily_margin_link"
             android:layout_marginStart="@dimen/gank_daily_margin_link"
+            android:elevation="5dp"
             android:text="@string/dots"
             android:textColor="@color/little_grey"
             android:textSize="@dimen/font_normal" />
@@ -44,6 +46,7 @@
             android:layout_marginLeft="@dimen/gank_daily_margin_link"
             android:layout_marginRight="@dimen/gank_daily_margin_link"
             android:layout_marginStart="@dimen/gank_daily_margin_link"
+            android:elevation="5dp"
             android:textColor="@color/little_grey"
             android:textSize="@dimen/font_normal" />
     </LinearLayout>

@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.github.chrisbanes.photoview.PhotoView;
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.presenter.GirlPresenter;
@@ -25,13 +26,12 @@ import com.onlyleo.gankgirl.widget.CompatToolbar;
 import java.io.File;
 
 import butterknife.Bind;
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlView {
 
 
     @Bind(R.id.iv_girl_all)
-    ImageView ivGirl;
+    PhotoView ivGirl;
     @Bind(R.id.toolbar)
     CompatToolbar toolbar;
     private Girl girl;
@@ -58,12 +58,10 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
 
 
         GlideTools.LoadImage(this, ivGirl, girl.url);
-        PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher(ivGirl);
-        photoViewAttacher.setScaleType(ImageView.ScaleType.CENTER);
-        photoViewAttacher.update();
+        ivGirl.setScaleType(ImageView.ScaleType.FIT_CENTER);
         ViewCompat.setTransitionName(ivGirl, getString(R.string.pretty_girl));
         setTitle(CommonTools.toDateTimeStr(girl.publishedAt));
-        photoViewAttacher.setOnLongClickListener(new View.OnLongClickListener() {
+        ivGirl.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 if (mOneStepHelper.isOneStepShowing()) {
@@ -109,8 +107,8 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         presenter.release();
+        super.onDestroy();
     }
 
     @Override

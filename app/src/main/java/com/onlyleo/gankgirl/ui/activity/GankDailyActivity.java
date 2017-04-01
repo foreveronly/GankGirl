@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -134,10 +135,12 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
         adapter = new GankDailyAdpter(this, list);
         recyclerViewGankdaily.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewGankdaily.setItemAnimator(new DefaultItemAnimator());
-        SlideInRightAnimatorAdapter animatorAdapter = new SlideInRightAnimatorAdapter(adapter,recyclerViewGankdaily);
+        SlideInRightAnimatorAdapter animatorAdapter = new SlideInRightAnimatorAdapter<>(adapter, recyclerViewGankdaily);
         recyclerViewGankdaily.setAdapter(animatorAdapter);
         ViewCompat.setTransitionName(gankDailyIv, getString(R.string.pretty_girl));
-        setAnimation(gankDailyIv);
+        ViewCompat.setTransitionName(CommonTools.getToolbarTitleView(this, toolbar), getString(R.string.date));
+
+//        setAnimation(gankDailyIv);
     }
 
     @Override
@@ -158,10 +161,11 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         presenter.release();
         if (anim != null)
             anim.cancel();
+        super.onDestroy();
+
 
     }
 
@@ -173,11 +177,13 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
         anim.start();
     }
 
-    public static void LaunchGankDailyActivity(Activity activity, View imageView, Girl girl) {
+    public static void LaunchGankDailyActivity(Activity activity, View imageView, View textView, Girl girl) {
         Intent Intent = new Intent(activity, GankDailyActivity.class);
         Intent.putExtra("girlData", girl);
-        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
-                .makeSceneTransitionAnimation(activity, imageView, activity.getString(R.string.pretty_girl));
+        Pair<View, String> image = new Pair<>(imageView, activity.getString(R.string.pretty_girl));
+        Pair<View, String> text = new Pair<>(textView, activity.getString(R.string.date));
+
+        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, image, text);
         ActivityCompat.startActivity(activity, Intent, optionsCompat.toBundle());
     }
 }

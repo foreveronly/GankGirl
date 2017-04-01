@@ -39,7 +39,6 @@ public class CompatToolbar extends Toolbar {
                     setPadding(0, statusBarHeight, 0, 0);
                 }
             }
-
             mLayoutReady = true;
         }
     }

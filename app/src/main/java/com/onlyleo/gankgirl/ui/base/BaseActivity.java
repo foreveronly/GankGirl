@@ -91,11 +91,12 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     @Override
     protected void onDestroy() {
+        ButterKnife.unbind(this);
+        Log.i(TAG, "onDestroy");
         super.onDestroy();
 //        RefWatcher refWatcher = GankGirlApp.getRefWatcher(this);
 //        refWatcher.watch(this);
-        ButterKnife.unbind(this);
-        Log.i(TAG, "onDestroy");
+
 
     }
 }

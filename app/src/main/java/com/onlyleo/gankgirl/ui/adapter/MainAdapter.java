@@ -81,7 +81,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
 
         @OnClick(R.id.ll_title)
         void itemCilick() {
-            GankDailyActivity.LaunchGankDailyActivity((MainActivity) context, ivGirl, (Girl) card.getTag());
+            GankDailyActivity.LaunchGankDailyActivity((MainActivity) context, ivGirl,tvDate, (Girl) card.getTag());
         }
 
         @OnClick(R.id.iv_girl)

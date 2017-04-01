@@ -9,7 +9,7 @@
 
     <include layout="@layout/app_toolbar" />
 
-    <ImageView
+    <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/iv_girl_all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

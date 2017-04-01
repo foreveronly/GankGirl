@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GankGirl</string>
+    <!--<string name="app_name">GankGirl</string>-->
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -29,7 +29,7 @@
     <string name="retry">重试</string>
     <string name="action_save">保存</string>
     <string name="action_share">分享</string>
-    <string name="share_app">分享技术干活App「GankGirl」，下载地址：http://fir.im/GankGirl</string>
+    <string name="share_app">分享技术干货App「GankGirl」，下载地址：http://fir.im/GankGirl</string>
     <string name="download_gank">\n下载「GankGirl」^_^ : http://fir.im/GankGirl</string>
     <string name="share_app_to_friend">分享「Gank.io」给朋友</string>
     <string name="share_gank_to">分享干货到</string>
@@ -42,5 +42,6 @@
     <string name="action_more_operation">更多操作</string>
     <string name="dot">·</string>
     <string name="dots">●</string>
+    <string name="date">date</string>
 
 </resources>
