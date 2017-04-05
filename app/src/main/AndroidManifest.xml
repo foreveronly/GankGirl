@@ -26,22 +26,27 @@
         <activity
             android:name=".ui.activity.GankDailyActivity"
             android:label="@string/title_activity_gank_daily"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.GirlActivity"
             android:label="@string/title_activity_girl"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.WebActivity"
             android:label="@string/title_activity_girl"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.CategoryActivity"
             android:label="@string/title_activity_girl"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.SearchActivity"
             android:label="@string/title_activity_girl"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <receiver

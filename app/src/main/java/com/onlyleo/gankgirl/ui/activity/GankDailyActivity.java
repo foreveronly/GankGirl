@@ -6,7 +6,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.util.Pair;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -113,10 +112,10 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
 
     @Override
     public void init() {
-        initToolbar(toolbar);
+        initToolbar(toolbar, false);
+        CommonTools.setTranslucentStatusBar(getWindow(),true);
         getIntentData();
         initGankDaily();
-
 
     }
 
@@ -138,7 +137,6 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
         SlideInRightAnimatorAdapter animatorAdapter = new SlideInRightAnimatorAdapter<>(adapter, recyclerViewGankdaily);
         recyclerViewGankdaily.setAdapter(animatorAdapter);
         ViewCompat.setTransitionName(gankDailyIv, getString(R.string.pretty_girl));
-        ViewCompat.setTransitionName(CommonTools.getToolbarTitleView(this, toolbar), getString(R.string.date));
 
 //        setAnimation(gankDailyIv);
     }
@@ -154,6 +152,8 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
         switch (item.getItemId()) {
             case R.id.action_share:
                 CommonTools.shareGankDaily(this, GankRetrofit.BaseURL + calendar.get(Calendar.YEAR) + "/" + calendar.get(Calendar.MONTH) + 1 + "/" + calendar.get(Calendar.DAY_OF_MONTH));
+                break;
+            default:
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -177,13 +177,20 @@ public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implemen
         anim.start();
     }
 
-    public static void LaunchGankDailyActivity(Activity activity, View imageView, View textView, Girl girl) {
-        Intent Intent = new Intent(activity, GankDailyActivity.class);
-        Intent.putExtra("girlData", girl);
-        Pair<View, String> image = new Pair<>(imageView, activity.getString(R.string.pretty_girl));
-        Pair<View, String> text = new Pair<>(textView, activity.getString(R.string.date));
-
-        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, image, text);
-        ActivityCompat.startActivity(activity, Intent, optionsCompat.toBundle());
+    //    public static void LaunchGankDailyActivity(Activity activity, View imageView, View textView, Girl girl) {
+//        Intent Intent = new Intent(activity, GankDailyActivity.class);
+//        Intent.putExtra("girlData", girl);
+//        Pair<View, String> image = new Pair<>(imageView, activity.getString(R.string.pretty_girl));
+//        Pair<View, String> text = new Pair<>(textView, activity.getString(R.string.date));
+//
+//        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, image, text);
+//        ActivityCompat.startActivity(activity, Intent, optionsCompat.toBundle());
+//    }
+    public static void LaunchGankDailyActivity(Activity activity, View imageView, Girl girl) {
+        Intent girlIntent = new Intent(activity, GankDailyActivity.class);
+        girlIntent.putExtra("girlData", girl);
+        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                .makeSceneTransitionAnimation(activity, imageView, activity.getString(R.string.pretty_girl));
+        ActivityCompat.startActivity(activity, girlIntent, optionsCompat.toBundle());
     }
 }

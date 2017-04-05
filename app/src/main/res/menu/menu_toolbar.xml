@@ -13,16 +13,16 @@
         android:icon="@mipmap/ic_category"
         android:title="@string/menu_category"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/tool_setting"
-        android:title="@string/menu_setting"
-        app:showAsAction="never" />
+    <!--<item-->
+        <!--android:id="@+id/tool_setting"-->
+        <!--android:title="@string/menu_setting"-->
+        <!--app:showAsAction="never" />-->
     <item
         android:id="@+id/tool_update"
         android:title="@string/menu_update"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/tool_about"
-        android:title="@string/menu_about"
-        app:showAsAction="never" />
+    <!--<item-->
+        <!--android:id="@+id/tool_about"-->
+        <!--android:title="@string/menu_about"-->
+        <!--app:showAsAction="never" />-->
 </menu>

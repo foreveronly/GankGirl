@@ -2,6 +2,7 @@ package com.onlyleo.gankgirl.ui.activity;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,7 +11,6 @@ import com.onlyleo.gankgirl.presenter.CategoryPresenter;
 import com.onlyleo.gankgirl.ui.adapter.CategoryPagerAdapter;
 import com.onlyleo.gankgirl.ui.base.BaseActivity;
 import com.onlyleo.gankgirl.ui.view.IBaseView;
-import com.onlyleo.gankgirl.widget.CompatToolbar;
 
 import butterknife.Bind;
 
@@ -18,7 +18,7 @@ import butterknife.Bind;
 public class CategoryActivity extends BaseActivity<CategoryPresenter> implements IBaseView, ViewPager.OnPageChangeListener {
 
     @Bind(R.id.toolbar)
-    CompatToolbar toolbar;
+    Toolbar toolbar;
     @Bind(R.id.tab_layout)
     TabLayout tabLayout;
     @Bind(R.id.container)
@@ -37,7 +37,7 @@ public class CategoryActivity extends BaseActivity<CategoryPresenter> implements
 
     @Override
     public void init() {
-        initToolbar(toolbar);
+        initToolbar(toolbar,false);
         setTitle("分类");
         CategoryPagerAdapter pagerAdapter = new CategoryPagerAdapter(getSupportFragmentManager(), CategoryActivity.this);
         container.setAdapter(pagerAdapter);

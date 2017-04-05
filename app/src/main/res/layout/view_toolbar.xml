@@ -6,14 +6,15 @@
     android:layout_height="wrap_content"
     android:theme="@style/AppTheme.AppBarOverlay">
 
-    <com.onlyleo.gankgirl.widget.CompatToolbar
+    <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
         android:background="?attr/colorPrimary"
         android:theme="@style/AppTheme.AppBarOverlay"
         app:layout_scrollFlags="scroll|enterAlways|snap"
         app:popupTheme="@style/AppTheme.PopupOverlay">
-    </com.onlyleo.gankgirl.widget.CompatToolbar>
+    </android.support.v7.widget.Toolbar>
 
 </android.support.design.widget.AppBarLayout>

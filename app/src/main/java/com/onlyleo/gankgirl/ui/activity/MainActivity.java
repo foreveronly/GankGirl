@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -26,9 +27,9 @@ import com.onlyleo.gankgirl.ui.adapter.MainAdapter;
 import com.onlyleo.gankgirl.ui.base.BaseActivity;
 import com.onlyleo.gankgirl.ui.view.IMainView;
 import com.onlyleo.gankgirl.utils.CheckVersion;
+import com.onlyleo.gankgirl.utils.GankDiffCallback;
 import com.onlyleo.gankgirl.utils.SPDataTools;
 import com.onlyleo.gankgirl.utils.TipsUtil;
-import com.onlyleo.gankgirl.widget.CompatToolbar;
 import com.onlyleo.gankgirl.widget.LMRecyclerView;
 
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
     @Bind(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
     @Bind(R.id.toolbar)
-    CompatToolbar toolbar;
+    Toolbar toolbar;
     private List<Girl> list;
     private MainAdapter adapter;
     private boolean canLoading = true;
@@ -132,7 +133,6 @@ public class MainActivity extends BaseActivity<MainPresenter>
         initRecyclerView();
     }
 
-    @Override
     public void initToolbar(Toolbar toolbar) {
         toolbar.setTitle(R.string.app_name);
         toolbar.inflateMenu(R.menu.menu_toolbar);
@@ -172,14 +172,16 @@ public class MainActivity extends BaseActivity<MainPresenter>
             case R.id.tool_category:
                 startActivity(new Intent(MainActivity.this, CategoryActivity.class));
                 break;
-            case R.id.tool_setting:
-
-                break;
+//            case R.id.tool_setting:
+//
+//                break;
             case R.id.tool_update:
                 CheckVersion.getInstance(MainActivity.this).checkVersion(false);
                 break;
-            case R.id.tool_about:
-
+//            case R.id.tool_about:
+//
+//                break;
+            default:
                 break;
         }
         return true;
@@ -223,15 +225,32 @@ public class MainActivity extends BaseActivity<MainPresenter>
                 Girl spGirl = list.get(0);
                 if (!netGirl.url.equals(spGirl.url)) {
                     list.clear();
-                    list.addAll(girlList);
-                    adapter.notifyDataSetChanged();
-                } else TipsUtil.showSnackTip(fab, "已经是最新内容了！");
+                    DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new GankDiffCallback(list, girlList),true);
+                    adapter.setList(girlList);
+                    diffResult.dispatchUpdatesTo(adapter);
+//                    list.addAll(girlList);
+//                    adapter.notifyDataSetChanged();
+                } else {
+                    TipsUtil.showSnackTip(fab, "已经是最新内容了！");
+                }
+            } else if (list != null && list.size() == 0) {
+                list.clear();
+                DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new GankDiffCallback(list, girlList),true);
+                adapter.setList(girlList);
+                diffResult.dispatchUpdatesTo(adapter);
+//                list.addAll(girlList);
+//                adapter.notifyDataSetChanged();
             }
             SPDataTools.saveFirstPageGirls(this, girlList);
         } else {
             list.addAll(girlList);
             adapter.notifyDataSetChanged();
+
         }
+
+//        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new GankDiffCallback(list, girlList),true);
+//        adapter.setList(girlList);
+//        diffResult.dispatchUpdatesTo(adapter);
     }
 
     @OnClick(R.id.fab)
@@ -275,9 +294,8 @@ public class MainActivity extends BaseActivity<MainPresenter>
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setLoadMoreListener(this);
         recyclerView.applyFloatingActionButton(fab);
-        ScaleInAnimatorAdapter animatorAdapter = new ScaleInAnimatorAdapter(adapter, recyclerView);
+        ScaleInAnimatorAdapter animatorAdapter = new ScaleInAnimatorAdapter<>(adapter, recyclerView);
         recyclerView.setAdapter(animatorAdapter);
-
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.post(new Runnable() {

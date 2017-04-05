@@ -223,8 +223,6 @@ public class CheckVersion {
                 try {
                     is = response.body().byteStream();
                     File dir = new File(GetAppInfo.getApkPath());
-                    if (!dir.isDirectory() || !dir.exists())
-                        dir.mkdir();
                     File file = new File(dir, "GankGirl.apk");
                     fos = new FileOutputStream(file);
                     while ((len = is.read(buf)) != -1) {

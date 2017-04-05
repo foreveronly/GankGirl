@@ -10,6 +10,14 @@ public class GankGirlApp extends Application {
     private static GankGirlApp INSTANCE = null;
 //    private RefWatcher refWatcher;
 
+    public static GankGirlApp getINSTANCE() {
+        return INSTANCE;
+    }
+
+    public static void setINSTANCE(GankGirlApp INSTANCE) {
+        GankGirlApp.INSTANCE = INSTANCE;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -21,11 +29,11 @@ public class GankGirlApp extends Application {
                     .methodOffset(0);        // default 0
 //            refWatcher = LeakCanary.install(this);
             }
-        INSTANCE = this;
+        setINSTANCE(this);
     }
 
     public static GankGirlApp getInstance() {
-        return INSTANCE;
+        return getINSTANCE();
         }
 
 //    public static RefWatcher getRefWatcher(Context context) {

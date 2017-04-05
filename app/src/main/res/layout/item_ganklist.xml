@@ -25,7 +25,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/gank_daily_margin_link"
-        android:elevation="5dp"
         android:layout_marginLeft="@dimen/gank_daily_margin_link"
         android:layout_marginRight="@dimen/gank_daily_margin_link"
         android:layout_marginStart="@dimen/gank_daily_margin_link"

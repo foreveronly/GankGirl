@@ -13,6 +13,8 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +24,8 @@ import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -98,32 +102,26 @@ public class CommonTools {
 
     /**
      * 判断网络是否连接
+     *
      * @param context
      * @return
      */
-    public static boolean isNetworkAvailable(Context context)
-    {
+    public static boolean isNetworkAvailable(Context context) {
         // 获取手机所有连接管理对象（包括对wi-fi,net等连接的管理）
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        if (connectivityManager == null)
-        {
+        if (connectivityManager == null) {
             return false;
-        }
-        else
-        {
+        } else {
             // 获取NetworkInfo对象
             NetworkInfo[] networkInfo = connectivityManager.getAllNetworkInfo();
 
-            if (networkInfo != null && networkInfo.length > 0)
-            {
-                for (int i = 0; i < networkInfo.length; i++)
-                {
+            if (networkInfo != null && networkInfo.length > 0) {
+                for (int i = 0; i < networkInfo.length; i++) {
                     System.out.println(i + "===状态===" + networkInfo[i].getState());
                     System.out.println(i + "===类型===" + networkInfo[i].getTypeName());
                     // 判断当前网络状态是否为连接状态
-                    if (networkInfo[i].getState() == NetworkInfo.State.CONNECTED)
-                    {
+                    if (networkInfo[i].getState() == NetworkInfo.State.CONNECTED) {
                         return true;
                     }
                 }
@@ -131,6 +129,7 @@ public class CommonTools {
         }
         return false;
     }
+
     /**
      * 日期做标题
      *
@@ -178,6 +177,7 @@ public class CommonTools {
         int anotherDay = _another.get(Calendar.DAY_OF_YEAR);
         return oneDay == anotherDay;
     }
+
     /**
      * 比较日期
      *
@@ -270,20 +270,20 @@ public class CommonTools {
         context.startActivity(Intent.createChooser(intent, context.getString(R.string.share_video_to)));
     }
 
-    public static TextView getToolbarTitleView(AppCompatActivity activity, Toolbar toolbar){
+    public static TextView getToolbarTitleView(AppCompatActivity activity, Toolbar toolbar) {
         ActionBar actionBar = activity.getSupportActionBar();
         CharSequence actionbarTitle = null;
-        if(actionBar != null)
+        if (actionBar != null)
             actionbarTitle = actionBar.getTitle();
         actionbarTitle = TextUtils.isEmpty(actionbarTitle) ? toolbar.getTitle() : actionbarTitle;
-        if(TextUtils.isEmpty(actionbarTitle)) return null;
+        if (TextUtils.isEmpty(actionbarTitle)) return null;
         // can't find if title not set
-        for(int i= 0; i < toolbar.getChildCount(); i++){
+        for (int i = 0; i < toolbar.getChildCount(); i++) {
             View v = toolbar.getChildAt(i);
-            if(v != null && v instanceof TextView){
+            if (v != null && v instanceof TextView) {
                 TextView t = (TextView) v;
                 CharSequence title = t.getText();
-                if(!TextUtils.isEmpty(title) && actionbarTitle.equals(title) && t.getId() == View.NO_ID){
+                if (!TextUtils.isEmpty(title) && actionbarTitle.equals(title) && t.getId() == View.NO_ID) {
                     //Toolbar does not assign id to views with layout params SYSTEM, hence getId() == View.NO_ID
                     //in same manner subtitle TextView can be obtained.
                     return t;
@@ -291,5 +291,25 @@ public class CommonTools {
             }
         }
         return null;
+    }
+
+    public static void setTranslucentStatusBar(Window window, boolean setTranslucentStatusBar) {
+        if (window == null) return;
+        int sdkInt = Build.VERSION.SDK_INT;
+        if (sdkInt >= Build.VERSION_CODES.LOLLIPOP && setTranslucentStatusBar) {
+            setTranslucentStatusBarLollipop(window);
+        } else if (sdkInt >= Build.VERSION_CODES.KITKAT) {
+            setTranslucentStatusBarKiKat(window);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private static void setTranslucentStatusBarLollipop(Window window) {
+        window.setStatusBarColor(ContextCompat.getColor(window.getContext(), android.R.color.transparent));
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private static void setTranslucentStatusBarKiKat(Window window) {
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
     }
 }

@@ -15,7 +15,7 @@
         android:textColor="@color/pure_white" />
 
     <LinearLayout
-        android:id="@+id/ll_title"
+        android:id="@+id/rl_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

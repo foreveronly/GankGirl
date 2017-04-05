@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.support.design.widget.AppBarLayout;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +21,6 @@ import com.onlyleo.gankgirl.presenter.WebPresenter;
 import com.onlyleo.gankgirl.ui.base.BaseActivity;
 import com.onlyleo.gankgirl.ui.view.IWebView;
 import com.onlyleo.gankgirl.utils.TipsUtil;
-import com.onlyleo.gankgirl.widget.CompatToolbar;
 import com.onlyleo.gankgirl.widget.LoveVideoView;
 
 import butterknife.Bind;
@@ -29,7 +29,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements IWebView 
 
 
     @Bind(R.id.toolbar)
-    CompatToolbar toolbar;
+    Toolbar toolbar;
     @Bind(R.id.progressbar)
     NumberProgressBar progressbar;
     @Bind(R.id.web_view)
@@ -82,7 +82,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements IWebView 
 
     @Override
     public void init() {
-        initToolbar(toolbar);
+        initToolbar(toolbar,false);
         gank = getIntent().getParcelableExtra(GlobalConfig.GANK);
         setTitle(gank.desc);
         if (("休息视频").equals(gank.type)) {
@@ -134,6 +134,8 @@ public class WebActivity extends BaseActivity<WebPresenter> implements IWebView 
                 break;
             case R.id.action_share_gank:
                 presenter.moreOperation(gank);
+                break;
+            default:
                 break;
         }
         return super.onOptionsItemSelected(item);

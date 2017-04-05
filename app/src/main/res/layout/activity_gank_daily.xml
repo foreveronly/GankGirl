@@ -18,7 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:statusBarScrim="@android:color/transparent">
 
             <ImageView
                 android:id="@+id/gank_daily_iv"
@@ -63,8 +64,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_gank_daily"
             android:layout_width="match_parent"
-            android:background="@color/pure_white"
             android:layout_height="match_parent"
+            android:background="@color/pure_white"
             android:clipToPadding="false"
             android:paddingBottom="20dp" />
     </LinearLayout>

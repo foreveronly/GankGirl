@@ -13,7 +13,7 @@ public class GlideTools {
      * 图片加载
      */
     public static void LoadImage(Context context, ImageView imageView, Object obj) {
-        Glide.with(context).load(obj).diskCacheStrategy(DiskCacheStrategy.RESULT).crossFade().into(imageView);
+        Glide.with(context).load(obj).diskCacheStrategy(DiskCacheStrategy.RESULT).crossFade(500).into(imageView);
     }
 
 

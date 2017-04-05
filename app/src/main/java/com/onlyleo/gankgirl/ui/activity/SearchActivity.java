@@ -2,6 +2,7 @@ package com.onlyleo.gankgirl.ui.activity;
 
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.Toolbar;
 
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Search;
@@ -10,7 +11,6 @@ import com.onlyleo.gankgirl.ui.adapter.SearchListAdapter;
 import com.onlyleo.gankgirl.ui.base.BaseActivity;
 import com.onlyleo.gankgirl.ui.view.ISearchView;
 import com.onlyleo.gankgirl.utils.ToastUtils;
-import com.onlyleo.gankgirl.widget.CompatToolbar;
 import com.onlyleo.gankgirl.widget.LMRecyclerView;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ import butterknife.Bind;
 public class SearchActivity extends BaseActivity<SearchPresenter> implements ISearchView, LMRecyclerView.LoadMoreListener {
 
     @Bind(R.id.toolbar)
-    CompatToolbar toolbar;
+    Toolbar toolbar;
     @Bind(R.id.recycler_view_search)
     LMRecyclerView recyclerViewSearch;
     @Bind(R.id.clprogressbar_searh)
@@ -51,7 +51,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements ISe
 
     @Override
     public void init() {
-        initToolbar(toolbar);
+        initToolbar(toolbar,false);
         setTitle("搜索结果");
         initData();
         initRecyclerView();

@@ -4,9 +4,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:windowTranslucentStatus">true</item>
-        <!--&lt;!&ndash; enable window content transitions &ndash;&gt;-->
+
+        <!-- enable window content transitions -->
         <!--<item name="android:windowContentTransitions">true</item>-->
         <!--&lt;!&ndash; specify shared element transitions &ndash;&gt;-->
         <!--<item name="android:windowSharedElementEnterTransition">-->

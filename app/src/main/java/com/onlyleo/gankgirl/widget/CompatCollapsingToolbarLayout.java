@@ -37,9 +37,7 @@ public class CompatCollapsingToolbarLayout extends CollapsingToolbarLayout {
                         Field mLastInsets = CollapsingToolbarLayout.class.getDeclaredField("mLastInsets");
                         mLastInsets.setAccessible(true);
                         mLastInsets.set(this, null);
-                    } catch (NoSuchFieldException e) {
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
+                    } catch (NoSuchFieldException | IllegalAccessException e) {
                         e.printStackTrace();
                     }
                 }

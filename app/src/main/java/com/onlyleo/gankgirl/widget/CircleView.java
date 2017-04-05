@@ -14,12 +14,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
 import com.onlyleo.gankgirl.R;
 
 
-public class CircleView extends ImageView {
+public class CircleView extends android.support.v7.widget.AppCompatImageView {
 
     private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;
 
@@ -95,7 +94,7 @@ public class CircleView extends ImageView {
             return;
         }
 
-        canvas.drawCircle(getWidth() / 2, getHeight() / 2, mDrawableRadius, mBitmapPaint);
+        canvas.drawCircle(getWidth() / 2f, getHeight() / 2f, mDrawableRadius, mBitmapPaint);
         if (mBorderWidth != 0) {
             canvas.drawCircle(getWidth() / 2, getHeight() / 2, mBorderRadius, mBorderPaint);
         }

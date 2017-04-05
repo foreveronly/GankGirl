@@ -26,7 +26,6 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> {
             // **一定要主动调用下面这一句**
             onCompleted();
 
-            return;
         }
         // 显示进度条
     }

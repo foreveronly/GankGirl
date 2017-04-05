@@ -55,6 +55,8 @@ public class LMRecyclerView extends RecyclerView {
                 if (floatingActionButton != null && floatingActionButton.isShown())
                     floatingActionButton.hide();
                 break;
+            default:
+                break;
         }
     }
 

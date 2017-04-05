@@ -1,14 +1,13 @@
 package com.onlyleo.gankgirl.ui.base;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 
 import com.onlyleo.gankgirl.presenter.BasePresenter;
+import com.onlyleo.gankgirl.utils.CommonTools;
 
 import butterknife.ButterKnife;
 import smartisanos.api.OneStepHelper;
@@ -18,6 +17,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected String TAG = this.getClass().getSimpleName();
     protected P presenter;
     protected OneStepHelper mOneStepHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,10 +33,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     protected abstract void initPresenter();
 
-    public void initToolbar(Toolbar toolbar) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
+    protected void initToolbar(Toolbar toolbar, boolean setStatusBarColor) {
+        CommonTools.setTranslucentStatusBar(getWindow(),setStatusBarColor);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

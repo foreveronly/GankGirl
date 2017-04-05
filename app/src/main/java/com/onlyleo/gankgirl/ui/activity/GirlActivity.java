@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +22,6 @@ import com.onlyleo.gankgirl.utils.CommonTools;
 import com.onlyleo.gankgirl.utils.FileUtil;
 import com.onlyleo.gankgirl.utils.GlideTools;
 import com.onlyleo.gankgirl.utils.TipsUtil;
-import com.onlyleo.gankgirl.widget.CompatToolbar;
 
 import java.io.File;
 
@@ -33,7 +33,7 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
     @Bind(R.id.iv_girl_all)
     PhotoView ivGirl;
     @Bind(R.id.toolbar)
-    CompatToolbar toolbar;
+    Toolbar toolbar;
     private Girl girl;
 
     @Override
@@ -49,14 +49,12 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
 
     @Override
     public void init() {
-        initToolbar(toolbar);
+        initToolbar(toolbar,false);
         getIntentData();
         initGirl();
     }
 
     public void initGirl() {
-
-
         GlideTools.LoadImage(this, ivGirl, girl.url);
         ivGirl.setScaleType(ImageView.ScaleType.FIT_CENTER);
         ViewCompat.setTransitionName(ivGirl, getString(R.string.pretty_girl));
@@ -90,16 +88,17 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
         Bitmap girlbm = CommonTools.drawableToBitamp(ivGirl.getDrawable());
         switch (item.getItemId()) {
             case R.id.action_save:
-
                 if (!FileUtil.isSDCardEnable() || girl == null) {
                     TipsUtil.showSnackTip(ivGirl, "保存失败!");
+                    girlbm.recycle();
                 } else {
                     presenter.saveGirl(girlbm, CommonTools.toDateString(girl.publishedAt).toString());
                 }
-
                 break;
             case R.id.action_share:
                 presenter.shareGirl(girlbm, CommonTools.toDateString(girl.publishedAt).toString());
+                break;
+            default:
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -107,6 +106,7 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
 
     @Override
     protected void onDestroy() {
+
         presenter.release();
         super.onDestroy();
     }
@@ -124,4 +124,13 @@ public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlVi
         ActivityCompat.startActivity(activity, girlIntent, optionsCompat.toBundle());
     }
 
+//    public static void LaunchGirlActivity(Activity activity, View imageView, View textView, Girl girl) {
+//        Intent Intent = new Intent(activity, GirlActivity.class);
+//        Intent.putExtra("girlData", girl);
+//        Pair<View, String> image = new Pair<>(imageView, activity.getString(R.string.pretty_girl));
+//        Pair<View, String> text = new Pair<>(textView, activity.getString(R.string.date));
+//
+//        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, image, text);
+//        ActivityCompat.startActivity(activity, Intent, optionsCompat.toBundle());
+//    }
 }

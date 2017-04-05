@@ -94,20 +94,5 @@ public class Version extends Soul implements Parcelable {
         }
     }
 
-    @Override
-    public String toString() {
-        return "{" +
-                "name='" + name + '\'' +
-                ", version='" + version + '\'' +
-                ", changelog='" + changelog + '\'' +
-                ", updated_at=" + updated_at +
-                ", versionShort='" + versionShort + '\'' +
-                ", build='" + build + '\'' +
-                ", installUrl='" + installUrl + '\'' +
-                ", install_url='" + install_url + '\'' +
-                ", direct_install_url='" + direct_install_url + '\'' +
-                ", update_url='" + update_url + '\'' +
-                ", fsize=" + binary.fsize +
-                '}';
-    }
+
 }

@@ -18,6 +18,7 @@ import com.onlyleo.gankgirl.utils.CommonTools;
 import com.onlyleo.gankgirl.utils.GlideTools;
 import com.onlyleo.gankgirl.widget.AlwaysMarqueeTextView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -29,6 +30,14 @@ import smartisanos.api.OneStepHelper;
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
     private List<Girl> list;
     private Context context;
+
+    public List<Girl> getList() {
+        return list;
+    }
+
+    public void setList(List<Girl> list) {
+        this.list = new ArrayList<>(list);
+    }
 
     private OneStepHelper mOneStepHelper;
 
@@ -53,10 +62,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
         holder.ivGirl.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if(mOneStepHelper.isOneStepShowing()){
+                if (mOneStepHelper.isOneStepShowing()) {
                     Calendar calendar = Calendar.getInstance();
                     String url = GankRetrofit.BaseURL + calendar.get(Calendar.YEAR) + "/" + calendar.get(Calendar.MONTH) + 1 + "/" + calendar.get(Calendar.DAY_OF_MONTH);
-                    mOneStepHelper.dragLink(v,url);
+                    mOneStepHelper.dragLink(v, url);
                     return true;
                 }
                 return false;
@@ -76,18 +85,17 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
         TextView tvDate;
         @Bind(R.id.tv_title)
         AlwaysMarqueeTextView tvTitle;
-//        @Bind(R.id.ll_title)
-//        LinearLayout llTitle;
 
-        @OnClick(R.id.ll_title)
+        @OnClick(R.id.rl_title)
         void itemCilick() {
-            GankDailyActivity.LaunchGankDailyActivity((MainActivity) context, ivGirl,tvDate, (Girl) card.getTag());
+            GankDailyActivity.LaunchGankDailyActivity((MainActivity) context, ivGirl, (Girl) card.getTag());
         }
 
         @OnClick(R.id.iv_girl)
         void girlClick() {
             GirlActivity.LaunchGirlActivity((MainActivity) context, ivGirl, (Girl) card.getTag());
         }
+
         View card;
 
         GirlHolder(View itemView) {

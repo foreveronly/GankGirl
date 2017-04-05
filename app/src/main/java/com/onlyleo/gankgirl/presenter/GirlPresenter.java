@@ -63,11 +63,13 @@ public class GirlPresenter extends BasePresenter<IGirlView> {
                         Intent scannerIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
                         mContext.sendBroadcast(scannerIntent);
                         mView.showSaveGirlResult("保存成功!");
+                        bitmap.recycle();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         mView.showSaveGirlResult("保存失败!");
+                        bitmap.recycle();
                     }
                 });
     }
@@ -79,12 +81,13 @@ public class GirlPresenter extends BasePresenter<IGirlView> {
      * @param title
      */
     public void shareGirl(final Bitmap bitmap, final String title) {
-        Observable.create(new Observable.OnSubscribe<Uri>() {
+        subscription = Observable.create(new Observable.OnSubscribe<Uri>() {
             @Override
             public void call(Subscriber<? super Uri> subscriber) {
                 Uri uri = FileUtil.saveBitmapToSDCard(bitmap, title);
                 if (uri == null) {
                     subscriber.onError(new Exception("分享失败!"));
+                    bitmap.recycle();
                 } else {
                     subscriber.onNext(uri);
                     subscriber.onCompleted();
@@ -96,12 +99,14 @@ public class GirlPresenter extends BasePresenter<IGirlView> {
                     @Override
                     public void call(Uri uri) {
                         CommonTools.shareImage(mContext, uri, "分享到");
+                        bitmap.recycle();
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
                         Log.d("log", "some thing is wrong");
                         mView.showSaveGirlResult(throwable.getMessage());
+                        bitmap.recycle();
                     }
                 });
     }
