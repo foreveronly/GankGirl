@@ -1,18 +1,19 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.Design.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+  <style name="AppTheme" parent="Theme.Design.Light.NoActionBar">
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
 
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    <item name="windowBackground">@color/pure_white</item>
 
-        <!-- enable window content transitions -->
-        <!--<item name="android:windowContentTransitions">true</item>-->
-        <!--&lt;!&ndash; specify shared element transitions &ndash;&gt;-->
-        <!--<item name="android:windowSharedElementEnterTransition">-->
-            <!--@transition/change_image_transform</item>-->
-        <!--<item name="android:windowSharedElementExitTransition">-->
-            <!--@transition/change_image_transform</item>-->
-    </style>
+    <!-- enable window content transitions -->
+    <!--<item name="android:windowContentTransitions">true</item>-->
+    <!--&lt;!&ndash; specify shared element transitions &ndash;&gt;-->
+    <!--<item name="android:windowSharedElementEnterTransition">-->
+    <!--@transition/change_image_transform</item>-->
+    <!--<item name="android:windowSharedElementExitTransition">-->
+    <!--@transition/change_image_transform</item>-->
+  </style>
 </resources>

@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.net.GankRetrofit;
@@ -17,14 +19,8 @@ import com.onlyleo.gankgirl.ui.activity.MainActivity;
 import com.onlyleo.gankgirl.utils.CommonTools;
 import com.onlyleo.gankgirl.utils.GlideTools;
 import com.onlyleo.gankgirl.widget.AlwaysMarqueeTextView;
-
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import smartisanos.api.OneStepHelper;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
@@ -36,7 +32,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
     }
 
     public void setList(List<Girl> list) {
-        this.list = new ArrayList<>(list);
+        this.list = list;
     }
 
     private OneStepHelper mOneStepHelper;

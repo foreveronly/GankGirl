@@ -227,6 +227,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
                     list.clear();
                     DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new GankDiffCallback(list, girlList),true);
                     adapter.setList(girlList);
+                    recyclerView.getRecycledViewPool().clear();
                     diffResult.dispatchUpdatesTo(adapter);
 //                    list.addAll(girlList);
 //                    adapter.notifyDataSetChanged();
@@ -237,6 +238,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
                 list.clear();
                 DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new GankDiffCallback(list, girlList),true);
                 adapter.setList(girlList);
+                recyclerView.getRecycledViewPool().clear();
                 diffResult.dispatchUpdatesTo(adapter);
 //                list.addAll(girlList);
 //                adapter.notifyDataSetChanged();
