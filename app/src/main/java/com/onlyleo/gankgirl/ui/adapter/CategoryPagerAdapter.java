@@ -12,14 +12,14 @@ import android.widget.TextView;
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.ui.fragment.CategoryFragment;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CategoryPagerAdapter extends FragmentStatePagerAdapter {
 
     private Context mContext;
     private String[] title = {"Android", "iOS", "前端", "瞎推荐", "拓展资源", "App"};
-    @Bind(R.id.tv_tabItem)
+    @BindView(R.id.tv_tabItem)
     TextView tabTv;
 
     public CategoryPagerAdapter(FragmentManager fm, Context context) {

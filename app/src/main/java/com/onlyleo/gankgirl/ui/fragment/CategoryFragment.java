@@ -7,7 +7,6 @@ import android.view.View;
 
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Category;
-import com.onlyleo.gankgirl.model.entity.Gank;
 import com.onlyleo.gankgirl.presenter.CategoryFragmentPresenter;
 import com.onlyleo.gankgirl.ui.adapter.GankListAdapter;
 import com.onlyleo.gankgirl.ui.base.BaseFragment;
@@ -18,15 +17,15 @@ import com.onlyleo.gankgirl.widget.LMRecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import it.gmariotti.recyclerview.adapter.AlphaAnimatorAdapter;
 
 public class CategoryFragment extends BaseFragment<CategoryFragmentPresenter> implements ICategoryView,
         LMRecyclerView.LoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
 
-    @Bind(R.id.recycler_view_category)
+    @BindView(R.id.recycler_view_category)
     LMRecyclerView recyclerViewCategory;
-    @Bind(R.id.swipe_refresh_layout)
+    @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
     public static final String TYPE = "type";
     private String type;

@@ -23,22 +23,21 @@ import com.onlyleo.gankgirl.ui.view.IWebView;
 import com.onlyleo.gankgirl.utils.TipsUtil;
 import com.onlyleo.gankgirl.widget.LoveVideoView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class WebActivity extends BaseActivity<WebPresenter> implements IWebView {
 
-
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.progressbar)
+    @BindView(R.id.progressbar)
     NumberProgressBar progressbar;
-    @Bind(R.id.web_view)
+    @BindView(R.id.web_view)
     WebView webView;
-    @Bind(R.id.contentView)
+    @BindView(R.id.contentView)
     LinearLayout contentView;
-    @Bind(R.id.app_bar)
+    @BindView(R.id.app_bar)
     AppBarLayout appBar;
-    @Bind(R.id.web_video)
+    @BindView(R.id.web_video)
     LoveVideoView webVideo;
     private Gank gank;
 

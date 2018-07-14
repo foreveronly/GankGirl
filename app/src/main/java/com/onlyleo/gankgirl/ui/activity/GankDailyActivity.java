@@ -35,19 +35,19 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 import it.gmariotti.recyclerview.adapter.SlideInRightAnimatorAdapter;
 
 public class GankDailyActivity extends BaseActivity<GankDailyPresenter> implements IGankDailyView {
 
-    @Bind(R.id.recycler_view_gank_daily)
+    @BindView(R.id.recycler_view_gank_daily)
     RecyclerView recyclerViewGankdaily;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     CompatToolbar toolbar;
-    @Bind(R.id.gank_daily_iv)
+    @BindView(R.id.gank_daily_iv)
     ImageView gankDailyIv;
-    @Bind(R.id.fab)
+    @BindView(R.id.fab)
     FloatingActionButton fab;
     private Girl girl;
     private List<Gank> list;

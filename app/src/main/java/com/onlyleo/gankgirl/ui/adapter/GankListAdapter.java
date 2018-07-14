@@ -18,7 +18,7 @@ import com.onlyleo.gankgirl.utils.TipsUtil;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import smartisanos.api.OneStepHelper;
@@ -67,9 +67,9 @@ public class GankListAdapter extends RecyclerView.Adapter<GankListAdapter.GankLi
     }
 
     class GankListViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.link_list)
+        @BindView(R.id.link_list)
         TextView linkList;
-        @Bind(R.id.gankll_list)
+        @BindView(R.id.gankll_list)
         LinearLayout gankllList;
 
         @OnClick(R.id.gankll_list)

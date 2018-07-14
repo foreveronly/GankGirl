@@ -7,9 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
 import com.onlyleo.gankgirl.R;
 import com.onlyleo.gankgirl.model.entity.Girl;
 import com.onlyleo.gankgirl.net.GankRetrofit;
@@ -19,8 +17,13 @@ import com.onlyleo.gankgirl.ui.activity.MainActivity;
 import com.onlyleo.gankgirl.utils.CommonTools;
 import com.onlyleo.gankgirl.utils.GlideTools;
 import com.onlyleo.gankgirl.widget.AlwaysMarqueeTextView;
+
 import java.util.Calendar;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import smartisanos.api.OneStepHelper;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
@@ -75,11 +78,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.GirlHolder> {
     }
 
     class GirlHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.iv_girl)
+        @BindView(R.id.iv_girl)
         ImageView ivGirl;
-        @Bind(R.id.tv_date)
+        @BindView(R.id.tv_date)
         TextView tvDate;
-        @Bind(R.id.tv_title)
+        @BindView(R.id.tv_title)
         AlwaysMarqueeTextView tvTitle;
 
         @OnClick(R.id.rl_title)

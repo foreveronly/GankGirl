@@ -16,18 +16,18 @@ import com.onlyleo.gankgirl.widget.LMRecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * 搜索页面
  */
 public class SearchActivity extends BaseActivity<SearchPresenter> implements ISearchView, LMRecyclerView.LoadMoreListener {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.recycler_view_search)
+    @BindView(R.id.recycler_view_search)
     LMRecyclerView recyclerViewSearch;
-    @Bind(R.id.clprogressbar_searh)
+    @BindView(R.id.clprogressbar_searh)
     ContentLoadingProgressBar clprogressbarSearh;
 
     private SearchListAdapter searchListAdapter;

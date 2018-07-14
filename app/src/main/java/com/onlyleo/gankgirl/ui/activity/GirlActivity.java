@@ -25,14 +25,14 @@ import com.onlyleo.gankgirl.utils.TipsUtil;
 
 import java.io.File;
 
-import butterknife.Bind;
+import butterknife.BindView;
+
 
 public class GirlActivity extends BaseActivity<GirlPresenter> implements IGirlView {
 
-
-    @Bind(R.id.iv_girl_all)
+    @BindView(R.id.iv_girl_all)
     PhotoView ivGirl;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
     private Girl girl;
 

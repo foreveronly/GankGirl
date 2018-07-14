@@ -10,6 +10,7 @@ import com.onlyleo.gankgirl.presenter.BasePresenter;
 import com.onlyleo.gankgirl.utils.CommonTools;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import smartisanos.api.OneStepHelper;
 
 
@@ -17,12 +18,13 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected String TAG = this.getClass().getSimpleName();
     protected P presenter;
     protected OneStepHelper mOneStepHelper;
+    protected Unbinder unbinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         initPresenter();
         checkPresenterIsNull();
         mOneStepHelper = OneStepHelper.getInstance(this);
@@ -89,12 +91,10 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     @Override
     protected void onDestroy() {
-        ButterKnife.unbind(this);
+        unbinder.unbind();
         Log.i(TAG, "onDestroy");
         super.onDestroy();
 //        RefWatcher refWatcher = GankGirlApp.getRefWatcher(this);
 //        refWatcher.watch(this);
-
-
     }
 }

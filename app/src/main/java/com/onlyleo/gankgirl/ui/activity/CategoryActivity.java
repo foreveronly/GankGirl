@@ -12,16 +12,16 @@ import com.onlyleo.gankgirl.ui.adapter.CategoryPagerAdapter;
 import com.onlyleo.gankgirl.ui.base.BaseActivity;
 import com.onlyleo.gankgirl.ui.view.IBaseView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 
 public class CategoryActivity extends BaseActivity<CategoryPresenter> implements IBaseView, ViewPager.OnPageChangeListener {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.tab_layout)
+    @BindView(R.id.tab_layout)
     TabLayout tabLayout;
-    @Bind(R.id.container)
+    @BindView(R.id.container)
     ViewPager container;
 
     @Override

@@ -17,7 +17,7 @@ import com.onlyleo.gankgirl.utils.TipsUtil;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import smartisanos.api.OneStepHelper;
@@ -85,11 +85,11 @@ public class GankDailyAdpter extends RecyclerView.Adapter<GankDailyAdpter.GankDa
 
 
     class GankDailyHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.gankll_list)
+        @BindView(R.id.gankll_list)
         LinearLayout gankllList;
-        @Bind(R.id.title_list)
+        @BindView(R.id.title_list)
         TextView titleList;
-        @Bind(R.id.link_list)
+        @BindView(R.id.link_list)
         TextView linkList;
 
         @OnClick(R.id.gankll_list)

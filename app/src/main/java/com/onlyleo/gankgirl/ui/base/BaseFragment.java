@@ -9,15 +9,17 @@ import android.view.ViewGroup;
 import com.onlyleo.gankgirl.presenter.BasePresenter;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
 
     protected T presenter;
+    protected Unbinder unbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(getLayout(), container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         initPresenter();
         return view;
     }
@@ -29,7 +31,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     protected boolean isVisible;
